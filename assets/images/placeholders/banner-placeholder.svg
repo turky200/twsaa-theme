@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="700" viewBox="0 0 1600 700" role="img" aria-label="Banner Placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f2a5b"/>
+      <stop offset="100%" stop-color="#091534"/>
+    </linearGradient>
+    <linearGradient id="stripe" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#78aaf6" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#78aaf6" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#78aaf6" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="700" rx="42" fill="url(#bg)"/>
+  <rect x="90" y="210" width="1420" height="8" fill="url(#stripe)"/>
+  <rect x="90" y="480" width="1420" height="8" fill="url(#stripe)"/>
+  <circle cx="800" cy="350" r="110" fill="#173a7b" stroke="#7fb2ff" stroke-opacity="0.45"/>
+  <text x="800" y="330" text-anchor="middle" fill="#e7f2ff" font-family="Arial, sans-serif" font-size="40" font-weight="700">BANNER</text>
+  <text x="800" y="380" text-anchor="middle" fill="#9fc0f0" font-family="Arial, sans-serif" font-size="28">PLACEHOLDER</text>
+</svg>

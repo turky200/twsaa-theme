@@ -1,0 +1,24 @@
+{% if content['settings']['image'] %}
+    {% if content['settings']['link'] %}
+        <a id="block{{ content['block_id'] }}" class="raqam-block-banner" href="{{ content['settings']['link'] }}">
+    {% endif %}
+
+    {% if content['settings']['start_date'] and content['settings']['start_date'] != '' and content['settings']['end_date'] and content['settings']['end_date'] != '' %}
+        {% if "now"|date > content['settings']['start_date'] and "now"|date < content['settings']['end_date'] %}
+            <img class="w-100 mb-40 raqam-banner-img" src="{{ content['content']['settings']['image'] }}" alt="Banner"
+                 onerror="this.onerror=null;this.src='{{ asset_url ~ 'images/placeholders/banner-placeholder.svg' }}';" />
+        {% endif %}
+    {% elseif content['settings']['start_date'] and content['settings']['start_date'] != '' and (content['settings']['end_date'] == '' or content['settings']['end_date'] == '') %}
+        {% if "now"|date > setting['start_date'] %}
+            <img class="w-100 mb-40 raqam-banner-img" src="{{ content['settings']['image'] }}" alt="Banner"
+                 onerror="this.onerror=null;this.src='{{ asset_url ~ 'images/placeholders/banner-placeholder.svg' }}';" />
+        {% endif %}
+    {% else %}
+        <img class="w-100 mb-40 raqam-banner-img" src="{{ content['settings']['image'] }}" alt="Banner"
+             onerror="this.onerror=null;this.src='{{ asset_url ~ 'images/placeholders/banner-placeholder.svg' }}';" />
+    {% endif %}
+   
+    {% if content['settings']['link'] %}
+    </a>
+    {% endif %}
+{% endif %}

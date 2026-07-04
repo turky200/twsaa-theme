@@ -1,0 +1,27 @@
+<div class="swiper myListSwiper raqam-block-list-items raqam-block-list-slider">
+    <div class="swiper-wrapper">
+        {% for item in content['settings']['items'] %}
+        <div class="swiper-slide">
+            <div class="banner-entry-list {{ item['name'] ? 'has-overlay with-hover' : '' }} angel_anime animate__ animate__fadeIn" data-wow-delay="0.1s"
+                style="visibility: visible; animation-delay: 0.1s;">
+                <div class="lazy__bg lazy entered loaded"
+                    data-bg="{{ item['image'] }}"
+                    data-ll-status="loaded"
+                    style="background-image: url(&quot;{{ item['image'] }}&quot;);">
+                </div>
+                {% if item['image'] %}
+                    <img src="{{ item['image'] }}"
+                         onerror="this.onerror=null;this.src='{{ asset_url ~ 'images/placeholders/banner-placeholder.svg' }}';"
+                         class="d-none" alt="list-slider-placeholder-loader" />
+                {% endif %}
+                <a href="{{ item['link'] ?? '' }}" aria-label="link">
+                    {% if item['name'] %}                        
+                        <h3 class="text-lg">{{ item['name'] }}</h3>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="swiper-pagination"></div>
+</div>

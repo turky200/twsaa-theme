@@ -1,0 +1,121 @@
+<nav class="desktop-navbar" aria-label="desktop-categories">
+    <ul class="nav category-navbar" id="cat-here"></ul>
+</nav>
+
+<div class="side-menu-overlay" id="side-menu-overlay"></div>
+<aside class="side-menu-panel" id="side-menu-panel" aria-hidden="true">
+    <div class="side-menu-header">
+        <h3 class="side-menu-title">القائمة الرئيسية</h3>
+        <button type="button" class="side-menu-close" id="side-menu-close" aria-label="close-main-menu">
+            <i class="icon-cancel"></i>
+        </button>
+    </div>
+
+    <div class="side-menu-body">
+        <ul class="side-menu-categories" id="mobile-cat-here"></ul>
+    </div>
+</aside>
+
+<script>
+    $(document).ready(function() {
+        function normalizeCategoryResponse(response) {
+            var html = '';
+
+            if (response && typeof response === 'object' && response.html) {
+                html = response.html;
+            } else if (typeof response === 'string') {
+                html = response;
+            }
+
+            if (!html) {
+                return '';
+            }
+
+            var $tmp = $('<div>').html(html);
+            var $tree = $tmp.find('#cat-here').first();
+
+            if ($tree.length) {
+                return $tree.html();
+            }
+
+            return $tmp.html();
+        }
+
+        function buildMobileCategoryTree() {
+            var html = $('#cat-here').html();
+            if (!html) {
+                return;
+            }
+
+            $('#mobile-cat-here').html(html);
+
+            $('#mobile-cat-here').find('li').each(function() {
+                var $li = $(this);
+                var $child = $li.children('.cat-sub');
+
+                if ($child.length) {
+                    $li.addClass('has-child');
+
+                    if ($li.children('.sub-toggle').length === 0) {
+                        $li.children('a').after('<button type="button" class="sub-toggle" aria-label="toggle-subcategory"><i class="icon-caret-down"></i></button>');
+                    }
+                }
+            });
+        }
+
+        function fetchCategories() {
+            $.ajax({
+                url: '{{ theme_base|default('') }}/category',
+                type: 'GET',
+                success: function(response) {
+                    var html = normalizeCategoryResponse(response);
+
+                    if (!html || $.trim(html) === '') {
+                        return;
+                    }
+
+                    $('#cat-here').html(html);
+                    buildMobileCategoryTree();
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                }
+            });
+        }
+
+        function openSideMenu() {
+            $('#side-menu-overlay').addClass('is-visible');
+            $('#side-menu-panel').addClass('is-open').attr('aria-hidden', 'false');
+            $('body').addClass('menu-open');
+        }
+
+        function closeSideMenu() {
+            $('#side-menu-overlay').removeClass('is-visible');
+            $('#side-menu-panel').removeClass('is-open').attr('aria-hidden', 'true');
+            $('body').removeClass('menu-open');
+        }
+
+        fetchCategories();
+
+        $('body').on('click', '#menu-toggle', function() {
+            openSideMenu();
+        });
+
+        $('body').on('click', '#side-menu-close, #side-menu-overlay', function() {
+            closeSideMenu();
+        });
+
+        $('body').on('click', '#mobile-cat-here .sub-toggle', function(e) {
+            e.preventDefault();
+            var $li = $(this).closest('li');
+            $li.toggleClass('expanded');
+            $li.children('.cat-sub').stop(true, true).slideToggle(180);
+        });
+
+        $(document).on('keyup', function(e) {
+            if (e.key === 'Escape') {
+                closeSideMenu();
+            }
+        });
+    });
+</script>

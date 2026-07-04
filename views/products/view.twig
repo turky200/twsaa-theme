@@ -1,0 +1,723 @@
+{% extends "layout/main.twig" %}
+{% block title %} main {% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="https://twsaa.com/themes/mbotiq/assets/css/default-booking.css">
+    <link rel="stylesheet" href="https://twsaa.com/themes/default/assets/css/calendar.css">
+{% endblock %}
+{% block main_content %}
+
+
+    <section class="product-detail raqam-product-page">
+
+        <div class="layouter">
+            <form action="{{ route('cart.add', product.product_id) }}" id="product-form" method="POST" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <input type="hidden" id="is_buy_now" name="is_buy_now" value="0">
+
+                <div class="form-container">
+
+                    <input type="hidden" name="product_id" value="{{ product.product_id }}">
+
+                    {% include 'products/view/gallery.twig' %}
+
+                    <div class="details">
+
+                        <h6 class="badge badge-pill badge-primary">
+                            {{ product.subtitle }}
+                        </h6>
+                        <div class="product-heading flexbetween flexvcenter flex-wrap">
+                            <div>{{ product.name }}</div>
+                            {# <div>
+                                {{ product.getBrand }}
+                            </div> #}
+                            {% if product.getBrand | length > 0 %}
+                                {% if product.getBrand.logo %}
+                                    <a href="">
+                                        <img src="{{ storage_url ~ product.getBrand.logo }}" height="40px" />
+                                    </a> 
+                                {% else %}
+                                    <span>{{ brand.name }}</span>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+
+
+                        <span class="product-price">
+                            {{ product.html_price | raw }}
+                        </span>
+
+                        <div class="stock-status {% if product.sufficient_quantity == true %}
+                                active
+                            {% endif %}
+                                ">
+                            {% if product.sufficient_quantity == true %}
+                                {{ ('shop::app.products.in-stock'|trans) }}
+                            {% elseif (product.sufficient_quantity > 0) %}
+                                {{ ('shop::app.products.available-for-order'|trans) }}
+                            {% else %}
+                                {{ ('shop::app.products.out-of-stock'|trans) }}
+                            {% endif %}
+                    </div>
+                    {% if product.show_sku %}
+                        {% if product.sku %}
+                            <div class="product-metadata sku">
+                                <i class="icon-tag mr-5"></i>
+                                {{ ('admin::app.catalog.products.sku'|trans) }} {{ product.sku }}
+                            </div>                            
+                        {% endif %}
+                        {% if product.barcode %}
+                            <div class="product-metadata barcode">
+                                <i class="icon-barcode mr-5"></i>
+                                {{ ('admin::app.catalog.products.barcode'|trans) }} {{ product.barcode }}
+                            </div>                            
+                        {% endif %}
+                    {% endif %}
+
+                    {% if sales_count > -1 %}
+                        {% if product.show_purchase_count %}
+                            <div class="product-metadata stock">
+                                <i class="icon-box mr-5"></i>
+                                {{ sales_count }} {{ ('admin::app.layouts.sales'|trans) }}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+
+                        <div class="full-description mt-30" data-max-height="300">
+                            {{ product.description|raw }}
+                        </div>
+
+                        {% if product.show_weight %}
+                            <div class="product-metadata weight">
+                                <i class="icon-cart-download mr-5"></i>
+                                {{ ('admin::app.catalog.products.weight'|trans) }} <span class="product-shipping-weight">{{ product.weight|default(1) }}</span>  {{ ('admin::app.admin.shipping.kg'|trans) }}
+                            </div>
+                        {% endif %}
+
+                        {% if product.type == 'configurable' %}
+                            {% include 'products/view/configurable-options.twig' %}
+                        {% endif %}
+                        {% if product.type == 'customizable' %}                            
+                            {% include 'products/view/customizable.twig' %}
+                        {% endif %}
+                        {% if product.type == 'booking' %}                            
+                            {% include 'products/view/booking.twig' %}
+                        {% endif %}
+
+                        <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;gap: 20px;padding-top: 20px;">
+
+                            {% if product.show_quantity_box %}
+                                <div class="quantity control-group" class="" >
+                                    <label class="required">{{ ('shop::app.products.quantity'|trans) }}</label>
+
+                                    <button type="button" class="decrease" @click="decreaseQty()">-</button>
+
+                                    <input
+                                        class="control"
+                                        id="qtyBox"
+                                        name="quantity"
+                                        data-vv-as="{{ ('shop::app.products.quantity'|trans) }}"
+                                        readonly=""
+                                        max="maxQuantity"
+                                        @keyUp="changeQty()" 
+                                    />
+
+                                    <button type="button" class="increase" @click="increaseQty()">+</button>
+
+                                    <span class="control-error"></span>
+
+                                    {# <i id="remaningQty" style=" text-align: center;">{{ maxQuantity }} items remaining</i> #}
+                                </div>
+                            {% else %}
+                                <input type="hidden" name="quantity" value="1">
+                            {% endif %}
+
+                            {% include 'products/view/product-add.twig' %}
+
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {% if product.enable_product_reviews %}
+            {% if product.guest_review %}
+                {% include 'products/view/feedback.twig' %}
+
+            {% endif %}
+        {% endif %}
+        {% include 'products/view/reviews.twig' %}
+        {% include 'products/view/related-products.twig' %}
+        {% include 'products/view/up-sells.twig' %}
+
+        <div class="modal fade" id="fastCheckOut" tabindex="-1" aria-labelledby="fastCheckOutLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body" id="fastCheckOutBody">
+                    </div>
+                    <div id="loadingoverlay"> 
+                        <div class="cv-spinner">
+                            <span class="spinner"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if (authUser is not null and authUser.is_verified is not null and authUser.is_verified == 0) %}
+            {% include 'customers/account/profile/popup.twig' %}
+        {% endif %}
+    </section>
+
+
+    <script>
+            var qty = 1;
+            var minQuantity = 1;
+            var maxQuantity = 1;
+            var manualQuantity = {{ product.quantity_manually }};
+            var showQuantity = {{ product.remaning_quantity }};
+
+            $(document).ready(function() {
+                if ('number' === typeof window.MAX_QTY) {
+                    maxQuantity = window.MAX_QTY;
+                    minQuantity = window.MAX_QTY > 0 ? 1 : 0;
+                    qty = window.MAX_QTY > 0 ? 1 : 0;
+                    showQuantity = showQuantity == 0 ? false : (showQuantity == 1 ? true : showQuantity >= maxQuantity);
+                }
+
+                $('#qtyBox').attr('min', minQuantity);
+                $('#qtyBox').attr('max', maxQuantity);
+                $('#qtyBox').attr('value', qty);
+                if(showQuantity)
+                {
+                    $('#remaningQty').prepend(maxQuantity);
+                    $('#remaningQty').addClass('d-block')
+                }else{
+                    $('#remaningQty').addClass('d-none')
+                }
+                if(manualQuantity)
+                {
+                    $('#qtyBox').prop('readonly', false);
+                }else{
+                    $('#qtyBox').prop('readonly', true);
+                }
+            });
+            function quantity(qty, prevQty) {
+                if (parseInt(qty) == qty && qty != prevQty) {
+                    qty = parseInt(qty);
+
+                    if (qty < minQuantity) {
+                        qty = minQuantity;
+                    } else if (qty > maxQuantity) {
+                        qty = maxQuantity;
+                    }
+                    qty = qty;
+                } else {
+                    qty = prevQty;
+                }
+                $('#qtyBox').attr('value', qty);
+                return qty;
+            }
+
+            function changeQty() {
+                const q = $('#qtyBox').val();
+                qty = quantity(q, qty);
+                $('#qtyBox').val(qty);
+            }
+            function decreaseQty() {
+                const q = qty-1;
+                qty = quantity(q, qty);
+            }
+
+            function increaseQty() {
+                const q = qty+1;
+                qty = quantity(q, qty);
+            }
+            
+
+
+        $(document).ready(function() {
+            document.getElementById('loader').style.display = "none";
+        });
+
+        window.onload = function() {
+            var thumbList = document.getElementsByClassName('thumb-list')[0];
+            var thumbFrame = document.getElementsByClassName('thumb-frame');
+            var productHeroImage = document.getElementsByClassName('product-hero-image')[0];
+            if (thumbList && productHeroImage) {
+
+                for (let i = 0; i < thumbFrame.length; i++) {
+                    thumbFrame[i].style.width = "120px";
+                }
+
+                if (document.body.offsetWidth > 1024) {
+                    thumbList.style = null;
+                    thumbList.style.height = "480px";
+                } else {
+                    thumbList.style = null;
+                    thumbList.style.justifyContent = 'center';
+                }
+            }
+
+            window.onresize = function() {
+                if (thumbList && productHeroImage) {
+
+                    for (let i = 0; i < thumbFrame.length; i++) {
+                        thumbFrame[i].style.width = "120px";
+                    }
+
+                    if (document.body.offsetWidth > 1024) {
+                        thumbList.style = null;
+                        thumbList.style.width = "120px";
+                        thumbList.style.height = "480px";
+                    } else {
+                        thumbList.style = null;
+                        thumbList.style.justifyContent = 'center';
+                    }
+                }
+            }
+        };
+
+        $('body').on('submit', '#product-form', function(e) {
+            e.preventDefault();
+            var submitButton = e.originalEvent.submitter;
+
+            if (submitButton.getAttribute('type') != 'submit')
+                return;
+
+            $('#product-form [required]').each(function(c) {
+                if ($.trim($(this).val()) === '') {
+                    toastr.error('required fields are missing');
+                    return false;
+                }
+            });
+            
+            var is_buy_now = submitButton.classList.contains('buynow') ? 1 : 0;
+            if(is_buy_now == 1)
+            {
+                $('#is_buy_now').val(is_buy_now);
+            }
+            
+            setTimeout(function() {
+                document.getElementById('product-form').submit();
+                var formData = $('#product-form').serializeArray();
+            }, 0);
+        });
+    </script>
+    <script>
+        window.MAX_QTY = {{product.total_quantity}};
+    </script>
+    <script>
+        var domain = window.location.hostname;
+        $(document).ready(function () {
+            function startProcessing(){
+                 $("#loadingoverlay").fadeIn();
+            }
+            function stopProcessing(){
+                $("#loadingoverlay").fadeOut();
+            }
+    
+            $('body').on('click', '#fastCheckOutButton', function() {
+                $('#fastCheckOut').modal('show');
+                data = $('#product-form').serialize();
+                startProcessing();
+                $.ajax({
+                    type: "POST",
+                    data: data,
+                    url: domain+"/fast/checkout",
+                    success: function(resp) {
+                        $('#fastCheckOutBody').html(resp.data);
+                        stopProcessing();
+                    },
+                    error: function(resp) {
+                        stopProcessing();
+                    }
+                });
+            });
+    
+            $('body').on('click', '.summary-widget--btn', function() {
+                var div = $(".summary-widget-open");
+                if (div.hasClass('open')) {
+                    div.show();
+                    div.removeClass('open')
+                } else {
+                    div.hide();
+                    div.addClass('open')
+                }
+            });
+            $('body').on('change', "input[name='payment[method]']", function() {
+                var selectedPaymentMethod = $("input[name='payment[method]']:checked").val();
+                if(selectedPaymentMethod == 'moneytransfer')
+                {
+                    $('.form--payment').show()
+                }else{
+                    $('.form--payment').hide()
+                }
+            });
+            $('body').on('change', ".change-address", function() {
+                let address = $(this).val();
+                data = $('#product-form').serialize();
+                data += ('&address='+address);
+                let coupon = $('.coupon-input').val();
+                data += ('&coupon='+coupon);
+                startProcessing();
+                $.ajax({
+                    type: "POST",
+                    data: data,
+                    url: domain+"/fast/checkout",
+                    success: function(resp) {
+                        $('#fastCheckOut').modal('show');
+                        $('#fastCheckOutBody').html(resp.data);
+                        stopProcessing();
+                    },
+                    error: function(resp) {
+                        stopProcessing();
+                        // console.log(resp);
+                    }
+                });
+            });
+            $('body').on('change', "#shipping-company", function() {
+                let address = $('.change-address').val();
+                let shipping = $(this).val();
+                let coupon = $('.coupon-input').val();
+                data += ('&coupon='+coupon);
+                data = $('#product-form').serialize();
+                data += ('&address='+address);
+                data += ('&shipping='+shipping);
+                startProcessing();
+                $.ajax({
+                    type: "POST",
+                    data: data,
+                    url: domain+"/fast/checkout",
+                    success: function(resp) {
+                        $('#fastCheckOut').modal('show');
+                        $('#fastCheckOutBody').html(resp.data);
+                        stopProcessing();
+                    },
+                    error: function(resp) {
+                        stopProcessing();
+                        // console.log(resp);
+                    }
+                });
+            });
+            $('body').on('click', ".add-coupon", function() {
+                $('.add-coupon').hide()
+                $('.coupon-input').show()
+                $('.coupon-button').show()
+            });
+            $('body').on('click', ".btn--coupon", function() {
+                let address = $('.change-address').val();
+                let shipping = $('#shipping-company').val();
+                let coupon = $('.coupon-input').val();
+                data = $('#product-form').serialize();
+                data += ('&address='+address);
+                data += ('&shipping='+shipping);
+                data += ('&coupon='+coupon);
+                startProcessing();
+                $.ajax({
+                    type: "POST",
+                    data: data,
+                    url: domain+"/fast/checkout",
+                    success: function(resp) {
+                        $('#fastCheckOut').modal('show');
+                        $('#fastCheckOutBody').html(resp.data);
+                        stopProcessing();
+                    },
+                    error: function(resp) {
+                        stopProcessing();
+                    }
+                });
+            });
+            $('body').on('click', "#pay-now", function() {
+                product = $('#product-form').serialize();
+                cart = $('#buy-now-form').serialize();
+                coupon = $('.coupon-input').val();
+                var data = product + '&' + cart + ('&coupon='+coupon);
+                startProcessing();
+                $.ajax({
+                    type: "POST",
+                    data: data,
+                    url: "{{ route('shop.fast.payout') }}",
+                    success: function(response) {
+                        if (response.success) {
+                            if (response.redirect_url) {
+                                window.location.href = response.redirect_url;
+                            } else {
+                                window.location.href = "{{ route('shop.checkout.success') }}";
+                            }
+                        }
+                        stopProcessing();
+                    },
+                    error: function(error) {
+                        stopProcessing();
+                        try {
+                            if(error.response.status === 403 && error.response.data.redirect_url){
+                                window.location.href = response.data.redirect_url;
+                            }
+                        } catch (x) {}
+    
+                        this_this.disable_button = false;
+    
+                        if (error?.response?.data?.message) {
+                            window.flashMessages = [{ 'type': 'alert-error', 'message': error?.response?.data?.message }];
+                        } else {
+                            window.flashMessages = [{ 'type': 'alert-error', 'message': "{{ ('shop::app.common.error'|trans) }}" }];
+                        }
+                    }
+                });
+            });
+    
+        });
+    </script>
+{% endblock %}
+{% block footer_scripts %}
+    {% if product['type'] == 'customizable' %}
+            <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+            <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+            <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+            <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+            <script>
+                $(document).ready(function() {
+                
+                        FilePond.registerPlugin(FilePondPluginImagePreview);
+                        var inputElement1 = document.querySelector('input[id="option-filepond-image"]');
+                        var inputElement2 = document.querySelector('input[id="option-filepond-file"]');
+                        var pond1 = FilePond.create(inputElement1);
+                        var pond2 = FilePond.create(inputElement2);
+                            
+                    
+                        FilePond.setOptions({
+                            allowImagePreview: true
+                            , labelIdle: `<div class="s-product-options-filepond-placeholder"><span class="s-product-options-filepond-placeholder-icon">
+                                <i class="icon-camera"></i>
+                                </span><span class="s-product-options-filepond-placeholder-text">اسحب و افلت الملف هنا</span><span class="filepond--label-action" tabindex="0">استعراض</span></div>`
+                            , iconRemove: '<i class="icon-trash"></i>'
+                            , iconUndo: '<i class="icon-forward"></i>'
+                            , acceptedFileTypes: ['image/png']
+                            , instantUpload: false
+                            , allowProcess: false
+                            , storeAsFile: true
+                        });
+                        
+                    });
+            </script>
+    {% elseif product['type'] == "booking" %}
+            <script>
+                $(document).ready(function() {
+                    var activeDays = {
+                        startTime: '12:00',
+                        endTime: '23:00',
+                        daysOfWeek: {{ product['slot_days'] }}
+                    },
+                    booking_overrides = [],
+                    reservations = [],
+                    current_date = null,
+                    max_slots = {{ product['booking']['max_qty'] }},
+                    booking_type = "{{ product['product_booking_type'] }}",
+                    excludedDatesList = [];
+                    var calendarEl = document.getElementById('calendar'),
+                        calendar = new FullCalendar.Calendar(calendarEl, {
+                            headerToolbar: {
+                                start: '',
+                                center: 'title',
+                                end: 'prev,next'
+                            },
+                            initialView: 'dayGridMonth',
+                            locale: '{{ getFunction('locale') }}',
+                            contentHeight: 500,
+                            //   schedulerLicenseKey: '0893078531-fcs-1629792461',
+                            unselectAuto: true,
+                            dateClick: function(info) {
+                                const day = info.date.getDay(),
+                                findDay = activeDays.daysOfWeek.findIndex(item => item === day);
+                                current_date = info;
+                            if (findDay === -1) {
+                
+                
+                                if(booking_type == 'many')
+                                {
+                                    dateSelected(info.dateStr);
+                                }else{
+                                    daySelected(info.dateStr);
+                                }
+                
+                                var dateIndex = booking_overrides.findIndex(item => {
+                                    return item.date === info.dateStr;
+                                });
+                
+                                if (dateIndex !== -1) {
+                                    booking_overrides.splice(dateIndex, 1);
+                                    excludedDatesList.splice(dateIndex, 1);
+                                }
+                                booking_overrides.push({
+                                    day: day,
+                                    date: info.dateStr
+                                });
+                
+                                excludedDatesList.push(`${info.dateStr}`);
+                            }
+                            else{
+                                $('#slots').html('');
+                            }
+                        },
+                        validRange (nowDate) {
+                            return {
+                                start: nowDate
+                            }
+                        },
+                    });
+                
+                    function addSelectedDate() {
+                        if(reservations.length > 0)
+                        {
+                            $.each(reservations, function(key, value) {
+                                $.each(value, function(subKey, subValue) {
+                                    var element = $('.fc-daygrid-day.fc-day[data-date="'+subValue+'"]');
+                                    if (element.length) {
+                                        element.addClass('selected');
+                                    }
+                                });
+                            });
+                        }
+                    }
+                    function removeSelectedDate(date) {
+                        $.each(reservations, function(key, value) {
+                            $.each(value, function(subKey, subValue) {
+                                if(date == subValue)
+                                {        
+                                    var element = $('.fc-daygrid-day.fc-day[data-date="'+subValue+'"]');
+                                    if (element.length) {
+                                        element.removeClass('selected');
+                                    }
+                                }
+                            });
+                        });
+                    }
+                    function daySelected(date) {
+                        if(max_slots == reservations.length)
+                        {
+                            $('#fc-media-screen').addClass('disabled');
+                            return;
+                        }
+                
+                        let dateEntry = reservations.find(entry => entry.date === current_date.dateStr);
+                        if (dateEntry) {
+                                return;
+                        }
+                
+                        var html = '<li class="child-slot"><div><span class=""><i class="icon-calendar"></i>'
+                        html += current_date.dateStr
+                        html += '</span></div> <button type="button" class="btn remove-slot" data-date="'
+                        html += current_date.dateStr
+                        html += '"><i class="icon-trash-2"></i></button></li>'
+                        $("#selected-slots").append(html);
+                
+                        reservations.push({
+                            day: current_date.date.getDay(),
+                            date: current_date.dateStr,
+                            time: [{
+                                from: "",
+                                to: ''
+                            }]
+                        });
+                
+                        addSelectedDate();
+                        $("#booking").val(JSON.stringify(reservations))
+                    }
+                
+                    function dateSelected(date) {
+                        $.ajax({
+                            url: "{{ route('booking_product.slots.get', product['booking']['id']) }}",
+                            type: "GET",
+                            data: { date: date },
+                            success: function(response) {
+                                $('#slots').html(response)
+                            },
+                            error: function(error) {
+                                console.error("Error fetching slots:", error);
+                            }
+                        });
+                    }
+                    function formatTimestamp(timestamp) {
+                        let date = new Date(timestamp * 1000); // Convert to milliseconds
+                        return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                    }
+                    $(document.body).on('click',".select-slot",function (e) {
+                        if(max_slots == reservations.length)
+                        {
+                            $('#slots').html('');
+                            return;
+                        }
+                
+                        var timestamp =  $(this).data('timestamp'); 
+                        let parts = timestamp.split("-");
+                        let start = formatTimestamp(parts[0]);
+                        let end = formatTimestamp(parts[1]);
+                
+                        let dateEntry = reservations.find(entry => entry.date === current_date.dateStr);
+                        if (dateEntry) {
+                            let timeExists = dateEntry.time.some(slot => slot.from === start && slot.to === end);
+                            if (timeExists) {
+                                return;
+                            }
+                        }
+                        console.log(current_date)
+                        var html = '<li class="child-slot"><div><span class="has-time"><i class="icon-calendar"></i>'
+                        html += current_date.dateStr
+                        html += '</span> <span class="time"><i class="icon-time"></i>'
+                        html += start+' - '+end
+                        html += '</span></div> <button type="button" class="btn remove-slot" data-date="'
+                        html += current_date.dateStr
+                        html += '"><i class="icon-trash-2"></i></button></li>'
+                        $("#selected-slots").append(html);
+                
+                        reservations.push({
+                            day: current_date.date.getDay(),
+                            date: current_date.dateStr,
+                            time: [{
+                                from: start,
+                                to: end
+                            }]
+                        });
+                
+                        addSelectedDate();
+                        $("#booking").val(JSON.stringify(reservations))
+                        if(max_slots == reservations.length)
+                        {
+                            $('#slots').html('');
+                            return;
+                        }
+                    });
+                
+                    $(document.body).on('click',".remove-slot",function (e) {
+                        let date = $(this).data('date'); 
+                        let childIndex = $(this).closest('.child-slot').index();
+                        removeSelectedDate(date);
+                        reservations.splice(childIndex,1);
+                        $(this).closest('.child-slot').remove();
+                        addSelectedDate();
+                        $("#booking").val(JSON.stringify(reservations));
+                        $('#fc-media-screen').removeClass('disabled');
+                
+                    });
+                
+                    $(function() {
+                        $('#calendar').slideDown();
+                        $(this).hide().siblings('.btn').show()
+                        calendar.render();
+                        $('.fc-next-button, .fc-prev-button').on('click', function () {
+                            booking_overrides.forEach(item => {
+                                $(`td[data-date=${item.date}]`).addClass('selected')
+                            });
+                        });
+                        if (booking_overrides.length > 0) {
+                            booking_overrides.forEach(item => {
+                                $(`td[data-date="${item.date}"]`).addClass('selected');
+                            });
+                        }
+                    });
+                });
+            </script>
+        {% endif %}
+    {% endblock %}
+    

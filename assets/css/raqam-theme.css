@@ -1,0 +1,5020 @@
+/**
+ * Raqam Dark Glass Theme — Phase 1 Foundation
+ * مصدر التصميم: dstory-ready.js + raqam-* snippets (getsupstore1.com)
+ * يستهدف: sky-theme (.header, .product-card) + TWSAA المنشور (#header, .product-entry)
+ */
+
+/* ═══════════════════════════════════════════════════════════════
+   1. DESIGN TOKENS
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+    --raqam-bg-dark: #050508;
+    --raqam-bg-header: #000000;
+    --raqam-accent: #8b51fe;
+    --raqam-accent-light: #a855f7;
+    --raqam-brand: #360a61;
+    --raqam-brand-mid: #5b1d8a;
+    --raqam-brand-light: #7c3aed;
+    --raqam-text: #ffffff;
+    --raqam-text-muted: rgba(255, 255, 255, 0.85);
+    --raqam-text-subtle: rgba(255, 255, 255, 0.75);
+    --raqam-text-purple: #c4b5fd;
+    --raqam-text-lavender: #e9d5ff;
+    --raqam-glass-bg: rgba(255, 255, 255, 0.07);
+    --raqam-glass-bg-hover: rgba(255, 255, 255, 0.11);
+    --raqam-glass-card: rgba(255, 255, 255, 0.06);
+    --raqam-glass-row: rgba(255, 255, 255, 0.05);
+    --raqam-glass-border: rgba(255, 255, 255, 0.14);
+    --raqam-border-purple: rgba(139, 81, 254, 0.35);
+    --raqam-border-purple-soft: rgba(168, 85, 247, 0.22);
+    --raqam-input-bg: rgba(26, 16, 37, 0.65);
+    --raqam-input-placeholder: rgba(255, 255, 255, 0.45);
+    --raqam-dropdown-bg: rgba(30, 15, 45, 0.92);
+    --raqam-dropdown-header-bg: rgba(54, 10, 97, 0.35);
+    --raqam-overlay: rgba(5, 5, 8, 0.78);
+    --raqam-nav-glass: rgba(5, 5, 8, 0.55);
+    --raqam-btn-grad: linear-gradient(135deg, #360a61 0%, #5b1d8a 45%, #7c3aed 100%);
+    --raqam-btn-grad-hover: linear-gradient(135deg, #4a1178 0%, #6d28d9 45%, #8b5cf6 100%);
+    --raqam-radius-sm: 8px;
+    --raqam-radius-md: 12px;
+    --raqam-radius-lg: 14px;
+    --raqam-radius-xl: 18px;
+    --raqam-shadow-glass: 0 16px 48px rgba(54, 10, 97, 0.45), 0 0 0 1px rgba(139, 81, 254, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    --raqam-shadow-card: 0 0 20px rgba(168, 85, 247, 0.15), 0 4px 16px rgba(0, 0, 0, 0.2);
+    --raqam-shadow-card-hover: 0 0 28px rgba(168, 85, 247, 0.28), 0 6px 20px rgba(0, 0, 0, 0.25);
+    --raqam-shadow-btn: 0 4px 14px rgba(54, 10, 97, 0.4);
+    --raqam-shadow-btn-hover: 0 6px 20px rgba(54, 10, 97, 0.55);
+    --raqam-cart-badge: #3b82f6;
+    --raqam-error: #fca5a5;
+    --raqam-logout: #fecaca;
+    --raqam-logout-icon: #f87171;
+    --raqam-sale: #ef4444;
+    --raqam-whatsapp: #25D366;
+    --raqam-telegram: #2AABEE;
+    --raqam-star-white: #ffffff;
+    --raqam-star-purple: #8b51fe;
+    --brand: var(--raqam-accent);
+    --brand-light: var(--raqam-text-lavender);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   2. SPACE BACKGROUND
+   ═══════════════════════════════════════════════════════════════ */
+html {
+    height: -webkit-fill-available;
+    background-color: var(--raqam-bg-dark) !important;
+    background: var(--raqam-bg-dark) !important;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+    background: transparent !important;
+    color: var(--raqam-text);
+    position: relative;
+}
+
+body.raqam-theme #app,
+body.raqam-theme .app,
+body.raqam-theme #page-wrapper,
+body.raqam-theme .main-wrapper,
+body.raqam-theme .site-container,
+body.raqam-theme main,
+body.raqam-theme .main,
+body.raqam-theme .main-container-wrapper,
+body.raqam-theme .content-container,
+body.raqam-theme .s-block,
+body.raqam-theme .s-main {
+    position: relative;
+    z-index: 1;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+.raqam-space-bg,
+.final-space-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+    background: radial-gradient(ellipse at bottom, #1b111d 0%, var(--raqam-bg-dark) 100%);
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.raqam-space-bg .raqam-stars,
+.final-space-bg .single-star,
+.raqam-space-bg::before {
+    position: absolute;
+    inset: 0;
+    content: "";
+}
+
+.raqam-space-bg::before,
+.raqam-space-bg .raqam-stars {
+    background-image:
+        radial-gradient(1px 1px at 10% 20%, var(--raqam-star-white), transparent),
+        radial-gradient(1.5px 1.5px at 25% 65%, var(--raqam-star-purple), transparent),
+        radial-gradient(1px 1px at 40% 15%, var(--raqam-star-white), transparent),
+        radial-gradient(2px 2px at 55% 80%, var(--raqam-star-purple), transparent),
+        radial-gradient(1px 1px at 70% 35%, var(--raqam-star-white), transparent),
+        radial-gradient(1.5px 1.5px at 85% 55%, var(--raqam-star-purple), transparent),
+        radial-gradient(1px 1px at 15% 90%, var(--raqam-star-white), transparent),
+        radial-gradient(1px 1px at 92% 12%, var(--raqam-star-purple), transparent),
+        radial-gradient(1.5px 1.5px at 48% 42%, var(--raqam-star-white), transparent),
+        radial-gradient(1px 1px at 62% 8%, var(--raqam-star-purple), transparent),
+        radial-gradient(1px 1px at 5% 45%, var(--raqam-star-white), transparent),
+        radial-gradient(2px 2px at 78% 92%, var(--raqam-star-purple), transparent);
+    background-size: 100% 100%;
+    animation: raqamMoveStars 35s linear infinite;
+    opacity: 0.85;
+}
+
+.raqam-space-bg .raqam-stars {
+    background-image:
+        radial-gradient(1px 1px at 18% 72%, var(--raqam-star-purple), transparent),
+        radial-gradient(1.5px 1.5px at 33% 28%, var(--raqam-star-white), transparent),
+        radial-gradient(1px 1px at 58% 58%, var(--raqam-star-purple), transparent),
+        radial-gradient(1px 1px at 73% 18%, var(--raqam-star-white), transparent),
+        radial-gradient(2px 2px at 88% 78%, var(--raqam-star-purple), transparent),
+        radial-gradient(1px 1px at 8% 58%, var(--raqam-star-white), transparent);
+    animation: raqamMoveStars 50s linear infinite reverse;
+    opacity: 0.6;
+}
+
+@keyframes raqamMoveStars {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100px); }
+}
+
+@keyframes moveStarUp {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-50px); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3. BASE / GLOBAL
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme,
+body.raqam-theme .main-container-wrapper,
+body.raqam-theme .content-container {
+    color: var(--raqam-text);
+}
+
+body.raqam-theme .bg-white,
+body.raqam-theme .da-bgg,
+body.raqam-theme .inner.bg-white {
+    background: var(--raqam-bg-dark) !important;
+}
+
+body.raqam-theme a {
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+body.raqam-theme .text-black,
+body.raqam-theme .da-tm {
+    color: var(--raqam-text) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   4. HEADER — sky-theme + TWSAA
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .header,
+body.raqam-theme .site-header,
+body.raqam-theme #header,
+body.raqam-theme #mainnav,
+body.raqam-theme #mainnav .inner {
+    background: var(--raqam-bg-header) !important;
+    background-color: var(--raqam-bg-header) !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--raqam-text) !important;
+    position: relative;
+    z-index: 9990;
+}
+
+body.raqam-theme .header-row-one,
+body.raqam-theme .raqam-header-row,
+body.raqam-theme #header .raqam-header-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between;
+    direction: ltr;
+    flex-wrap: nowrap;
+    position: relative;
+    width: 100%;
+    min-height: 76px;
+    padding: 12px 0;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+@media (min-width: 1024px) {
+    body.raqam-theme .header-row-one,
+    body.raqam-theme .raqam-header-row,
+    body.raqam-theme #header .raqam-header-row {
+        min-height: 80px;
+        max-height: 80px;
+    }
+}
+
+/* 3-zone header — matches raqam-header-override left / center / right */
+body.raqam-theme .top-links-1,
+body.raqam-theme.rtl .top-links-1 {
+    order: 1 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px;
+    width: auto !important;
+    min-width: 0;
+    flex: 0 1 auto;
+    direction: ltr;
+}
+
+body.raqam-theme .top-links-2,
+body.raqam-theme .raqam-zone-center,
+body.raqam-theme .store-logo.top-links-2,
+body.raqam-theme.rtl .top-links-2,
+body.raqam-theme.rtl .raqam-zone-center {
+    order: 2 !important;
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    max-width: calc(100% - 280px);
+    flex: 1 1 auto;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-self: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    pointer-events: none;
+    z-index: 1;
+}
+
+body.raqam-theme .top-links-2 a,
+body.raqam-theme .top-links-2 .store-logo-link,
+body.raqam-theme .raqam-zone-center .raqam-brand-link,
+body.raqam-theme .raqam-zone-center .store-logo-link {
+    pointer-events: auto;
+}
+
+body.raqam-theme .top-links-3,
+body.raqam-theme.rtl .top-links-3 {
+    order: 3 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px;
+    width: auto !important;
+    min-width: 0;
+    flex: 0 1 auto;
+    margin-inline-start: auto;
+    direction: ltr;
+}
+
+@media (min-width: 1024px) {
+    body.raqam-theme .top-links-1,
+    body.raqam-theme.rtl .top-links-1 {
+        gap: 24px;
+    }
+
+    body.raqam-theme .top-links-2,
+    body.raqam-theme.rtl .top-links-2 {
+        max-width: calc(100% - 420px);
+    }
+}
+
+@media (max-width: 767px) {
+    body.raqam-theme .header-row-one,
+    body.raqam-theme .raqam-header-row {
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        column-gap: 8px;
+    }
+
+    body.raqam-theme .top-links-2,
+    body.raqam-theme.rtl .top-links-2 {
+        width: auto !important;
+        order: 2 !important;
+    }
+
+    body.raqam-theme .top-links-1,
+    body.raqam-theme.rtl .top-links-1 {
+        order: 1 !important;
+    }
+
+    body.raqam-theme .top-links-3,
+    body.raqam-theme.rtl .top-links-3 {
+        order: 3 !important;
+    }
+}
+
+body.raqam-theme .header {
+    margin-bottom: 0 !important;
+    background: var(--raqam-bg-header) !important;
+    background-color: var(--raqam-bg-header) !important;
+    border: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+/* Remove red/accent line under header — ar.css .main-container-wrapper { border-top: 2px solid var(--brand-light) } */
+body.raqam-theme .main-container-wrapper,
+body.raqam-theme .main.main-container-wrapper {
+    border-top: none !important;
+    border-bottom: none !important;
+}
+
+body.raqam-theme .site-header,
+body.raqam-theme .raqam-theme-header,
+body.raqam-theme .header-container,
+body.raqam-theme .raqam-theme-header .primary-menu,
+body.raqam-theme .raqam-theme-header .raqam-header-category-source,
+body.raqam-theme .raqam-theme-header .desktop-navbar,
+body.raqam-theme .raqam-theme-header .category-navbar,
+body.raqam-theme #mainnav,
+body.raqam-theme #mainnav .inner,
+body.raqam-theme #mainnav .inner.bg-white {
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+body.raqam-theme .top-links-icon,
+body.raqam-theme .menu-trigger-btn {
+    height: auto;
+    width: auto;
+    min-width: 36px;
+    min-height: 36px;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--raqam-text) !important;
+    box-shadow: none !important;
+}
+
+body.raqam-theme .top-links-icon i,
+body.raqam-theme .menu-trigger-btn i,
+body.raqam-theme .icon-search,
+body.raqam-theme .icon-menu,
+body.raqam-theme .icon-user,
+body.raqam-theme .icon-cart,
+body.raqam-theme .icon-world,
+body.raqam-theme .icon-flag {
+    color: var(--raqam-text) !important;
+    font-size: 23px;
+    line-height: 1;
+}
+
+body.raqam-theme .icon-cart {
+    font-size: 27px;
+}
+
+body.raqam-theme .icon-menu {
+    font-size: 31px;
+}
+
+body.raqam-theme .top-links-cart .count-wrapper,
+body.raqam-theme .top-links-cart .cart-count,
+body.raqam-theme .s-cart-summary-count,
+body.raqam-theme twsaa-cart-summary .s-cart-summary-count {
+    position: absolute;
+    top: -6px;
+    inset-inline-end: -8px;
+    background: var(--raqam-cart-badge) !important;
+    color: var(--raqam-text) !important;
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    z-index: 2;
+    pointer-events: none;
+}
+
+body.raqam-theme .store-logo,
+body.raqam-theme .store-logo.top-links-2 {
+    padding: 0 !important;
+    height: auto !important;
+    line-height: 1 !important;
+}
+
+body.raqam-theme .store-logo a,
+body.raqam-theme .store-logo-link,
+body.raqam-theme .raqam-zone-center .raqam-brand-link,
+body.raqam-theme .raqam-zone-center .navbar-brand {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px;
+    height: auto !important;
+    max-height: none !important;
+    padding: 4px 8px !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    color: var(--raqam-text);
+    vertical-align: middle;
+}
+
+body.raqam-theme .store-logo a img,
+body.raqam-theme .store-logo-link .logo,
+body.raqam-theme .raqam-brand-link .logo,
+body.raqam-theme #header .logo img,
+body.raqam-theme #header .logo-light,
+body.raqam-theme #header .navbar-brand img {
+    display: block;
+    max-height: 50px !important;
+    height: auto !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: middle;
+}
+
+@media (min-width: 1024px) {
+    body.raqam-theme .store-logo a img,
+    body.raqam-theme .store-logo-link .logo,
+    body.raqam-theme .raqam-brand-link .logo,
+    body.raqam-theme #header .logo img,
+    body.raqam-theme #header .logo-light,
+    body.raqam-theme #header .navbar-brand img {
+        max-height: 52px !important;
+    }
+}
+
+body.raqam-theme .store-logo .logo-fallback-text,
+body.raqam-theme .store-name h1 {
+    color: var(--raqam-text) !important;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+body.raqam-theme .header .nav > li > a,
+body.raqam-theme .header .nav > li > a:focus,
+body.raqam-theme .category-navbar > li > a {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .header .nav > li > ul,
+body.raqam-theme .cat-sub {
+    background: var(--raqam-dropdown-bg) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45) !important;
+}
+
+body.raqam-theme .cat-sub a,
+body.raqam-theme .nav .cat-sub a {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .cat-sub a:hover,
+body.raqam-theme .nav .cat-sub a:hover {
+    background: rgba(168, 85, 247, 0.22) !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .dropdown-links,
+body.raqam-theme .customer-dropdown,
+body.raqam-theme .dropdown-list {
+    background: var(--raqam-dropdown-bg) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(168, 85, 247, 0.35) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45) !important;
+    direction: rtl;
+}
+
+body.raqam-theme .dropdown-links li a,
+body.raqam-theme .customer-dropdown li a {
+    color: var(--raqam-text) !important;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+}
+
+body.raqam-theme .dropdown-links li a i,
+body.raqam-theme .customer-dropdown li a i {
+    color: var(--raqam-accent-light) !important;
+}
+
+body.raqam-theme .dropdown-links li a:hover,
+body.raqam-theme .customer-dropdown li a:hover {
+    background: rgba(168, 85, 247, 0.22) !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .dropdown-links .no-link {
+    color: var(--raqam-text-muted) !important;
+    border-bottom: 1px solid var(--raqam-border-purple-soft);
+}
+
+body.raqam-theme .customer-dropdown hr {
+    border-color: var(--raqam-border-purple-soft);
+    margin: 6px 0;
+}
+
+body.raqam-theme .customer-dropdown li:last-child a,
+body.raqam-theme .customer-dropdown li:last-child a i {
+    color: var(--raqam-logout) !important;
+}
+
+body.raqam-theme .ui.search .prompt,
+body.raqam-theme .search-box {
+    background: var(--raqam-input-bg) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .ui.search > .results {
+    background: var(--raqam-dropdown-bg) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-md) !important;
+}
+
+body.raqam-theme #side-menu-panel,
+body.raqam-theme .side-menu-panel {
+    position: fixed;
+    top: 0;
+    width: min(320px, 88vw);
+    height: 100vh;
+    height: 100dvh;
+    z-index: 10050;
+    display: flex;
+    flex-direction: column;
+    background: rgba(20, 12, 35, 0.94) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--raqam-text);
+    overflow: hidden;
+    pointer-events: none;
+    visibility: hidden;
+    box-sizing: border-box;
+    transition: transform 0.28s ease, visibility 0.28s ease;
+}
+
+/* RTL (Arabic): drawer on physical right, off-screen when closed */
+[dir="rtl"] body.raqam-theme #side-menu-panel,
+[dir="rtl"] body.raqam-theme .side-menu-panel {
+    right: 0;
+    left: auto;
+    border-left: 1px solid var(--raqam-border-purple);
+    border-right: none;
+    transform: translate3d(100%, 0, 0);
+}
+
+/* LTR: drawer on physical left, off-screen when closed */
+[dir="ltr"] body.raqam-theme #side-menu-panel,
+[dir="ltr"] body.raqam-theme .side-menu-panel {
+    left: 0;
+    right: auto;
+    border-right: 1px solid var(--raqam-border-purple);
+    border-left: none;
+    transform: translate3d(-100%, 0, 0);
+}
+
+body.raqam-theme #side-menu-panel.is-open,
+body.raqam-theme .side-menu-panel.is-open {
+    transform: translate3d(0, 0, 0);
+    pointer-events: auto;
+    visibility: visible;
+}
+
+body.raqam-theme #side-menu-overlay,
+body.raqam-theme .side-menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10040;
+    background: var(--raqam-overlay);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+body.raqam-theme #side-menu-overlay.is-visible,
+body.raqam-theme .side-menu-overlay.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+body.raqam-theme.menu-open {
+    overflow: hidden;
+}
+
+body.raqam-theme .side-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--raqam-border-purple-soft);
+    flex-shrink: 0;
+}
+
+body.raqam-theme .side-menu-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--raqam-text);
+}
+
+body.raqam-theme .side-menu-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--raqam-text);
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+body.raqam-theme .side-menu-close i {
+    font-size: 20px;
+    line-height: 1;
+}
+
+body.raqam-theme .side-menu-body {
+    flex: 1 1 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 0 24px;
+}
+
+body.raqam-theme .side-menu-categories {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+body.raqam-theme .side-menu-categories > li {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 1px solid var(--raqam-border-purple-soft);
+}
+
+body.raqam-theme .side-menu-categories > li > a {
+    flex: 1 1 auto;
+    display: block;
+    padding: 14px 18px;
+    color: var(--raqam-text) !important;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
+    min-width: 0;
+}
+
+body.raqam-theme .side-menu-categories > li > a:hover {
+    background: rgba(168, 85, 247, 0.15);
+}
+
+body.raqam-theme .side-menu-categories .sub-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent !important;
+    color: var(--raqam-text) !important;
+    cursor: pointer;
+    flex-shrink: 0;
+    pointer-events: auto;
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: none !important;
+}
+
+body.raqam-theme .side-menu-categories .sub-toggle i,
+body.raqam-theme .side-menu-categories .sub-toggle i:before {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1;
+    color: var(--raqam-text) !important;
+    font-family: 'mbicon' !important;
+    font-style: normal;
+    font-weight: normal;
+    transition: transform 0.2s ease;
+}
+
+body.raqam-theme .side-menu-categories > li.expanded > .sub-toggle i {
+    transform: rotate(180deg);
+}
+
+body.raqam-theme .side-menu-categories > li.has-child > .cat-sub {
+    flex: 0 0 100%;
+    width: 100% !important;
+}
+
+body.raqam-theme .side-menu-panel .cat-sub {
+    position: static !important;
+    width: 100% !important;
+    margin: 0 !important;
+    margin-inline-start: 0 !important;
+    padding: 0 0 8px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: rgba(0, 0, 0, 0.22) !important;
+    overflow: hidden;
+    z-index: auto;
+    list-style: none;
+}
+
+body.raqam-theme .side-menu-panel .cat-sub li ul {
+    position: static !important;
+    right: auto !important;
+}
+
+body.raqam-theme .side-menu-panel .cat-sub a {
+    padding: 10px 18px 10px 28px !important;
+    color: var(--raqam-text-muted) !important;
+    font-size: 14px;
+}
+
+body.raqam-theme .side-menu-panel .cat-sub a:hover {
+    background: rgba(168, 85, 247, 0.12) !important;
+    color: var(--raqam-text) !important;
+}
+
+/*
+ * Header nav-only: hide desktop category strip on all pages (matches raqam-header-override).
+ * Keeps #cat-here in DOM for navbar.twig → side-menu AJAX; drawer uses position:fixed.
+ */
+body.raqam-theme .raqam-theme-header .primary-menu,
+body.raqam-theme .raqam-theme-header .raqam-header-category-source {
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+}
+
+body.raqam-theme .raqam-theme-header .desktop-navbar,
+body.raqam-theme .raqam-theme-header .category-navbar,
+body.raqam-theme .raqam-theme-header .raqam-header-category-source > .desktop-navbar {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+    border: none !important;
+}
+
+body.raqam-theme #header .nav-header,
+body.raqam-theme #mainnav .inner.nav-header {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* TWSAA deployed selectors */
+body.raqam-theme #header .raqam-header-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between;
+    direction: ltr;
+    width: 100%;
+    min-height: 76px;
+    padding: 12px 0;
+}
+
+body.raqam-theme #header .s-user-menu-dropdown,
+body.raqam-theme .s-user-menu-dropdown {
+    background: var(--raqam-dropdown-bg) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(168, 85, 247, 0.35) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45) !important;
+    direction: rtl;
+}
+
+body.raqam-theme #header .s-user-menu-dropdown-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--raqam-border-purple-soft);
+    background: var(--raqam-dropdown-header-bg);
+}
+
+body.raqam-theme #header .s-user-menu-dropdown-item a:hover {
+    background: rgba(168, 85, 247, 0.22) !important;
+}
+
+body.raqam-theme #header .s-user-menu-dropdown-item-logout a {
+    color: var(--raqam-logout) !important;
+}
+
+body.raqam-theme #header .s-user-menu-dropdown-item-logout a i {
+    color: var(--raqam-logout-icon) !important;
+}
+
+body.raqam-theme twsaa-cart-summary a,
+body.raqam-theme twsaa-cart-summary button,
+body.raqam-theme twsaa-cart-summary i {
+    color: var(--raqam-text) !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   5. PRODUCT CARDS — sky-theme + TWSAA
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .main-container-wrapper .product-card,
+body.raqam-theme .product-entry,
+body.raqam-theme .product-entry.raqam-product-card {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: var(--raqam-radius-md) !important;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    height: 100%;
+}
+
+body.raqam-theme .main-container-wrapper .product-card:hover,
+body.raqam-theme .product-entry:hover {
+    box-shadow: none !important;
+    transform: none;
+}
+
+body.raqam-theme .product-card .product-image,
+body.raqam-theme .product-entry > a:first-child .relative,
+body.raqam-theme .product-entry > a:first-child .flex.items-center {
+    border-radius: var(--raqam-radius-lg) !important;
+    overflow: hidden;
+    background: transparent !important;
+    border-bottom: none !important;
+    box-shadow: var(--raqam-shadow-card);
+    transition: box-shadow 0.25s ease;
+}
+
+body.raqam-theme .product-card:hover .product-image,
+body.raqam-theme .product-entry:hover > a:first-child .relative {
+    box-shadow: var(--raqam-shadow-card-hover);
+}
+
+body.raqam-theme .product-card .product-image img,
+body.raqam-theme .product-entry img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    border-radius: var(--raqam-radius-lg);
+    display: block;
+}
+
+body.raqam-theme .product-card .product-information,
+body.raqam-theme .product-card .product-name,
+body.raqam-theme .product-entry .product-entry__title,
+body.raqam-theme .product-entry .product-entry__title a,
+body.raqam-theme .product-card .product-name span {
+    color: var(--raqam-text) !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.45;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+}
+
+body.raqam-theme .product-entry .s-product-card-content-subtitle {
+    color: var(--raqam-text-purple) !important;
+    font-size: 12px;
+}
+
+body.raqam-theme .product-card .product-bottom-row,
+body.raqam-theme .product-entry .price-wrapper,
+body.raqam-theme .product-entry .on-sale {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    width: 100%;
+    margin: 8px 0 10px;
+}
+
+body.raqam-theme .product-card .product-price,
+body.raqam-theme .product-entry .price-wrapper > .regular-price,
+body.raqam-theme .product-entry .on-sale .special-price,
+body.raqam-theme .product-entry .price-wrapper .price {
+    color: var(--raqam-text) !important;
+    font-weight: 700;
+    font-size: 18px;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+}
+
+body.raqam-theme .product-entry .on-sale .regular-price {
+    color: var(--raqam-sale) !important;
+    text-decoration: line-through;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+body.raqam-theme .product-card button.addToCart,
+body.raqam-theme .product-entry button.addToCart,
+body.raqam-theme .product-entry button.addToCart.s-button-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--raqam-btn-grad) !important;
+    background-image: var(--raqam-btn-grad) !important;
+    border: none !important;
+    outline: none !important;
+    color: var(--raqam-text) !important;
+    border-radius: 10px !important;
+    padding: 12px 16px !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.3;
+    cursor: pointer;
+    box-shadow: var(--raqam-shadow-btn);
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.raqam-theme .product-card button.addToCart:hover,
+body.raqam-theme .product-entry button.addToCart:hover {
+    background: var(--raqam-btn-grad-hover) !important;
+    background-image: var(--raqam-btn-grad-hover) !important;
+    box-shadow: var(--raqam-shadow-btn-hover);
+}
+
+body.raqam-theme .product-card .cart-wish-wrap,
+body.raqam-theme .product-entry .product-footer,
+body.raqam-theme .product-entry .cart-wish-wrap {
+    width: 100%;
+    margin-top: auto;
+    padding-top: 6px;
+}
+
+body.raqam-theme .s-block h2,
+body.raqam-theme .s-slider-block__title h2 {
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ffffff 0%, #a855f7 50%, #360a61 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 4px;
+}
+
+body.raqam-theme .s-block a.text-primary,
+body.raqam-theme .s-block a[href*="products"] {
+    color: var(--raqam-brand-light) !important;
+    font-weight: 600;
+}
+
+body.raqam-theme .s-block a.text-primary:hover {
+    color: var(--raqam-brand) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   6. FOOTER
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .footer,
+body.raqam-theme footer {
+    background: transparent !important;
+    background-color: transparent !important;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    color: var(--raqam-text) !important;
+    position: relative;
+    z-index: 1;
+}
+
+body.raqam-theme .footer-title,
+body.raqam-theme .footer-title span,
+body.raqam-theme .footer-main h2,
+body.raqam-theme footer .footer-middle h3,
+body.raqam-theme footer .footer-middle .title {
+    color: var(--raqam-text) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+body.raqam-theme .footer-links a,
+body.raqam-theme .store-contact a,
+body.raqam-theme footer .footer-middle a,
+body.raqam-theme .copyright,
+body.raqam-theme footer p {
+    color: var(--raqam-text-muted) !important;
+}
+
+body.raqam-theme .footer-links a:hover,
+body.raqam-theme footer .footer-middle a:hover,
+body.raqam-theme .store-contact a:hover {
+    color: var(--raqam-text-lavender) !important;
+    opacity: 0.9;
+}
+
+body.raqam-theme footer .footer-main .footer-item .social__item a {
+    color: var(--raqam-text);
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(54, 10, 97, 0.35);
+}
+
+body.raqam-theme footer .footer-main .footer-item .social__item a:hover {
+    background: rgba(139, 81, 254, 0.35);
+    border-color: var(--raqam-border-purple);
+}
+
+/* Footer contact icons — raqam-footer-contact-icons.js */
+body.raqam-theme .raqam-contact-links,
+body.raqam-theme .store-contact.raqam-contact-links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+    text-align: center;
+}
+
+body.raqam-theme .raqam-contact-links a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 56px;
+    color: var(--raqam-text-muted) !important;
+    font-size: 0.8125rem;
+    text-decoration: none;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+body.raqam-theme .raqam-contact-links a > i,
+body.raqam-theme .raqam-contact-links a > svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    color: var(--raqam-text) !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+body.raqam-theme .raqam-contact-links a[href*="wa.me"] > i {
+    background-color: var(--raqam-whatsapp) !important;
+}
+
+body.raqam-theme .raqam-contact-links a[href^="mailto:"] > i {
+    background-color: var(--raqam-accent) !important;
+}
+
+body.raqam-theme .raqam-contact-links a[href*="wa.me"]:hover > i {
+    transform: scale(1.08);
+    box-shadow: 0 0 16px rgba(37, 211, 102, 0.55);
+}
+
+body.raqam-theme .raqam-contact-links a[href^="mailto:"]:hover > i {
+    transform: scale(1.08);
+    box-shadow: 0 0 16px rgba(139, 81, 254, 0.55);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   7. LOGIN MODAL — raqam-login-modal-glass.js
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme #customerLoginModal .modal-backdrop,
+body.raqam-theme .modal-overlay,
+body.raqam-theme #customerLoginModal .s-modal-overlay {
+    background: var(--raqam-overlay) !important;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+body.raqam-theme #customerLoginModal .modal-content,
+body.raqam-theme #customerLoginModal .s-modal-body {
+    background: var(--raqam-glass-bg) !important;
+    backdrop-filter: blur(22px) saturate(1.5);
+    -webkit-backdrop-filter: blur(22px) saturate(1.5);
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-xl) !important;
+    box-shadow: var(--raqam-shadow-glass);
+    color: var(--raqam-text) !important;
+    overflow: hidden;
+}
+
+body.raqam-theme #customerLoginModal .modal-header,
+body.raqam-theme #customerLoginModal .s-modal-header {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(139, 81, 254, 0.2) !important;
+    padding-bottom: 12px;
+}
+
+body.raqam-theme #customerLoginModal .modal-header h2,
+body.raqam-theme #customerLoginModal .s-modal-title,
+body.raqam-theme #customerLoginModal .s-modal-header-content h2 {
+    color: var(--raqam-text) !important;
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+
+body.raqam-theme #customerLoginModal .s-modal-header-inner span,
+body.raqam-theme #customerLoginModal .s-login-modal-header-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(139, 81, 254, 0.12);
+    border: 1.5px solid rgba(139, 81, 254, 0.5);
+    box-shadow: 0 0 14px rgba(139, 81, 254, 0.15);
+}
+
+body.raqam-theme #customerLoginModal .s-modal-header-inner i,
+body.raqam-theme #customerLoginModal .s-login-modal-header-icon i {
+    color: var(--raqam-accent) !important;
+}
+
+body.raqam-theme #customerLoginModal .close,
+body.raqam-theme #customerLoginModal .s-modal-close {
+    background: transparent !important;
+    border: none !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    opacity: 1;
+    box-shadow: none !important;
+}
+
+body.raqam-theme #customerLoginModal .close:hover,
+body.raqam-theme #customerLoginModal .s-modal-close:hover {
+    color: var(--raqam-text) !important;
+    opacity: 0.72;
+}
+
+body.raqam-theme #customerLoginModal .auth-content,
+body.raqam-theme #customerLoginModal .s-login-modal-wrapper {
+    background: transparent !important;
+    color: var(--raqam-text);
+}
+
+body.raqam-theme #customerLoginModal label,
+body.raqam-theme #customerLoginModal .s-login-modal-label {
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+body.raqam-theme #customerLoginModal input.control,
+body.raqam-theme #customerLoginModal input.phone-fix,
+body.raqam-theme #customerLoginModal #phone,
+body.raqam-theme #customerLoginModal #otp {
+    background: var(--raqam-input-bg) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    color: var(--raqam-text) !important;
+    -webkit-text-fill-color: var(--raqam-text) !important;
+    caret-color: var(--raqam-text);
+    padding: 12px 14px;
+    font-size: 15px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+
+body.raqam-theme #customerLoginModal input::placeholder {
+    color: var(--raqam-input-placeholder) !important;
+    opacity: 1;
+}
+
+body.raqam-theme #customerLoginModal input:focus {
+    outline: none;
+    border-color: var(--raqam-accent) !important;
+    box-shadow: 0 0 0 3px rgba(139, 81, 254, 0.28), inset 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+
+body.raqam-theme #customerLoginModal .control-error,
+body.raqam-theme #customerLoginModal .control-errors {
+    color: var(--raqam-error) !important;
+    font-size: 0.82rem;
+}
+
+body.raqam-theme #customerLoginModal #loginSubmit,
+body.raqam-theme #customerLoginModal .s-login-modal-enter-button,
+body.raqam-theme #customerLoginModal .btn-primary {
+    background: var(--raqam-btn-grad) !important;
+    background-image: var(--raqam-btn-grad) !important;
+    border: none !important;
+    border-radius: var(--raqam-radius-md) !important;
+    color: var(--raqam-text) !important;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 13px 18px;
+    box-shadow: 0 4px 18px rgba(54, 10, 97, 0.45);
+}
+
+body.raqam-theme #customerLoginModal #loginSubmit:hover,
+body.raqam-theme #customerLoginModal .btn-primary:hover {
+    background: var(--raqam-btn-grad-hover) !important;
+    background-image: var(--raqam-btn-grad-hover) !important;
+    box-shadow: 0 6px 22px rgba(139, 81, 254, 0.4);
+}
+
+body.raqam-theme #customerLoginModal #otpSubmit,
+body.raqam-theme #customerLoginModal .verify-resend {
+    background: rgba(139, 81, 254, 0.15) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-md);
+    color: var(--raqam-text-lavender) !important;
+}
+
+@media (max-width: 768px) {
+    body.raqam-theme #customerLoginModal .modal-content,
+    body.raqam-theme #customerLoginModal .s-modal-body {
+        border-radius: 16px !important;
+        margin: 12px;
+        max-width: calc(100vw - 24px);
+    }
+
+    body.raqam-theme #customerLoginModal input.control,
+    body.raqam-theme #customerLoginModal #phone {
+        font-size: 16px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   8. TESTIMONIALS — raqam-testimonials-pro.js + customer-options
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .myReviewSwiper,
+body.raqam-theme twsaa-slider.myReviewSwiper {
+    position: relative;
+    z-index: 1;
+}
+
+body.raqam-theme .myReviewSwiper .s-slider-block__display-all {
+    color: var(--raqam-accent) !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+}
+
+body.raqam-theme .myReviewSwiper .s-slider-block__display-all:hover {
+    color: var(--raqam-text-purple) !important;
+}
+
+body.raqam-theme .myReviewSwiper .s-slider-nav-arrow,
+body.raqam-theme .myReviewSwiper .s-slider-prev,
+body.raqam-theme .myReviewSwiper .s-slider-next {
+    color: var(--raqam-accent) !important;
+}
+
+body.raqam-theme .myReviewSwiper .s-slider-nav-arrow svg,
+body.raqam-theme .myReviewSwiper .s-slider-button-icon svg {
+    fill: var(--raqam-accent) !important;
+}
+
+body.raqam-theme .myReviewSwiper .swiper-slide .da-bgg,
+body.raqam-theme .myReviewSwiper .swiper-slide .bg-white.da-bgg,
+body.raqam-theme .myReviewSwiper .swiper-slide > .flex.rounded-lg,
+body.raqam-theme .testimonial__card,
+body.raqam-theme .myReviewSwiper .swiper-slide > div,
+body.raqam-theme .raqam-block-testimonials .owl-item > div {
+    background: rgba(54, 10, 97, 0.14) !important;
+    background-color: rgba(54, 10, 97, 0.14) !important;
+    backdrop-filter: blur(22px) saturate(1.7) brightness(1.08);
+    -webkit-backdrop-filter: blur(22px) saturate(1.7) brightness(1.08);
+    border: 1px solid rgba(139, 81, 254, 0.32) !important;
+    border-radius: 16px !important;
+    box-shadow:
+        0 8px 32px rgba(54, 10, 97, 0.28),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    color: var(--raqam-text);
+    transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+body.raqam-theme .myReviewSwiper .swiper-slide .da-bgg:hover,
+body.raqam-theme .myReviewSwiper .swiper-slide > .flex.rounded-lg:hover,
+body.raqam-theme .raqam-block-testimonials .owl-item > div:hover {
+    background: rgba(54, 10, 97, 0.22) !important;
+    background-color: rgba(54, 10, 97, 0.22) !important;
+    border-color: rgba(139, 81, 254, 0.55) !important;
+    box-shadow:
+        0 12px 40px rgba(139, 81, 254, 0.22),
+        0 0 24px rgba(54, 10, 97, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+body.raqam-theme .raqam-block-testimonials .owl-item > div {
+    position: relative;
+    padding: 24px 16px 20px !important;
+    margin-top: 0 !important;
+}
+
+body.raqam-theme .myReviewSwiper .testimonial__avatar,
+body.raqam-theme .raqam-block-testimonials .testimonial__avatar {
+    border: 2px solid var(--raqam-accent) !important;
+    box-shadow: 0 0 20px rgba(139, 81, 254, 0.4);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+body.raqam-theme .myReviewSwiper .testimonial__avatar:hover,
+body.raqam-theme .raqam-block-testimonials .testimonial__avatar:hover {
+    box-shadow: 0 0 28px rgba(139, 81, 254, 0.55);
+    transform: scale(1.05);
+}
+
+body.raqam-theme .myReviewSwiper .s-testimonials--slider--img h4,
+body.raqam-theme .myReviewSwiper h4.da-tm,
+body.raqam-theme .raqam-block-testimonials h4.da-tm {
+    color: var(--raqam-text) !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme .testimonial__rating .icon-star2,
+body.raqam-theme .s-rating-stars-wrapper i,
+body.raqam-theme .raqam-block-testimonials .testimonial__rating .icon-star2 {
+    color: #ffd700 !important;
+    filter: drop-shadow(0 1px 2px rgba(255, 215, 0, 0.35));
+}
+
+body.raqam-theme .myReviewSwiper .swiper-slide p.da-tm,
+body.raqam-theme .myReviewSwiper p.text-base.da-tm,
+body.raqam-theme .raqam-block-testimonials p.da-tm {
+    color: var(--raqam-text-lavender) !important;
+    font-size: 15px !important;
+    line-height: 1.75 !important;
+    text-align: center !important;
+}
+
+body.raqam-theme .myReviewSwiper .testimonial__icon,
+body.raqam-theme .raqam-block-testimonials .testimonial__icon {
+    color: var(--raqam-accent) !important;
+    opacity: 0.15 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   9. Z-INDEX LAYERING
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .header,
+body.raqam-theme #header,
+body.raqam-theme #mainnav {
+    z-index: 9990;
+}
+
+body.raqam-theme .dropdown-list,
+body.raqam-theme .customer-dropdown,
+body.raqam-theme #header .s-user-menu-dropdown {
+    z-index: 99999;
+}
+
+body.raqam-theme .raqam-space-bg,
+body.raqam-theme .final-space-bg {
+    z-index: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   10. RTL SAFETY
+   ═══════════════════════════════════════════════════════════════ */
+[dir="rtl"] body.raqam-theme .top-links-cart .count-wrapper,
+[dir="rtl"] body.raqam-theme .s-cart-summary-count {
+    inset-inline-end: -8px;
+    inset-inline-start: auto;
+}
+
+[dir="rtl"] body.raqam-theme .dropdown-list.bottom-right {
+    right: 0;
+    left: auto;
+}
+
+[dir="rtl"] body.raqam-theme .dropdown-list.bottom-left {
+    left: 0;
+    right: auto;
+}
+
+[dir="rtl"] body.raqam-theme .store-contact,
+[dir="rtl"] body.raqam-theme .raqam-contact-links {
+    text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   11. HOME PAGE — section headings & product groups
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .raqam-home {
+    position: relative;
+    z-index: 1;
+}
+
+body.raqam-theme .product-group-heading,
+body.raqam-theme .s-block__title h2,
+body.raqam-theme .s-block__title h2.da-cp {
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    background: linear-gradient(90deg, #ffffff 0%, #a855f7 50%, #360a61 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    margin-bottom: 4px;
+    background-color: transparent !important;
+}
+
+body.raqam-theme .product-group {
+    margin-bottom: 20px;
+}
+
+body.raqam-theme .product-group-heading,
+body.raqam-theme .product-group-arrows {
+    background-color: transparent !important;
+}
+
+body.raqam-theme .product-group-divider {
+    background-color: var(--raqam-border-purple-soft) !important;
+    height: 1px;
+}
+
+body.raqam-theme .product-group-arrows {
+    color: var(--raqam-accent) !important;
+}
+
+body.raqam-theme .product-group-arrows span {
+    border: 1px solid var(--raqam-border-purple) !important;
+    background-color: rgba(54, 10, 97, 0.25) !important;
+    color: var(--raqam-accent-light) !important;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.raqam-theme .product-group-arrows span:hover {
+    background-color: var(--raqam-accent) !important;
+    color: var(--raqam-text) !important;
+    box-shadow: 0 0 14px rgba(139, 81, 254, 0.45);
+}
+
+body.raqam-theme .s-block a.text-primary,
+body.raqam-theme .s-block a[href*="products"],
+body.raqam-theme .s-slider-block__display-all {
+    color: var(--raqam-brand-light) !important;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+body.raqam-theme .s-block a.text-primary:hover,
+body.raqam-theme .s-slider-block__display-all:hover {
+    color: var(--raqam-text-purple) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   12. SWIPER SLIDERS — mySwiper + myListSwiper (raqam-products-pro)
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .mySwiper,
+body.raqam-theme .myListSwiper {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+body.raqam-theme .mySwiper .s-slider-prev,
+body.raqam-theme .mySwiper .s-slider-next,
+body.raqam-theme .myListSwiper .s-slider-prev,
+body.raqam-theme .myListSwiper .s-slider-next {
+    color: var(--raqam-accent) !important;
+}
+
+body.raqam-theme .mySwiper .s-slider-button-icon svg,
+body.raqam-theme .myListSwiper .s-slider-button-icon svg {
+    fill: var(--raqam-accent) !important;
+}
+
+body.raqam-theme .mySwiper .swiper-pagination-bullet,
+body.raqam-theme .myListSwiper .swiper-pagination-bullet {
+    background: rgba(139, 81, 254, 0.35);
+    opacity: 1;
+}
+
+body.raqam-theme .mySwiper .swiper-pagination-bullet-active,
+body.raqam-theme .myListSwiper .swiper-pagination-bullet-active {
+    background: var(--raqam-accent);
+    box-shadow: 0 0 8px rgba(139, 81, 254, 0.6);
+}
+
+body.raqam-theme .load-products,
+body.raqam-theme .load-products[class*="grid"],
+body.raqam-theme .product-grid-4 {
+    gap: 16px !important;
+}
+
+body.raqam-theme .swiper-slide {
+    height: auto;
+}
+
+@media (max-width: 767px) {
+    body.raqam-theme .mySwiper .swiper-slide.slide--one-sixth,
+    body.raqam-theme .mySwiper .swiper-slide:has(.product-entry),
+    body.raqam-theme .mySwiper .swiper-slide:has(.product-card) {
+        width: calc((100vw - 40px) / 2.5) !important;
+        max-width: none !important;
+        min-width: 0 !important;
+    }
+
+    body.raqam-theme .mySwiper .swiper-slide .product-card .product-image,
+    body.raqam-theme .mySwiper .swiper-slide .product-entry > a:first-child .relative {
+        border-radius: 10px !important;
+    }
+
+    body.raqam-theme .mySwiper .swiper-slide .product-card .product-name span,
+    body.raqam-theme .mySwiper .swiper-slide .product-entry .product-entry__title,
+    body.raqam-theme .mySwiper .swiper-slide .product-entry .product-entry__title a {
+        font-size: 11px !important;
+        line-height: 1.35 !important;
+        font-weight: 600 !important;
+    }
+
+    body.raqam-theme .mySwiper .swiper-slide .product-card .product-price,
+    body.raqam-theme .mySwiper .swiper-slide .product-entry .on-sale .special-price,
+    body.raqam-theme .mySwiper .swiper-slide .product-entry .price-wrapper > .regular-price {
+        font-size: 13px !important;
+    }
+
+    body.raqam-theme .mySwiper .swiper-slide .product-card button.addToCart,
+    body.raqam-theme .mySwiper .swiper-slide .product-entry button.addToCart {
+        padding: 6px 8px !important;
+        font-size: 10px !important;
+        font-weight: 600 !important;
+        border-radius: 7px !important;
+        box-shadow: 0 2px 8px rgba(54, 10, 97, 0.35) !important;
+    }
+}
+
+@media (min-width: 768px) {
+    body.raqam-theme .mySwiper .swiper-slide:has(.product-entry),
+    body.raqam-theme .mySwiper .swiper-slide:has(.product-card) {
+        width: 280px !important;
+        max-width: 300px !important;
+        min-width: 0 !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    body.raqam-theme .mySwiper .swiper-slide:has(.product-entry),
+    body.raqam-theme .mySwiper .swiper-slide:has(.product-card) {
+        width: 300px !important;
+        max-width: 320px !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   13. OWL CAROUSEL — product / brand / testimonial sliders
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .raqam-block-products-slider .owl-carousel,
+body.raqam-theme .raqam-block-brands .owl-carousel,
+body.raqam-theme .raqam-block-testimonials .owl-carousel {
+    position: relative;
+    z-index: 1;
+}
+
+body.raqam-theme .raqam-block-products-slider .owl-carousel .owl-nav button,
+body.raqam-theme .raqam-block-brands .owl-carousel .owl-nav button,
+body.raqam-theme .raqam-block-testimonials .owl-carousel .owl-nav button {
+    color: var(--raqam-accent) !important;
+    background: rgba(54, 10, 97, 0.35) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.raqam-theme .raqam-block-products-slider .owl-carousel .owl-nav button:hover,
+body.raqam-theme .raqam-block-brands .owl-carousel .owl-nav button:hover {
+    background: var(--raqam-accent) !important;
+    box-shadow: 0 0 12px rgba(139, 81, 254, 0.5);
+}
+
+body.raqam-theme .raqam-block-products-slider .owl-item,
+body.raqam-theme .raqam-block-brands .owl-item {
+    padding-bottom: 15px;
+}
+
+@media (max-width: 767px) {
+    body.raqam-theme .raqam-block-products-slider .owl-item,
+    body.raqam-theme .raqam-block-brands .owl-item {
+        width: calc((100vw - 40px) / 2.5) !important;
+        max-width: none !important;
+    }
+
+    body.raqam-theme .raqam-block-products-slider .product-card .product-name span {
+        font-size: 11px !important;
+        line-height: 1.35 !important;
+        font-weight: 600 !important;
+    }
+
+    body.raqam-theme .raqam-block-products-slider .product-card .product-image {
+        border-radius: 10px !important;
+    }
+
+    body.raqam-theme .raqam-block-products-slider .product-card button.addToCart {
+        padding: 8px !important;
+        font-size: 10px !important;
+        border-radius: 7px !important;
+        min-height: 32px;
+    }
+}
+
+@media (min-width: 768px) {
+    body.raqam-theme .raqam-block-products-slider .owl-item {
+        width: 280px !important;
+        max-width: 300px !important;
+    }
+
+    body.raqam-theme .raqam-block-brands .owl-item {
+        width: 180px !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    body.raqam-theme .raqam-block-products-slider .owl-item {
+        width: 300px !important;
+        max-width: 320px !important;
+    }
+}
+
+body.raqam-theme .raqam-block-products .product-card .sticker.new {
+    background: var(--raqam-btn-grad) !important;
+    color: var(--raqam-text) !important;
+    border-radius: var(--raqam-radius-sm);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    z-index: 2;
+}
+
+body.raqam-theme .raqam-block-products .product-card .card-promo {
+    background: rgba(54, 10, 97, 0.85) !important;
+    color: var(--raqam-text-lavender) !important;
+    border-radius: 0 0 12px 0;
+}
+
+body.raqam-theme .product-card .price .sar-icon,
+body.raqam-theme .product-entry .price-wrapper .sar-icon,
+body.raqam-theme .product-entry .on-sale .sar-icon {
+    filter: brightness(0) invert(1) !important;
+    -webkit-filter: brightness(0) invert(1) !important;
+    vertical-align: middle;
+}
+
+body.raqam-theme .product-entry .on-sale .regular-price .sar-icon {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(95%) saturate(5000%) hue-rotate(350deg) !important;
+    -webkit-filter: brightness(0) saturate(100%) invert(27%) sepia(95%) saturate(5000%) hue-rotate(350deg) !important;
+    opacity: 0.9;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   14. BOLD BANNER / wide_banner
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .raqam-block-banner,
+body.raqam-theme .raqam-banner-img {
+    display: block;
+    border-radius: var(--raqam-radius-lg);
+    overflow: hidden;
+}
+
+body.raqam-theme .raqam-banner-img {
+    border-radius: var(--raqam-radius-lg);
+    box-shadow: var(--raqam-shadow-card);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+body.raqam-theme .raqam-block-banner:hover .raqam-banner-img,
+body.raqam-theme a.raqam-block-banner:hover .raqam-banner-img {
+    box-shadow: var(--raqam-shadow-card-hover);
+    transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   15. STORE FEATURES — s-block--features glass cards
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .raqam-block-features .s-block--features__item {
+    background: var(--raqam-glass-bg) !important;
+    background-color: var(--raqam-glass-bg) !important;
+    backdrop-filter: blur(16px) saturate(1.5);
+    -webkit-backdrop-filter: blur(16px) saturate(1.5);
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    box-shadow: var(--raqam-shadow-card);
+    color: var(--raqam-text);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.raqam-theme .raqam-block-features .s-block--features__item:hover {
+    background: var(--raqam-glass-bg-hover) !important;
+    border-color: rgba(139, 81, 254, 0.55) !important;
+    box-shadow: var(--raqam-shadow-card-hover);
+}
+
+body.raqam-theme .raqam-block-features .s-block--features__item h2 {
+    color: var(--raqam-text) !important;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+body.raqam-theme .raqam-block-features .s-block--features__item p {
+    color: var(--raqam-text-purple) !important;
+}
+
+body.raqam-theme .raqam-block-features .feature-icon {
+    background: rgba(54, 10, 97, 0.55) !important;
+    border: 1.5px solid var(--raqam-border-purple);
+    box-shadow: 0 0 16px rgba(139, 81, 254, 0.25);
+}
+
+body.raqam-theme .raqam-block-features .feature-icon i {
+    color: var(--raqam-accent-light) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   16. BRANDS — glass logo cards
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .raqam-block-brands .product-image {
+    background: var(--raqam-glass-bg) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    box-shadow: var(--raqam-shadow-card);
+    overflow: hidden;
+    padding: 12px;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+body.raqam-theme .raqam-block-brands .product-image:hover {
+    box-shadow: var(--raqam-shadow-card-hover);
+    border-color: rgba(139, 81, 254, 0.55) !important;
+}
+
+body.raqam-theme .raqam-block-brands .product-image img {
+    border-radius: var(--raqam-radius-sm);
+    object-fit: contain;
+    aspect-ratio: 1 / 1;
+}
+
+body.raqam-theme .raqam-block-brands h3.text-lg {
+    color: var(--raqam-text) !important;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   17. LIST OF ITEMS — grid + swiper banner cards
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .raqam-block-list-items .banner-entry,
+body.raqam-theme .raqam-block-list-items .banner-entry-list {
+    background-color: var(--raqam-glass-card) !important;
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    box-shadow: var(--raqam-shadow-card);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+body.raqam-theme .raqam-block-list-items .banner-entry:hover,
+body.raqam-theme .raqam-block-list-items .banner-entry-list:hover {
+    box-shadow: var(--raqam-shadow-card-hover);
+    border-color: var(--raqam-border-purple) !important;
+}
+
+body.raqam-theme .raqam-block-list-items .banner-entry h3,
+body.raqam-theme .raqam-block-list-items .banner-entry-list h3 {
+    color: var(--raqam-text) !important;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+body.raqam-theme .raqam-block-list-slider .swiper-slide {
+    width: auto;
+}
+
+@media (max-width: 767px) {
+    body.raqam-theme .raqam-block-list-slider .swiper-slide {
+        width: calc((100vw - 48px) / 1.5) !important;
+    }
+}
+
+body.raqam-theme .raqam-block-list-items .has-overlay:after {
+    background-color: rgba(54, 10, 97, 0.35);
+}
+
+body.raqam-theme .raqam-block-list-items .has-overlay.with-hover:hover:after {
+    background-color: rgba(54, 10, 97, 0.55);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   18. VIDEO BLOCK — minimal glass frame
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .raqam-block-video {
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-lg) !important;
+    box-shadow: var(--raqam-shadow-card);
+    background: var(--raqam-glass-card);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   19. BREADCRUMB — raqam-breadcrumb-white (global)
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .breadcrumbs,
+body.raqam-theme .nav-breadcrumb,
+body.raqam-theme .breadcrumbs .breadcrumb,
+body.raqam-theme .nav-breadcrumb .breadcrumb {
+    background: transparent !important;
+}
+
+body.raqam-theme .breadcrumbs .breadcrumb-item,
+body.raqam-theme .nav-breadcrumb .breadcrumb-item,
+body.raqam-theme .breadcrumb .breadcrumb-item {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .breadcrumbs .breadcrumb-item a,
+body.raqam-theme .nav-breadcrumb .breadcrumb-item a,
+body.raqam-theme .breadcrumb .breadcrumb-item a {
+    color: var(--raqam-text) !important;
+    text-decoration: none !important;
+}
+
+body.raqam-theme .breadcrumbs .breadcrumb-item a:hover,
+body.raqam-theme .nav-breadcrumb .breadcrumb-item a:hover {
+    color: var(--raqam-text-purple) !important;
+}
+
+body.raqam-theme .breadcrumbs .breadcrumb-item.active,
+body.raqam-theme .nav-breadcrumb .breadcrumb-item.active,
+body.raqam-theme .breadcrumb .breadcrumb-item.active {
+    color: var(--raqam-text-lavender) !important;
+}
+
+body.raqam-theme .breadcrumbs .breadcrumb-item i,
+body.raqam-theme .nav-breadcrumb .breadcrumb-item i,
+body.raqam-theme .breadcrumb .breadcrumb-item .icon-home {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .breadcrumbs .breadcrumb-item + .breadcrumb-item::before,
+body.raqam-theme .nav-breadcrumb .breadcrumb-item + .breadcrumb-item::before,
+body.raqam-theme .breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+body.raqam-theme section.product-detail div.category-breadcrumbs,
+body.raqam-theme section.product-detail div.category-breadcrumbs a {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme section.product-detail div.category-breadcrumbs a:hover {
+    color: var(--raqam-text-purple) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   20. PRODUCT PAGE — raqam-product-page-glass v15 (TWSAA .main-content)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Glass panels — gallery + details columns */
+body.raqam-theme .main-content.w-full,
+body.raqam-theme .main-content.md\:w-1\/2 {
+    background: var(--raqam-glass-bg) !important;
+    backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+    border: 1px solid var(--raqam-glass-border) !important;
+    border-radius: var(--raqam-radius-xl) !important;
+    padding: 20px 22px 24px !important;
+    box-shadow: 0 8px 40px rgba(54, 10, 97, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+    margin-top: 12px !important;
+    margin-bottom: 16px !important;
+    overflow: hidden !important;
+}
+
+/* Typography & links */
+body.raqam-theme .main-content h1.da-tm {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme .main-content .product-entry__sub-title,
+body.raqam-theme .main-content h3.text-gray-400 {
+    color: var(--raqam-text-purple) !important;
+}
+
+body.raqam-theme .main-content a.text-gray-500,
+body.raqam-theme .main-content .mb-3 a {
+    color: var(--raqam-accent-light) !important;
+}
+
+body.raqam-theme .main-content .short__description,
+body.raqam-theme .main-content #more-details,
+body.raqam-theme .main-content .short__description p,
+body.raqam-theme .main-content .short__description li,
+body.raqam-theme .main-content .short__description h4 {
+    color: #f3f4f6 !important;
+}
+
+body.raqam-theme .main-content .short__description a {
+    color: var(--raqam-accent-light) !important;
+    word-break: break-all !important;
+}
+
+body.raqam-theme .main-content .short__description::after,
+body.raqam-theme .main-content .short__description::before,
+body.raqam-theme .main-content #more-details::after,
+body.raqam-theme .main-content #more-details::before {
+    display: none !important;
+    content: none !important;
+}
+
+/* Show more */
+body.raqam-theme .main-content [data-show-more],
+body.raqam-theme .main-content [data-show-more="true"] {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 14px 0 6px !important;
+    inset-inline: 0 !important;
+    transform: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    background: linear-gradient(to top, rgba(12, 10, 20, 0.55) 0%, rgba(12, 10, 20, 0) 85%) !important;
+}
+
+body.raqam-theme .main-content [data-show-more] .btn,
+body.raqam-theme .main-content [data-show-more] .btn-primary {
+    background: var(--raqam-btn-grad) !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+    border-radius: 10px !important;
+    padding: 8px 20px !important;
+    box-shadow: var(--raqam-shadow-btn) !important;
+    margin: 0 auto !important;
+}
+
+/* Prices */
+body.raqam-theme .main-content .discountPercentage,
+body.raqam-theme .discountPercentage {
+    color: var(--raqam-text) !important;
+    -webkit-text-fill-color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .main-content .price .regular-price {
+    color: var(--raqam-sale) !important;
+    text-decoration: line-through !important;
+}
+
+body.raqam-theme .main-content .price .special-price {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+    font-size: 22px !important;
+}
+
+body.raqam-theme .main-content .price .special-price .sar-icon {
+    filter: brightness(0) invert(1) !important;
+}
+
+body.raqam-theme .main-content .price .regular-price .sar-icon {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(95%) saturate(5000%) hue-rotate(350deg) !important;
+}
+
+/* Sold / details / options */
+body.raqam-theme .main-content .sold.details,
+body.raqam-theme .main-content .details__wrapper {
+    background: var(--raqam-glass-row) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    padding: 10px 14px !important;
+}
+
+body.raqam-theme .main-content .details__title,
+body.raqam-theme .main-content .details__title span,
+body.raqam-theme .main-content .details__action span {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .main-content .customizable.details,
+body.raqam-theme .main-content .s-product-options-wrapper,
+body.raqam-theme .main-content .s-product-options,
+body.raqam-theme .main-content .s-product-options-option-container {
+    background: var(--raqam-glass-row) !important;
+    border: 1px solid rgba(139, 81, 254, 0.2) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    padding: 14px !important;
+    margin-bottom: 12px !important;
+}
+
+body.raqam-theme .main-content .s-product-options label {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .main-content .s-product-options input,
+body.raqam-theme .main-content .s-product-options-option input {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(139, 81, 254, 0.3) !important;
+    border-radius: 10px !important;
+    color: var(--raqam-text) !important;
+    padding: 10px 12px !important;
+}
+
+body.raqam-theme .main-content .sticky-product-bar,
+body.raqam-theme .main-content .sticky-product-bar.bg-white {
+    background: var(--raqam-glass-row) !important;
+    border: 1px solid rgba(139, 81, 254, 0.25) !important;
+    border-radius: var(--raqam-radius-lg) !important;
+}
+
+/* Quantity — desktop */
+body.raqam-theme .main-content .s-quantity-input-input,
+body.raqam-theme .main-content .s-quantity-input-button,
+body.raqam-theme .main-content .sticky-product-bar .s-quantity-input-input,
+body.raqam-theme .main-content .sticky-product-bar .s-quantity-input-button,
+body.raqam-theme .main-content .cartButtons .s-quantity-input-input,
+body.raqam-theme .main-content .cartButtons .s-quantity-input-button {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: var(--raqam-text) !important;
+    -webkit-text-fill-color: var(--raqam-text) !important;
+}
+
+/* Cart / buy buttons */
+body.raqam-theme .main-content .cartButtons .s-button-solid.s-button-primary {
+    background: var(--raqam-btn-grad) !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+    border-radius: 10px !important;
+}
+
+body.raqam-theme .main-content .cartButtons .s-button-text {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .main-content .s-quick-buy-button.s-button-outline {
+    background: rgba(139, 81, 254, 0.08) !important;
+    border: 1px solid rgba(139, 81, 254, 0.45) !important;
+    color: var(--raqam-text) !important;
+}
+
+/* Reviews tabs */
+body.raqam-theme .main-content #product-tabs,
+body.raqam-theme .main-content .s-product-tabs {
+    background: transparent !important;
+    border: none !important;
+    margin-top: 16px !important;
+}
+
+body.raqam-theme .main-content #product-tabs .nav-tabs {
+    background: var(--raqam-glass-row) !important;
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+    border-radius: var(--raqam-radius-lg) var(--raqam-radius-lg) 0 0 !important;
+    border-bottom: none !important;
+    padding: 8px 12px !important;
+}
+
+body.raqam-theme .main-content .nav-tabs .nav-link {
+    color: var(--raqam-text-purple) !important;
+    background: transparent !important;
+    border: none !important;
+    font-weight: 600 !important;
+}
+
+body.raqam-theme .main-content .nav-tabs .nav-link.active {
+    color: var(--raqam-text) !important;
+    background: rgba(139, 81, 254, 0.25) !important;
+    border-radius: var(--raqam-radius-sm) !important;
+}
+
+body.raqam-theme .main-content #product-tabs .tab-content,
+body.raqam-theme .main-content #nav-tabContent {
+    background: var(--raqam-glass-row) !important;
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+    border-top: none !important;
+    border-radius: 0 0 16px 16px !important;
+    padding: 0 !important;
+}
+
+body.raqam-theme .main-content #nav-comments,
+body.raqam-theme .main-content .comments-wrapper {
+    background: transparent !important;
+    color: var(--raqam-text) !important;
+    padding: 20px 18px !important;
+}
+
+/* Comment form */
+body.raqam-theme .main-content .ask-form,
+body.raqam-theme .main-content #comment_form {
+    background: var(--raqam-glass-card) !important;
+    border: 1px solid rgba(139, 81, 254, 0.2) !important;
+    border-radius: var(--raqam-radius-lg) !important;
+    padding: 16px !important;
+    margin-bottom: 20px !important;
+}
+
+body.raqam-theme .main-content .ask-form .stars .icon-star2 {
+    color: #ffd700 !important;
+    font-size: 24px !important;
+}
+
+body.raqam-theme .main-content .s-comment-form-wrapper {
+    position: relative !important;
+    margin-top: 12px !important;
+}
+
+body.raqam-theme .main-content .s-comment-form-input,
+body.raqam-theme .main-content #ask_textarea {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(139, 81, 254, 0.3) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    color: var(--raqam-text) !important;
+    padding: 14px 16px 52px 16px !important;
+    min-height: 95px !important;
+    width: 100% !important;
+}
+
+body.raqam-theme .main-content .s-comment-form-input::placeholder {
+    color: rgba(196, 181, 253, 0.6) !important;
+}
+
+body.raqam-theme .main-content .s-comment-form-action {
+    position: absolute !important;
+    bottom: 10px !important;
+    inset-inline-start: 10px !important;
+}
+
+body.raqam-theme .main-content #ask_button {
+    background: var(--raqam-btn-grad) !important;
+    background-image: var(--raqam-btn-grad) !important;
+    border: none !important;
+    outline: none !important;
+    color: var(--raqam-text) !important;
+    border-radius: var(--raqam-radius-sm) !important;
+    padding: 7px 18px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+
+body.raqam-theme .main-content #ask_button .s-button-text {
+    color: var(--raqam-text) !important;
+}
+
+/* Reviews sort — native select (CSS-first, no JS filter) */
+body.raqam-theme .main-content .comments-wrapper .s-comments-sort-wrapper,
+body.raqam-theme .main-content .comments-wrapper .s-reviews-header,
+body.raqam-theme .main-content .comments-wrapper [class*="sort"],
+body.raqam-theme .main-content .comments-wrapper [class*="reviews-header"],
+body.raqam-theme .main-content #nav-comments .s-comments-sort-wrapper,
+body.raqam-theme .main-content #nav-comments [class*="sort"] {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+    width: 100% !important;
+    overflow: visible !important;
+}
+
+body.raqam-theme .main-content .s-comments-sort-input,
+body.raqam-theme .main-content #comments-filter {
+    background: var(--raqam-input-bg) !important;
+    backdrop-filter: blur(16px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(1.4) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: 10px !important;
+    color: var(--raqam-text) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    padding: 6px 12px !important;
+    box-shadow: 0 2px 10px rgba(54, 10, 97, 0.22) !important;
+    outline: none !important;
+    cursor: pointer !important;
+}
+
+body.raqam-theme .main-content .comments-wrapper h3,
+body.raqam-theme .main-content .comments-wrapper h4,
+body.raqam-theme .main-content .comments-wrapper .s-reviews-header span,
+body.raqam-theme .main-content .comments-wrapper .s-reviews-header div {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+}
+
+/* Review cards */
+body.raqam-theme .main-content .comments-wrapper .flex-1.rounded-xl.bg-gray-200.bg-opacity-20,
+body.raqam-theme .main-content #nav-comments .flex-1.rounded-xl.bg-gray-200.bg-opacity-20,
+body.raqam-theme .main-content .comments-wrapper .flex-1.rounded-xl.shadow-sm,
+body.raqam-theme .main-content #nav-comments .flex-1.rounded-xl.shadow-sm {
+    background: var(--raqam-glass-card) !important;
+    background-color: var(--raqam-glass-card) !important;
+    border: 1px solid rgba(139, 81, 254, 0.22) !important;
+    border-radius: var(--raqam-radius-lg) !important;
+    margin-bottom: 12px !important;
+}
+
+body.raqam-theme .main-content .comments-wrapper .s-reviews-list > div,
+body.raqam-theme .main-content .comments-wrapper .s-reviews-list > li,
+body.raqam-theme .main-content .comments-wrapper [class*="comment-item"],
+body.raqam-theme .main-content .comments-wrapper [class*="review-item"],
+body.raqam-theme .main-content .comments-wrapper .comment-item,
+body.raqam-theme .main-content .comments-wrapper .s-comment-item,
+body.raqam-theme .main-content .comments-wrapper .bg-gray-50,
+body.raqam-theme .main-content .comments-wrapper .bg-white,
+body.raqam-theme .main-content .comments-wrapper .da-bgg {
+    background: var(--raqam-glass-card) !important;
+    background-color: var(--raqam-glass-card) !important;
+    border: 1px solid rgba(139, 81, 254, 0.22) !important;
+    border-radius: var(--raqam-radius-lg) !important;
+    padding: 16px 18px !important;
+    margin-bottom: 12px !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .main-content .comments-wrapper .s-reviews-list h5,
+body.raqam-theme .main-content .comments-wrapper .s-reviews-list .font-bold,
+body.raqam-theme .main-content .comments-wrapper .comment-author {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme .main-content .comments-wrapper .prose.prose-sm.max-w-none.text-gray-500.da-tm,
+body.raqam-theme .main-content .comments-wrapper .prose.prose-sm.max-w-none.text-gray-500.da-tm p,
+body.raqam-theme .main-content #nav-comments .prose.prose-sm.max-w-none.text-gray-500.da-tm,
+body.raqam-theme .main-content #nav-comments .prose.prose-sm.max-w-none.text-gray-500.da-tm p,
+body.raqam-theme .main-content .comments-wrapper .prose.text-gray-500.da-tm,
+body.raqam-theme .main-content .comments-wrapper .prose.text-gray-500.da-tm p,
+body.raqam-theme .main-content #nav-comments .prose.text-gray-500.da-tm,
+body.raqam-theme .main-content #nav-comments .prose.text-gray-500.da-tm p,
+body.raqam-theme .main-content .comments-wrapper .s-reviews-list .prose,
+body.raqam-theme .main-content .comments-wrapper .s-reviews-list .prose p,
+body.raqam-theme .main-content .comments-wrapper .s-reviews-list [class*="comment"] p,
+body.raqam-theme .main-content .comments-wrapper [class*="comment-body"],
+body.raqam-theme .main-content .comments-wrapper [class*="comment-content"],
+body.raqam-theme .main-content .comments-wrapper .comment-body,
+body.raqam-theme .main-content .comments-wrapper .s-comment-content,
+body.raqam-theme .main-content .comments-wrapper .s-reviews-list p {
+    color: var(--raqam-text) !important;
+    -webkit-text-fill-color: var(--raqam-text) !important;
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+}
+
+body.raqam-theme .main-content .comments-wrapper .s-reviews-list time,
+body.raqam-theme .main-content .comments-wrapper .s-reviews-list .comment-date,
+body.raqam-theme .main-content .comments-wrapper .s-reviews-list [class*="date"],
+body.raqam-theme .main-content .comments-wrapper .s-reviews-list .text-muted {
+    color: rgba(196, 181, 253, 0.75) !important;
+    -webkit-text-fill-color: rgba(196, 181, 253, 0.75) !important;
+    font-size: 12px !important;
+}
+
+body.raqam-theme .main-content .comments-wrapper .icon-star2,
+body.raqam-theme .main-content .comments-wrapper [class*="star"] {
+    color: #ffd700 !important;
+    -webkit-text-fill-color: #ffd700 !important;
+}
+
+body.raqam-theme .main-content .comments-wrapper .verified,
+body.raqam-theme .main-content .comments-wrapper .badge {
+    background: rgba(255, 215, 0, 0.12) !important;
+    color: #ffd700 !important;
+    border: 1px solid rgba(255, 215, 0, 0.3) !important;
+    border-radius: var(--raqam-radius-sm) !important;
+}
+
+body.raqam-theme .main-content .comments-wrapper salla-infinite-scroll,
+body.raqam-theme .main-content #nav-comments salla-infinite-scroll,
+body.raqam-theme .main-content .comments-wrapper .s-infinite-scroll-container,
+body.raqam-theme .main-content #nav-comments .s-infinite-scroll-container {
+    display: block !important;
+    text-align: center !important;
+}
+
+/* Load more */
+body.raqam-theme #load-more,
+body.raqam-theme a#load-more,
+body.raqam-theme #load-more.s-infinite-scroll-btn,
+body.raqam-theme a#load-more.s-infinite-scroll-btn,
+body.raqam-theme .main-content #load-more,
+body.raqam-theme .main-content a#load-more,
+body.raqam-theme .main-content .comments-wrapper #load-more,
+body.raqam-theme .main-content #nav-comments #load-more,
+body.raqam-theme .main-content a.s-infinite-scroll-btn.s-button-primary,
+body.raqam-theme .main-content .comments-wrapper a.s-infinite-scroll-btn.s-button-primary,
+body.raqam-theme .main-content #nav-comments a.s-infinite-scroll-btn.s-button-primary,
+body.raqam-theme .main-content .s-infinite-scroll-btn.s-button-primary,
+body.raqam-theme .main-content .comments-wrapper .s-infinite-scroll-btn.s-button-btn.s-button-primary,
+body.raqam-theme .main-content #nav-comments .s-infinite-scroll-btn.s-button-btn.s-button-primary {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: fit-content !important;
+    min-width: unset !important;
+    max-width: none !important;
+    margin: 16px auto 8px !important;
+    background: var(--raqam-btn-grad) !important;
+    background-image: var(--raqam-btn-grad) !important;
+    background-color: var(--raqam-brand) !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border-radius: var(--raqam-radius-sm) !important;
+    color: var(--raqam-text) !important;
+    -webkit-text-fill-color: var(--raqam-text) !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    padding: 7px 18px !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
+body.raqam-theme #load-more .s-button-text,
+body.raqam-theme #load-more .s-infinite-scroll-btn-text,
+body.raqam-theme a#load-more .s-button-text,
+body.raqam-theme a#load-more .s-infinite-scroll-btn-text,
+body.raqam-theme .main-content #load-more .s-button-text,
+body.raqam-theme .main-content #load-more .s-infinite-scroll-btn-text,
+body.raqam-theme .main-content a.s-infinite-scroll-btn.s-button-primary .s-button-text,
+body.raqam-theme .main-content a.s-infinite-scroll-btn.s-button-primary .s-infinite-scroll-btn-text {
+    color: var(--raqam-text) !important;
+    -webkit-text-fill-color: var(--raqam-text) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+/* Mobile — quantity + compact reviews */
+@media (max-width: 768px) {
+    body.raqam-theme .main-content .s-quantity-input,
+    body.raqam-theme .main-content salla-quantity-input,
+    body.raqam-theme .main-content .sticky-product-bar .s-quantity-input,
+    body.raqam-theme .main-content .cartButtons .s-quantity-input {
+        display: inline-flex !important;
+        align-items: stretch !important;
+        flex-wrap: nowrap !important;
+        flex-direction: row !important;
+        gap: 0 !important;
+        width: fit-content !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        background: var(--raqam-input-bg) !important;
+        backdrop-filter: blur(14px) saturate(1.4) !important;
+        -webkit-backdrop-filter: blur(14px) saturate(1.4) !important;
+        border: 1px solid rgba(139, 81, 254, 0.4) !important;
+        border-radius: var(--raqam-radius-md) !important;
+        overflow: hidden !important;
+        box-shadow: 0 2px 12px rgba(54, 10, 97, 0.22) !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+    }
+
+    body.raqam-theme .main-content salla-quantity-input {
+        display: inline-flex !important;
+        width: fit-content !important;
+    }
+
+    body.raqam-theme .main-content salla-quantity-input .s-quantity-input {
+        width: auto !important;
+    }
+
+    body.raqam-theme .main-content .s-quantity-input > *,
+    body.raqam-theme .main-content .sticky-product-bar .s-quantity-input > *,
+    body.raqam-theme .main-content .cartButtons .s-quantity-input > * {
+        margin: 0 !important;
+    }
+
+    body.raqam-theme .main-content .s-quantity-input-button,
+    body.raqam-theme .main-content .sticky-product-bar .s-quantity-input-button,
+    body.raqam-theme .main-content .cartButtons .s-quantity-input-button {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex: 0 0 34px !important;
+        width: 34px !important;
+        min-width: 34px !important;
+        max-width: 34px !important;
+        height: 34px !important;
+        min-height: 34px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        outline: none !important;
+        box-shadow: none !important;
+        color: var(--raqam-text) !important;
+        -webkit-text-fill-color: var(--raqam-text) !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        line-height: 1 !important;
+        cursor: pointer !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: transparent !important;
+        transition: background 0.15s !important;
+    }
+
+    body.raqam-theme .main-content .s-quantity-input-button:hover,
+    body.raqam-theme .main-content .s-quantity-input-button:active,
+    body.raqam-theme .main-content .sticky-product-bar .s-quantity-input-button:hover,
+    body.raqam-theme .main-content .cartButtons .s-quantity-input-button:hover {
+        background: rgba(139, 81, 254, 0.28) !important;
+        color: var(--raqam-text) !important;
+    }
+
+    body.raqam-theme .main-content .s-quantity-input-button:first-of-type {
+        border-inline-end: 1px solid rgba(139, 81, 254, 0.22) !important;
+    }
+
+    body.raqam-theme .main-content .s-quantity-input-button:last-of-type {
+        border-inline-start: 1px solid rgba(139, 81, 254, 0.22) !important;
+    }
+
+    body.raqam-theme .main-content .s-quantity-input-input,
+    body.raqam-theme .main-content .sticky-product-bar .s-quantity-input-input,
+    body.raqam-theme .main-content .cartButtons .s-quantity-input-input {
+        display: block !important;
+        flex: 0 0 38px !important;
+        width: 38px !important;
+        min-width: 38px !important;
+        max-width: 38px !important;
+        height: 34px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        outline: none !important;
+        box-shadow: none !important;
+        color: var(--raqam-text) !important;
+        -webkit-text-fill-color: var(--raqam-text) !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        text-align: center !important;
+        line-height: 34px !important;
+        -moz-appearance: textfield !important;
+    }
+
+    body.raqam-theme .main-content .s-quantity-input-input::-webkit-outer-spin-button,
+    body.raqam-theme .main-content .s-quantity-input-input::-webkit-inner-spin-button {
+        -webkit-appearance: none !important;
+        margin: 0 !important;
+    }
+
+    body.raqam-theme .main-content .comments-wrapper,
+    body.raqam-theme .main-content #nav-comments {
+        padding: 12px 10px !important;
+    }
+
+    body.raqam-theme .main-content .comments-wrapper .s-reviews-list {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    body.raqam-theme .main-content .comments-wrapper .s-reviews-list > div,
+    body.raqam-theme .main-content .comments-wrapper .s-reviews-list > li,
+    body.raqam-theme .main-content .comments-wrapper [class*="comment-item"],
+    body.raqam-theme .main-content .comments-wrapper [class*="review-item"] {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+        padding: 0 !important;
+        margin-bottom: 8px !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    body.raqam-theme .main-content .comments-wrapper .s-reviews-list img,
+    body.raqam-theme .main-content .comments-wrapper [class*="avatar"] img,
+    body.raqam-theme .main-content .comments-wrapper .rounded-full img {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
+        flex-shrink: 0 !important;
+        border-radius: 50% !important;
+    }
+
+    body.raqam-theme .main-content .comments-wrapper .flex-1.rounded-xl,
+    body.raqam-theme .main-content #nav-comments .flex-1.rounded-xl {
+        padding: 8px 10px !important;
+        margin-bottom: 0 !important;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        border-radius: var(--raqam-radius-md) !important;
+    }
+
+    body.raqam-theme .main-content .ask-form,
+    body.raqam-theme .main-content #comment_form {
+        padding: 12px !important;
+        margin-bottom: 12px !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   20b. PRODUCT PAGE — sky-theme local preview (.raqam-product-page)
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme .raqam-product-page .form-container > .product-image-group,
+body.raqam-theme .raqam-product-page .form-container > .details {
+    background: var(--raqam-glass-bg) !important;
+    backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+    border: 1px solid var(--raqam-glass-border) !important;
+    border-radius: var(--raqam-radius-xl) !important;
+    padding: 20px 22px 24px !important;
+    box-shadow: 0 8px 40px rgba(54, 10, 97, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+    margin-top: 12px !important;
+    margin-bottom: 16px !important;
+    overflow: hidden !important;
+}
+
+body.raqam-theme .raqam-product-page .product-heading,
+body.raqam-theme .raqam-product-page .product-heading > div {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme .raqam-product-page .badge-primary {
+    background: rgba(139, 81, 254, 0.25) !important;
+    color: var(--raqam-text-purple) !important;
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+}
+
+body.raqam-theme .raqam-product-page .product-price,
+body.raqam-theme .raqam-product-page .product-price .special-price {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+    font-size: 22px !important;
+}
+
+body.raqam-theme .raqam-product-page .product-price .regular-price {
+    color: var(--raqam-sale) !important;
+    text-decoration: line-through !important;
+}
+
+body.raqam-theme .raqam-product-page .stock-status {
+    color: var(--raqam-text-purple) !important;
+}
+
+body.raqam-theme .raqam-product-page .stock-status.active {
+    color: #86efac !important;
+}
+
+body.raqam-theme .raqam-product-page .product-metadata,
+body.raqam-theme .raqam-product-page .full-description,
+body.raqam-theme .raqam-product-page .full-description p,
+body.raqam-theme .raqam-product-page .full-description li {
+    color: #f3f4f6 !important;
+}
+
+body.raqam-theme .raqam-product-page .full-description a {
+    color: var(--raqam-accent-light) !important;
+}
+
+body.raqam-theme .raqam-product-page .product-hero-image {
+    border-radius: var(--raqam-radius-lg) !important;
+    box-shadow: var(--raqam-shadow-card) !important;
+    overflow: hidden !important;
+}
+
+body.raqam-theme .raqam-product-page .thumb-list .thumb-frame {
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+    border-radius: var(--raqam-radius-sm) !important;
+    overflow: hidden !important;
+}
+
+body.raqam-theme .raqam-product-page .quantity.control-group {
+    background: var(--raqam-input-bg) !important;
+    border: 1px solid rgba(139, 81, 254, 0.4) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    padding: 4px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+}
+
+body.raqam-theme .raqam-product-page .quantity.control-group label {
+    display: none !important;
+}
+
+body.raqam-theme .raqam-product-page .quantity .decrease,
+body.raqam-theme .raqam-product-page .quantity .increase {
+    background: transparent !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+}
+
+body.raqam-theme .raqam-product-page .quantity .control {
+    background: transparent !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+    text-align: center !important;
+    width: 38px !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme .raqam-product-page .add-to-buttons .btn-primary,
+body.raqam-theme .raqam-product-page .add-to-buttons button[type="submit"] {
+    background: var(--raqam-btn-grad) !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+    border-radius: 10px !important;
+    box-shadow: var(--raqam-shadow-btn) !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme .raqam-product-page .rating-reviews {
+    background: var(--raqam-glass-row) !important;
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+    border-radius: var(--raqam-radius-lg) !important;
+    padding: 20px 18px !important;
+    margin-top: 16px !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .raqam-product-page .rating-header {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme .raqam-product-page .rating-reviews .number {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme .raqam-product-page .rating-reviews .icon-star2 {
+    color: #ffd700 !important;
+}
+
+body.raqam-theme .raqam-product-page .rating-reviews .total-reviews {
+    color: var(--raqam-text-purple) !important;
+}
+
+body.raqam-theme .raqam-product-page .s-product-options-wrapper,
+body.raqam-theme .raqam-product-page .customizable-options {
+    background: var(--raqam-glass-row) !important;
+    border: 1px solid rgba(139, 81, 254, 0.2) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    padding: 14px !important;
+    margin-bottom: 12px !important;
+    color: var(--raqam-text) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   21. CART PAGE — raqam-cart-page-glass v2
+   ═══════════════════════════════════════════════════════════════ */
+
+/* raqam-cart-page-glass v2 */
+body.raqam-theme .raqam-cart-page .nav-header.bg-gray-100,
+body.raqam-theme .raqam-cart-page .nav-header.da-bgg {
+  background: var(--raqam-glass-bg) !important;
+  background-color: var(--raqam-glass-bg) !important;
+  backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+  border-bottom: 1px solid var(--raqam-border-purple-soft) !important;
+  box-shadow: 0 4px 24px rgba(54, 10, 97, 0.2) !important;
+}
+body.raqam-theme .raqam-cart-page .nav-header h1,
+body.raqam-theme .raqam-cart-page .nav-header .da-tm {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 700 !important;
+}
+body.raqam-theme .raqam-cart-page .breadcrumb,
+body.raqam-theme .raqam-cart-page .nav-breadcrumb {
+  background: transparent !important;
+}
+body.raqam-theme .raqam-cart-page .breadcrumb-item,
+body.raqam-theme .raqam-cart-page .breadcrumb-item a,
+body.raqam-theme .raqam-cart-page .breadcrumb-item .icon-home {
+  color: #c4b5fd !important;
+  -webkit-text-fill-color: #c4b5fd !important;
+}
+body.raqam-theme .raqam-cart-page .breadcrumb-item a:hover {
+  color: #a855f7 !important;
+}
+body.raqam-theme .raqam-cart-page .breadcrumb-item.active {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+body.raqam-theme .raqam-cart-page twsaa-conditional-offer.bg-white,
+body.raqam-theme .raqam-cart-page twsaa-conditional-offer.s-conditional-offer-container,
+body.raqam-theme .raqam-cart-page .s-conditional-offer-container.bg-white {
+  display: block !important;
+  background: var(--raqam-glass-card) !important;
+  background-color: var(--raqam-glass-card) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+  border: 1px solid var(--raqam-border-purple-soft) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(54, 10, 97, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+body.raqam-theme .raqam-cart-page .s-conditional-offer-title,
+body.raqam-theme .raqam-cart-page .s-conditional-offer-title-wrapper {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 700 !important;
+}
+body.raqam-theme .raqam-cart-page .s-conditional-offer-checkpoint-label,
+body.raqam-theme .raqam-cart-page .s-conditional-offer-checkpoint-label.active,
+body.raqam-theme .raqam-cart-page .s-conditional-offer-progress-bar,
+body.raqam-theme .raqam-cart-page .s-conditional-offer-progress-container {
+  color: #e9d5ff !important;
+  -webkit-text-fill-color: #e9d5ff !important;
+}
+body.raqam-theme .raqam-cart-page section.cart-item.bg-white,
+body.raqam-theme .raqam-cart-page .cart-item.da-bgg {
+  background: var(--raqam-glass-card) !important;
+  background-color: var(--raqam-glass-card) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+  border: 1px solid var(--raqam-border-purple-soft) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 6px 28px rgba(54, 10, 97, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item h4,
+body.raqam-theme .raqam-cart-page .cart-item h5,
+body.raqam-theme .raqam-cart-page .cart-item .da-tm,
+body.raqam-theme .raqam-cart-page .cart-item b.da-tm,
+body.raqam-theme .raqam-cart-page .cart-item .font-primary {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item a.font-primary:hover {
+  color: #a855f7 !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item .text-gray-500,
+body.raqam-theme .raqam-cart-page .cart-item .text-gray-400,
+body.raqam-theme .raqam-cart-page .cart-item .da-ts {
+  color: #c4b5fd !important;
+  -webkit-text-fill-color: #c4b5fd !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item .item-regular-price,
+body.raqam-theme .raqam-cart-page .cart-item .line-through {
+  color: #f87171 !important;
+  -webkit-text-fill-color: #f87171 !important;
+  text-decoration: line-through !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item .item-price,
+body.raqam-theme .raqam-cart-page .cart-item .text-red-400,
+body.raqam-theme .raqam-cart-page .cart-item .item-total,
+body.raqam-theme .raqam-cart-page .cart-item .text-primary {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 700 !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item .border-gray-200,
+body.raqam-theme .raqam-cart-page .cart-item .border-t {
+  border-color: rgba(139, 81, 254, 0.25) !important;
+}
+body.raqam-theme .raqam-cart-page .s-cart-item-offers-box {
+  background: rgba(34, 197, 94, 0.1) !important;
+  border: 1px solid rgba(34, 197, 94, 0.35) !important;
+  border-radius: 10px !important;
+  padding: 8px 10px !important;
+}
+body.raqam-theme .raqam-cart-page .s-cart-item-offers-title,
+body.raqam-theme .raqam-cart-page .s-cart-item-offers-icon,
+body.raqam-theme .raqam-cart-page .s-cart-item-offers-icon i {
+  color: #86efac !important;
+  -webkit-text-fill-color: #86efac !important;
+}
+/* v2: الشريط الجانبي — صندوق خارجي فقط */
+body.raqam-theme .raqam-cart-page .sticky > .shadow-default.bg-white.da-bgg,
+body.raqam-theme .raqam-cart-page .sticky > .shadow-default.da-bgg {
+  background: var(--raqam-glass-card) !important;
+  background-color: var(--raqam-glass-card) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+  border: 1px solid var(--raqam-border-purple-soft) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(54, 10, 97, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  padding: 20px 24px !important;
+  margin-bottom: 20px !important;
+}
+body.raqam-theme .raqam-cart-page .sticky .shadow-default .shadow-default.bg-white,
+body.raqam-theme .raqam-cart-page .sticky .shadow-default .shadow-default.da-bgg,
+body.raqam-theme .raqam-cart-page .sticky .shadow-default > .shadow-default {
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+}
+body.raqam-theme .raqam-cart-page .shadow-default h4,
+body.raqam-theme .raqam-cart-page .shadow-default h5,
+body.raqam-theme .raqam-cart-page .shadow-default .da-tm,
+body.raqam-theme .raqam-cart-page .shadow-default span,
+body.raqam-theme .raqam-cart-page .shadow-default b {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+body.raqam-theme .raqam-cart-page .shadow-default .text-primary,
+body.raqam-theme .raqam-cart-page #sub-total,
+body.raqam-theme .raqam-cart-page #total-discount b,
+body.raqam-theme .raqam-cart-page [data-cart-total] {
+  color: #e9d5ff !important;
+  -webkit-text-fill-color: #e9d5ff !important;
+  font-weight: 700 !important;
+}
+body.raqam-theme .raqam-cart-page .sar-icon,
+body.raqam-theme .raqam-cart-page img.sar-icon {
+  filter: brightness(0) invert(1) !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item .item-regular-price .sar-icon {
+  filter: brightness(0) saturate(100%) invert(27%) sepia(95%) saturate(5000%) hue-rotate(350deg) !important;
+}
+body.raqam-theme .raqam-cart-page .cart-submit-wrap,
+body.raqam-theme .raqam-cart-page .cart-submit-wrap > a {
+  display: block !important;
+  width: 100% !important;
+  text-decoration: none !important;
+}
+/* v2: أزرار الإتمام بعد تسجيل الدخول */
+body.raqam-theme .raqam-cart-page .btn--coupon,
+body.raqam-theme .raqam-cart-page .cart-submit-wrap .btn--coupon,
+body.raqam-theme .raqam-cart-page .cart-submit-wrap .btn--checkout,
+body.raqam-theme .raqam-cart-page .cart-submit-wrap .s-button-primary,
+body.raqam-theme .raqam-cart-page .cart-submit-wrap a.btn-primary,
+body.raqam-theme .raqam-cart-page .cart-submit-wrap .btn.btn-primary,
+body.raqam-theme .raqam-cart-page .cart-submit-wrap .btn-lg.btn-primary,
+body.raqam-theme .raqam-cart-page .cart-submit-wrap a.btn.btn-lg,
+body.raqam-theme .raqam-cart-page .sticky .s-button-solid.s-button-primary,
+body.raqam-theme .raqam-cart-page .sticky a.s-button-btn.s-button-primary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  background: var(--raqam-btn-grad) !important;
+  background-image: var(--raqam-btn-grad) !important;
+  background-color: #360a61 !important;
+  border: none !important;
+  outline: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 12px !important;
+  padding: 12px 20px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 16px rgba(54, 10, 97, 0.35) !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  text-decoration: none !important;
+}
+body.raqam-theme .raqam-cart-page .btn--coupon .s-button-text,
+body.raqam-theme .raqam-cart-page .cart-submit-wrap .s-button-text,
+body.raqam-theme .raqam-cart-page .cart-submit-wrap a.btn-primary,
+body.raqam-theme .raqam-cart-page .cart-submit-wrap .btn.btn-primary {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+/* v2: زر الأمنيات */
+body.raqam-theme .raqam-cart-page .btn--wishlist,
+body.raqam-theme .raqam-cart-page .btn--wishlist.s-button-outline,
+body.raqam-theme .raqam-cart-page .btn--wishlist.s-button-light-outline,
+body.raqam-theme .raqam-cart-page .cart-item .btn--wishlist {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(139, 81, 254, 0.08) !important;
+  background-color: rgba(139, 81, 254, 0.08) !important;
+  backdrop-filter: blur(12px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.3) !important;
+  border: 1px solid rgba(139, 81, 254, 0.45) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 10px !important;
+  padding: 8px 14px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 10px rgba(54, 10, 97, 0.2) !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s !important;
+}
+body.raqam-theme .raqam-cart-page .btn--wishlist:hover,
+body.raqam-theme .raqam-cart-page .btn--wishlist:active,
+body.raqam-theme .raqam-cart-page .cart-item .btn--wishlist:hover {
+  background: rgba(91, 29, 138, 0.35) !important;
+  background-color: rgba(91, 29, 138, 0.35) !important;
+  border-color: rgba(167, 139, 250, 0.65) !important;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.28) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+body.raqam-theme .raqam-cart-page .btn--wishlist .s-button-text,
+body.raqam-theme .raqam-cart-page .btn--wishlist span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+body.raqam-theme .raqam-cart-page .btn--delete.s-button-danger,
+body.raqam-theme .raqam-cart-page .cart-item .btn--delete {
+  background: rgba(220, 38, 38, 0.88) !important;
+  background-color: rgba(220, 38, 38, 0.88) !important;
+  border: 1px solid rgba(252, 165, 165, 0.45) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3) !important;
+}
+body.raqam-theme .raqam-cart-page .btn--delete .s-button-text,
+body.raqam-theme .raqam-cart-page .btn--delete .icon-cancel,
+body.raqam-theme .raqam-cart-page .btn--delete .fix-align {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+body.raqam-theme .raqam-cart-page coupon-component,
+body.raqam-theme .raqam-cart-page .coupon-form,
+body.raqam-theme .raqam-cart-page .s-coupon-input-wrapper {
+  background: transparent !important;
+}
+body.raqam-theme .raqam-cart-page .coupon-form input,
+body.raqam-theme .raqam-cart-page .s-coupon-input,
+body.raqam-theme .raqam-cart-page input[name*="coupon"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(139, 81, 254, 0.35) !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  padding: 10px 12px !important;
+}
+body.raqam-theme .raqam-cart-page .coupon-form input::placeholder {
+  color: rgba(196, 181, 253, 0.6) !important;
+}
+/* v2: كمية — أولوية أعلى من v15 product page */
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input,
+body.raqam-theme .raqam-cart-page .cart-item twsaa-quantity-input,
+body.raqam-theme .raqam-cart-page .main-content .cart-item .s-quantity-input,
+body.raqam-theme .raqam-cart-page .main-content .cart-item twsaa-quantity-input,
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input-container {
+  display: inline-flex !important;
+  align-items: stretch !important;
+  flex-wrap: nowrap !important;
+  flex-direction: row !important;
+  gap: 0 !important;
+  column-gap: 0 !important;
+  width: fit-content !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  background: var(--raqam-input-bg) !important;
+  background-color: var(--raqam-input-bg) !important;
+  backdrop-filter: blur(14px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(1.4) !important;
+  border: 1px solid rgba(139, 81, 254, 0.4) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 12px rgba(54, 10, 97, 0.22) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item twsaa-quantity-input,
+body.raqam-theme .raqam-cart-page .main-content .cart-item twsaa-quantity-input {
+  display: inline-flex !important;
+  width: fit-content !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input > *,
+body.raqam-theme .raqam-cart-page .main-content .cart-item .s-quantity-input > * {
+  margin: 0 !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input-button,
+body.raqam-theme .raqam-cart-page .main-content .cart-item .s-quantity-input-button,
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input-decrease-button,
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input-increase-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 34px !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input-button:hover,
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input-button:active,
+body.raqam-theme .raqam-cart-page .main-content .cart-item .s-quantity-input-button:hover {
+  background: rgba(139, 81, 254, 0.28) !important;
+  background-color: rgba(139, 81, 254, 0.28) !important;
+  color: #ffffff !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input-decrease-button,
+body.raqam-theme .raqam-cart-page .main-content .cart-item .s-quantity-input-decrease-button {
+  border-inline-end: 1px solid rgba(139, 81, 254, 0.22) !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input-increase-button,
+body.raqam-theme .raqam-cart-page .main-content .cart-item .s-quantity-input-increase-button {
+  border-inline-start: 1px solid rgba(139, 81, 254, 0.22) !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input-input,
+body.raqam-theme .raqam-cart-page .main-content .cart-item .s-quantity-input-input {
+  display: block !important;
+  flex: 0 0 38px !important;
+  width: 38px !important;
+  min-width: 38px !important;
+  max-width: 38px !important;
+  height: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  line-height: 34px !important;
+  -moz-appearance: textfield !important;
+}
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input-input::-webkit-outer-spin-button,
+body.raqam-theme .raqam-cart-page .cart-item .s-quantity-input-input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+body.raqam-theme .raqam-cart-page .empty-cart,
+body.raqam-theme .raqam-cart-page .s-cart-empty {
+  background: var(--raqam-glass-card) !important;
+  border: 1px solid var(--raqam-border-purple-soft) !important;
+  border-radius: 16px !important;
+  color: #ffffff !important;
+  padding: 32px 24px !important;
+}
+body.raqam-theme .raqam-cart-page .empty-cart .s-button-primary,
+body.raqam-theme .raqam-cart-page .s-cart-empty .s-button-primary {
+  background: var(--raqam-btn-grad) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+}
+/* sky-theme cart selectors */
+body.raqam-theme .raqam-cart-page section.cart,
+body.raqam-theme .raqam-cart-page .cart-content {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .raqam-cart-page .cart-item-list .item {
+    background: var(--raqam-glass-card) !important;
+    backdrop-filter: blur(20px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+    border-radius: var(--raqam-radius-xl) !important;
+    box-shadow: 0 6px 28px rgba(54, 10, 97, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    color: var(--raqam-text) !important;
+    padding: 16px !important;
+    margin-bottom: 16px !important;
+}
+
+body.raqam-theme .raqam-cart-page .item-title a,
+body.raqam-theme .raqam-cart-page .item-details .price {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .raqam-cart-page .item-options {
+    color: var(--raqam-text-purple) !important;
+}
+
+body.raqam-theme .raqam-cart-page .quantity.control-group {
+    display: inline-flex !important;
+    align-items: stretch !important;
+    background: var(--raqam-input-bg) !important;
+    border: 1px solid rgba(139, 81, 254, 0.4) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    overflow: hidden !important;
+}
+
+body.raqam-theme .raqam-cart-page .quantity .decrease,
+body.raqam-theme .raqam-cart-page .quantity .increase {
+    background: transparent !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+    width: 34px !important;
+    min-width: 34px !important;
+    cursor: pointer !important;
+}
+
+body.raqam-theme .raqam-cart-page .quantity .qtyBox {
+    background: transparent !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+    text-align: center !important;
+    width: 48px !important;
+}
+
+body.raqam-theme .raqam-cart-page .order-summary {
+    background: var(--raqam-glass-card) !important;
+    backdrop-filter: blur(20px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+    border-radius: var(--raqam-radius-xl) !important;
+    padding: 20px 24px !important;
+    color: var(--raqam-text) !important;
+    margin-top: 20px !important;
+}
+
+body.raqam-theme .raqam-cart-page .order-summary h3,
+body.raqam-theme .raqam-cart-page .order-summary label {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .raqam-cart-page .payable-amount label {
+    color: var(--raqam-text-lavender) !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme .raqam-cart-page .coupon-container,
+body.raqam-theme .raqam-cart-page .shadow-default.bg-white {
+    background: var(--raqam-glass-card) !important;
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+    border-radius: var(--raqam-radius-xl) !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .raqam-cart-page .btn-primary,
+body.raqam-theme .raqam-cart-page .btn.btn-lg.btn-primary {
+    background: var(--raqam-btn-grad) !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    box-shadow: var(--raqam-shadow-btn) !important;
+}
+
+body.raqam-theme .raqam-cart-page .btn-black {
+    background: var(--raqam-btn-grad) !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .raqam-cart-page .discount-control input.control {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: 10px !important;
+    color: var(--raqam-text) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   22. ACCOUNT PAGES — raqam-account-pages-glass (8 paths unified)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* raqam-account-pages-glass — تخطيط مشترك */
+/* ── رأس الصفحة ── */
+body.raqam-theme.raqam-account-page .nav-header.bg-gray-100,
+body.raqam-theme.raqam-account-page .nav-header.da-bgg {
+  background: var(--raqam-nav-glass) !important;
+  background-color: var(--raqam-nav-glass) !important;
+  backdrop-filter: blur(18px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.4) !important;
+  border-bottom: 1px solid var(--raqam-border-purple) !important;
+  box-shadow: 0 4px 24px rgba(54, 10, 97, 0.25) !important;
+}
+body.raqam-theme.raqam-account-page .nav-header h1,
+body.raqam-theme.raqam-account-page .nav-header h1.da-tm,
+body.raqam-theme.raqam-account-page .nav-header .da-tm {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 700 !important;
+}
+body.raqam-theme.raqam-account-page .nav-header .profile-photo,
+body.raqam-theme.raqam-account-page .profile-photo {
+  border: 2px solid var(--raqam-accent) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 20px rgba(139, 81, 254, 0.4) !important;
+  object-fit: cover !important;
+}
+/* ── مسار التنقل ── */
+body.raqam-theme.raqam-account-page .breadcrumbs,
+body.raqam-theme.raqam-account-page .nav-breadcrumb,
+body.raqam-theme.raqam-account-page .breadcrumbs .breadcrumb,
+body.raqam-theme.raqam-account-page .nav-breadcrumb .breadcrumb {
+  background: transparent !important;
+}
+body.raqam-theme.raqam-account-page .breadcrumb-item,
+body.raqam-theme.raqam-account-page .breadcrumb-item a,
+body.raqam-theme.raqam-account-page .breadcrumb-item .icon-home,
+body.raqam-theme.raqam-account-page .breadcrumb-item i {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-decoration: none !important;
+}
+body.raqam-theme.raqam-account-page .breadcrumb-item a:hover {
+  color: #c4b5fd !important;
+  -webkit-text-fill-color: #c4b5fd !important;
+}
+body.raqam-theme.raqam-account-page .breadcrumb-item.active {
+  color: var(--raqam-accent) !important;
+  -webkit-text-fill-color: var(--raqam-accent) !important;
+}
+body.raqam-theme.raqam-account-page .breadcrumb-item + .breadcrumb-item::before {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+/* ── الشريط الجانبي ── */
+body.raqam-theme.raqam-account-page nav.sidebar.bg-white,
+body.raqam-theme.raqam-account-page nav.sidebar.da-bgs,
+body.raqam-theme.raqam-account-page .sidebar.bg-white,
+body.raqam-theme.raqam-account-page .sidebar.da-bgs {
+  background: var(--raqam-glass-bg) !important;
+  background-color: var(--raqam-glass-bg) !important;
+  backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+  border: 1px solid var(--raqam-border-purple) !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 8px 32px rgba(54, 10, 97, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-inline,
+body.raqam-theme.raqam-account-page .sidebar .s-user-menu-inline {
+  background: transparent !important;
+}
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-dropdown-item,
+body.raqam-theme.raqam-account-page .sidebar .s-user-menu-dropdown-item {
+  margin: 2px 0 !important;
+  border: none !important;
+}
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-dropdown-item a,
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-dropdown-item button,
+body.raqam-theme.raqam-account-page .sidebar .s-user-menu-dropdown-item a,
+body.raqam-theme.raqam-account-page .sidebar .s-user-menu-dropdown-item button {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 12px !important;
+  text-decoration: none !important;
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    color 0.25s ease !important;
+}
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-dropdown-item-title,
+body.raqam-theme.raqam-account-page .sidebar .s-user-menu-dropdown-item-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-dropdown-item a i,
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-dropdown-item a [class*="icon"],
+body.raqam-theme.raqam-account-page .sidebar .s-user-menu-dropdown-item a i,
+body.raqam-theme.raqam-account-page .sidebar .s-user-menu-dropdown-item a [class*="icon"] {
+  color: var(--raqam-accent) !important;
+  -webkit-text-fill-color: var(--raqam-accent) !important;
+}
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-dropdown-item a:hover,
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-dropdown-item a:focus,
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-dropdown-item button:hover,
+body.raqam-theme.raqam-account-page .sidebar .s-user-menu-dropdown-item a:hover,
+body.raqam-theme.raqam-account-page .sidebar .s-user-menu-dropdown-item a:focus {
+  background: rgba(139, 81, 254, 0.18) !important;
+  box-shadow: 0 0 18px rgba(139, 81, 254, 0.22) !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-dropdown-item.active a,
+body.raqam-theme.raqam-account-page .sidebar .s-user-menu-dropdown-item.active a,
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-dropdown-item a[href*="/customer/account/notifications"],
+body.raqam-theme.raqam-account-page .sidebar .s-user-menu-dropdown-item a[href*="/customer/account/notifications"] {
+  background: rgba(139, 81, 254, 0.25) !important;
+  box-shadow:
+    0 0 22px rgba(139, 81, 254, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page nav.sidebar .s-user-menu-dropdown-item-logout a,
+body.raqam-theme.raqam-account-page .sidebar .s-user-menu-dropdown-item-logout a {
+  color: #fecaca !important;
+  -webkit-text-fill-color: #fecaca !important;
+}
+/* ── المحتوى الرئيسي ── */
+body.raqam-theme.raqam-account-page .main-content {
+  background: var(--raqam-glass-bg) !important;
+  background-color: var(--raqam-glass-bg) !important;
+  backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+  border: 1px solid var(--raqam-border-purple) !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 8px 32px rgba(54, 10, 97, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page .main-content h1,
+body.raqam-theme.raqam-account-page .main-content h2,
+body.raqam-theme.raqam-account-page .main-content h3,
+body.raqam-theme.raqam-account-page .main-content h4,
+body.raqam-theme.raqam-account-page .main-content .da-tm {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page .main-content .text-gray-400,
+body.raqam-theme.raqam-account-page .main-content .text-gray-500,
+body.raqam-theme.raqam-account-page .main-content .da-ts {
+  color: #c4b5fd !important;
+  -webkit-text-fill-color: #c4b5fd !important;
+}
+body.raqam-theme.raqam-account-page .s-infinite-scroll-btn,
+body.raqam-theme.raqam-account-page a.s-infinite-scroll-btn,
+body.raqam-theme.raqam-account-page #load-more.s-infinite-scroll-btn {
+  background: var(--raqam-btn-grad) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 18px rgba(54, 10, 97, 0.45) !important;
+}
+body.raqam-theme.raqam-account-page .s-infinite-scroll-btn .s-button-text,
+body.raqam-theme.raqam-account-page .s-infinite-scroll-btn .s-infinite-scroll-btn-text {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+@media (max-width: 768px) {
+  body.raqam-theme.raqam-account-page nav.sidebar,
+  body.raqam-theme.raqam-account-page .sidebar {
+    border-radius: 14px !important;
+    margin-bottom: 16px !important;
+  }
+  body.raqam-theme.raqam-account-page .main-content {
+    border-radius: 14px !important;
+  }
+  body.raqam-theme.raqam-account-page .nav-header h1 {
+    font-size: 1.15rem !important;
+  }
+}
+
+/* ── صفوف القائمة (إشعارات) ── */
+body.raqam-theme.raqam-account-page twsaa-infinite-scroll,
+body.raqam-theme.raqam-account-page .list-container {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page .list-container .s-table__tr,
+body.raqam-theme.raqam-account-page .main-content .s-table__tr,
+body.raqam-theme.raqam-account-page twsaa-infinite-scroll .s-table__tr {
+  background: var(--raqam-glass-row) !important;
+  background-color: var(--raqam-glass-row) !important;
+  border-bottom: 1px solid rgba(139, 81, 254, 0.2) !important;
+  color: #ffffff !important;
+  transition: background 0.25s ease, box-shadow 0.25s ease !important;
+}
+body.raqam-theme.raqam-account-page .list-container .s-table__tr:hover,
+body.raqam-theme.raqam-account-page .main-content .s-table__tr:hover,
+body.raqam-theme.raqam-account-page twsaa-infinite-scroll .s-table__tr:hover {
+  background: var(--raqam-glass-bg-hover) !important;
+  background-color: var(--raqam-glass-bg-hover) !important;
+  box-shadow: inset 0 0 0 1px rgba(139, 81, 254, 0.25) !important;
+}
+body.raqam-theme.raqam-account-page .s-table__tr a {
+  color: var(--raqam-accent) !important;
+  -webkit-text-fill-color: var(--raqam-accent) !important;
+}
+body.raqam-theme.raqam-account-page .s-table__tr a:hover {
+  color: #c4b5fd !important;
+}
+body.raqam-theme.raqam-account-page .s-empty-state,
+body.raqam-theme.raqam-account-page .empty-state {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* ── جداول الحساب (طلبات / تحميل / محفظة) ── */
+body.raqam-theme.raqam-account-page .account-items-list,
+body.raqam-theme.raqam-account-page .account-table-content {
+  background: var(--raqam-glass-card) !important;
+  background-color: var(--raqam-glass-card) !important;
+  backdrop-filter: blur(16px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.4) !important;
+  border: 1px solid var(--raqam-border-purple) !important;
+  border-radius: 14px !important;
+  color: #ffffff !important;
+  overflow: hidden !important;
+}
+body.raqam-theme.raqam-account-page table.s-table {
+  background: transparent !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  width: 100% !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page table.s-table thead tr {
+  background: rgba(54, 10, 97, 0.55) !important;
+  background-color: rgba(54, 10, 97, 0.55) !important;
+}
+body.raqam-theme.raqam-account-page table.s-table thead th,
+body.raqam-theme.raqam-account-page table.s-table th {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: transparent !important;
+  border-bottom: 2px solid var(--raqam-accent) !important;
+  font-weight: 600 !important;
+  padding: 14px 16px !important;
+}
+body.raqam-theme.raqam-account-page table.s-table tbody.list-container,
+body.raqam-theme.raqam-account-page twsaa-infinite-scroll,
+body.raqam-theme.raqam-account-page .list-container {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page table.s-table tbody.list-container tr,
+body.raqam-theme.raqam-account-page .account-table-content tbody tr,
+body.raqam-theme.raqam-account-page .list-container tr,
+body.raqam-theme.raqam-account-page .main-content table.s-table tbody tr,
+body.raqam-theme.raqam-account-page twsaa-infinite-scroll .s-table__tr,
+body.raqam-theme.raqam-account-page .list-container .s-table__tr,
+body.raqam-theme.raqam-account-page .main-content .s-table__tr {
+  background: var(--raqam-glass-row) !important;
+  background-color: var(--raqam-glass-row) !important;
+  border-bottom: 1px solid rgba(139, 81, 254, 0.2) !important;
+  color: #ffffff !important;
+  transition: background 0.25s ease, box-shadow 0.25s ease !important;
+}
+body.raqam-theme.raqam-account-page table.s-table tbody.list-container tr:nth-child(even),
+body.raqam-theme.raqam-account-page .account-table-content tbody tr:nth-child(even),
+body.raqam-theme.raqam-account-page .list-container tr:nth-child(even),
+body.raqam-theme.raqam-account-page twsaa-infinite-scroll .s-table__tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03) !important;
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+body.raqam-theme.raqam-account-page table.s-table tbody.list-container tr:hover,
+body.raqam-theme.raqam-account-page .account-table-content tbody tr:hover,
+body.raqam-theme.raqam-account-page .list-container tr:hover,
+body.raqam-theme.raqam-account-page .main-content table.s-table tbody tr:hover,
+body.raqam-theme.raqam-account-page twsaa-infinite-scroll .s-table__tr:hover,
+body.raqam-theme.raqam-account-page .list-container .s-table__tr:hover,
+body.raqam-theme.raqam-account-page .main-content .s-table__tr:hover {
+  background: rgba(139, 81, 254, 0.14) !important;
+  background-color: rgba(139, 81, 254, 0.14) !important;
+  box-shadow: inset 0 0 0 1px rgba(139, 81, 254, 0.3) !important;
+}
+body.raqam-theme.raqam-account-page table.s-table td,
+body.raqam-theme.raqam-account-page table.s-table tbody td {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: transparent !important;
+  border-color: rgba(139, 81, 254, 0.15) !important;
+  padding: 12px 16px !important;
+  vertical-align: middle !important;
+}
+body.raqam-theme.raqam-account-page table.s-table td a,
+body.raqam-theme.raqam-account-page .s-table__tr a {
+  color: var(--raqam-accent) !important;
+  -webkit-text-fill-color: var(--raqam-accent) !important;
+  text-decoration: none !important;
+}
+body.raqam-theme.raqam-account-page table.s-table td a:hover,
+body.raqam-theme.raqam-account-page .s-table__tr a:hover {
+  color: #c4b5fd !important;
+  -webkit-text-fill-color: #c4b5fd !important;
+}
+body.raqam-theme.raqam-account-page .s-badge,
+body.raqam-theme.raqam-account-page .badge,
+body.raqam-theme.raqam-account-page .status-badge,
+body.raqam-theme.raqam-account-page [class*="order-status"],
+body.raqam-theme.raqam-account-page [class*="status-badge"],
+body.raqam-theme.raqam-account-page table.s-table td .badge,
+body.raqam-theme.raqam-account-page table.s-table td .s-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 4px 12px !important;
+  border-radius: 20px !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(139, 81, 254, 0.4) !important;
+  background: rgba(139, 81, 254, 0.18) !important;
+  color: #e9d5ff !important;
+  -webkit-text-fill-color: #e9d5ff !important;
+}
+body.raqam-theme.raqam-account-page .badge-success,
+body.raqam-theme.raqam-account-page .s-badge-success,
+body.raqam-theme.raqam-account-page [class*="status-completed"],
+body.raqam-theme.raqam-account-page [class*="status-delivered"],
+body.raqam-theme.raqam-account-page [class*="status-done"],
+body.raqam-theme.raqam-account-page .text-green-600,
+body.raqam-theme.raqam-account-page .text-success {
+  background: rgba(34, 197, 94, 0.18) !important;
+  border-color: rgba(34, 197, 94, 0.45) !important;
+  color: #86efac !important;
+  -webkit-text-fill-color: #86efac !important;
+}
+body.raqam-theme.raqam-account-page .badge-warning,
+body.raqam-theme.raqam-account-page .s-badge-warning,
+body.raqam-theme.raqam-account-page [class*="status-pending"],
+body.raqam-theme.raqam-account-page [class*="status-processing"],
+body.raqam-theme.raqam-account-page [class*="status-waiting"],
+body.raqam-theme.raqam-account-page .text-yellow-600,
+body.raqam-theme.raqam-account-page .text-warning {
+  background: rgba(234, 179, 8, 0.18) !important;
+  border-color: rgba(234, 179, 8, 0.45) !important;
+  color: #fde68a !important;
+  -webkit-text-fill-color: #fde68a !important;
+}
+body.raqam-theme.raqam-account-page .badge-danger,
+body.raqam-theme.raqam-account-page .s-badge-danger,
+body.raqam-theme.raqam-account-page [class*="status-cancelled"],
+body.raqam-theme.raqam-account-page [class*="status-canceled"],
+body.raqam-theme.raqam-account-page [class*="status-failed"],
+body.raqam-theme.raqam-account-page [class*="status-rejected"],
+body.raqam-theme.raqam-account-page .text-red-600,
+body.raqam-theme.raqam-account-page .text-danger {
+  background: rgba(239, 68, 68, 0.18) !important;
+  border-color: rgba(239, 68, 68, 0.45) !important;
+  color: #fca5a5 !important;
+  -webkit-text-fill-color: #fca5a5 !important;
+}
+body.raqam-theme.raqam-account-page .badge-info,
+body.raqam-theme.raqam-account-page .s-badge-info,
+body.raqam-theme.raqam-account-page [class*="status-shipped"],
+body.raqam-theme.raqam-account-page [class*="status-shipping"],
+body.raqam-theme.raqam-account-page .text-blue-600,
+body.raqam-theme.raqam-account-page .text-info {
+  background: rgba(59, 130, 246, 0.18) !important;
+  border-color: rgba(59, 130, 246, 0.45) !important;
+  color: #93c5fd !important;
+  -webkit-text-fill-color: #93c5fd !important;
+}
+body.raqam-theme.raqam-account-page table.s-table .btn,
+body.raqam-theme.raqam-account-page table.s-table a.btn,
+body.raqam-theme.raqam-account-page table.s-table button.btn,
+body.raqam-theme.raqam-account-page .s-table__tr .btn,
+body.raqam-theme.raqam-account-page .main-content .btn-outline,
+body.raqam-theme.raqam-account-page .main-content a.btn-outline {
+  background: transparent !important;
+  border: 1px solid var(--raqam-accent) !important;
+  border-radius: 10px !important;
+  color: var(--raqam-accent) !important;
+  -webkit-text-fill-color: var(--raqam-accent) !important;
+  padding: 6px 14px !important;
+  font-weight: 600 !important;
+  transition: background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease !important;
+}
+body.raqam-theme.raqam-account-page table.s-table .btn:hover,
+body.raqam-theme.raqam-account-page .main-content .btn-primary,
+body.raqam-theme.raqam-account-page .main-content a.btn-primary,
+body.raqam-theme.raqam-account-page .main-content button.btn-primary {
+  background: var(--raqam-btn-grad) !important;
+  border: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(54, 10, 97, 0.4) !important;
+}
+body.raqam-theme.raqam-account-page .s-empty-state,
+body.raqam-theme.raqam-account-page .empty-state,
+body.raqam-theme.raqam-account-page .main-content .text-center {
+  color: rgba(255, 255, 255, 0.75) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important;
+}
+body.raqam-theme.raqam-account-page .main-content td[colspan],
+body.raqam-theme.raqam-account-page table.s-table tbody tr:only-child td {
+  text-align: center !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.7) !important;
+  padding: 40px 20px !important;
+}
+body.raqam-theme.raqam-account-page .pagination {
+  background: transparent !important;
+  border: none !important;
+  margin-top: 20px !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+}
+body.raqam-theme.raqam-account-page .pagination a,
+body.raqam-theme.raqam-account-page .pagination .page-link,
+body.raqam-theme.raqam-account-page .pagination .page-item a {
+  color: var(--raqam-accent) !important;
+  -webkit-text-fill-color: var(--raqam-accent) !important;
+  background: rgba(139, 81, 254, 0.12) !important;
+  border: 1px solid rgba(139, 81, 254, 0.35) !important;
+  border-radius: 10px !important;
+  padding: 8px 14px !important;
+  text-decoration: none !important;
+}
+body.raqam-theme.raqam-account-page .pagination a:hover {
+  background: rgba(139, 81, 254, 0.28) !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page .pagination .active a,
+body.raqam-theme.raqam-account-page .pagination .page-item.active .page-link,
+body.raqam-theme.raqam-account-page .pagination .page-item.active a {
+  background: linear-gradient(135deg, var(--raqam-brand) 0%, #7c3aed 100%) !important;
+  border-color: var(--raqam-accent) !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page .pagination .disabled a,
+body.raqam-theme.raqam-account-page .pagination .page-item.disabled .page-link {
+  color: rgba(255, 255, 255, 0.35) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  pointer-events: none !important;
+}
+@media (max-width: 768px) {
+  body.raqam-theme.raqam-account-page table.s-table thead th,
+  body.raqam-theme.raqam-account-page table.s-table td {
+    padding: 10px 12px !important;
+    font-size: 0.85rem !important;
+  }
+  body.raqam-theme.raqam-account-page .account-items-list,
+  body.raqam-theme.raqam-account-page .account-table-content {
+    border-radius: 12px !important;
+    overflow-x: auto !important;
+  }
+}
+
+/* ── صفحة الملف الشخصي ── */
+body.raqam-theme.raqam-account-page .form--user-profile {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page .form--user-profile .profile-field-item,
+body.raqam-theme.raqam-account-page .form--user-profile .form-group {
+  margin-bottom: 18px !important;
+}
+body.raqam-theme.raqam-account-page .form--user-profile .grid,
+body.raqam-theme.raqam-account-page .form--user-profile form > .grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 16px 20px !important;
+}
+body.raqam-theme.raqam-account-page .form--user-profile label,
+body.raqam-theme.raqam-account-page .form--user-profile .form-label,
+body.raqam-theme.raqam-account-page .profile-field-item label {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 600 !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+}
+body.raqam-theme.raqam-account-page .form--user-profile .form-input,
+body.raqam-theme.raqam-account-page .form--user-profile input.form-input,
+body.raqam-theme.raqam-account-page .form--user-profile input.control,
+body.raqam-theme.raqam-account-page .form--user-profile select.form-input,
+body.raqam-theme.raqam-account-page .form--user-profile textarea.form-input,
+body.raqam-theme.raqam-account-page .profile-field-item .form-input,
+body.raqam-theme.raqam-account-page .profile-field-item input,
+body.raqam-theme.raqam-account-page .profile-field-item select,
+body.raqam-theme.raqam-account-page .profile-field-item textarea {
+  background: var(--raqam-input-bg) !important;
+  background-color: var(--raqam-input-bg) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 1px solid var(--raqam-border-purple) !important;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  width: 100% !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+body.raqam-theme.raqam-account-page .form--user-profile .form-input::placeholder,
+body.raqam-theme.raqam-account-page .profile-field-item input::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+body.raqam-theme.raqam-account-page .form--user-profile .form-input:focus,
+body.raqam-theme.raqam-account-page .profile-field-item input:focus,
+body.raqam-theme.raqam-account-page .profile-field-item select:focus,
+body.raqam-theme.raqam-account-page .profile-field-item textarea:focus {
+  outline: none !important;
+  border-color: var(--raqam-accent) !important;
+  box-shadow:
+    0 0 0 3px rgba(139, 81, 254, 0.25),
+    inset 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker[type="date"],
+body.raqam-theme.raqam-account-page.raqam-ac-profile input[name="date_of_birth"][type="date"] {
+  position: relative !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  color-scheme: dark !important;
+  background-color: var(--raqam-input-bg) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2722%27 height=%2722%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23ffffff%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Crect x=%273%27 y=%274%27 width=%2718%27 height=%2718%27 rx=%272%27 ry=%272%27/%3E%3Cline x1=%2716%27 y1=%272%27 x2=%2716%27 y2=%276%27/%3E%3Cline x1=%278%27 y1=%272%27 x2=%278%27 y2=%276%27/%3E%3Cline x1=%273%27 y1=%2710%27 x2=%2721%27 y2=%2710%27/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: left 12px center !important;
+  background-size: 22px 22px !important;
+  padding-left: 40px !important;
+}
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker[type="date"]::-webkit-calendar-picker-indicator,
+body.raqam-theme.raqam-account-page.raqam-ac-profile input[name="date_of_birth"][type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0 !important;
+  position: absolute !important;
+  left: 12px !important;
+  width: 22px !important;
+  height: 22px !important;
+  cursor: pointer !important;
+}
+body.raqam-theme.raqam-account-page.raqam-ac-profile .profile-field-item:has(#datepicker) img,
+body.raqam-theme.raqam-account-page.raqam-ac-profile .profile-field-item:has([name="date_of_birth"]) img,
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker + img,
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker ~ img,
+body.raqam-theme.raqam-account-page.raqam-ac-profile input[name="date_of_birth"] + img,
+body.raqam-theme.raqam-account-page.raqam-ac-profile input[name="date_of_birth"] ~ img,
+body.raqam-theme.raqam-account-page.raqam-ac-profile .ui-datepicker-trigger,
+body.raqam-theme.raqam-account-page.raqam-ac-profile .profile-field-item:has(#datepicker) .ui-datepicker-trigger,
+body.raqam-theme.raqam-account-page.raqam-ac-profile .profile-field-item:has(#datepicker) [class*="calendar"] img,
+body.raqam-theme.raqam-account-page.raqam-ac-profile .profile-field-item:has(#datepicker) i,
+body.raqam-theme.raqam-account-page.raqam-ac-profile .profile-field-item:has(#datepicker) [class*="icon-calendar"],
+body.raqam-theme.raqam-account-page.raqam-ac-profile .profile-field-item:has(#datepicker) [class*="calendar"]:not(img),
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker + button,
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker ~ button,
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker + .input-group-addon,
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker ~ .input-group-addon,
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker + .input-group-append,
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker ~ .input-group-append,
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker + .input-group-prepend,
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker ~ .input-group-prepend,
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker + .add-on,
+body.raqam-theme.raqam-account-page.raqam-ac-profile #datepicker ~ .add-on,
+body.raqam-theme.raqam-account-page.raqam-ac-profile input[name="date_of_birth"] + button,
+body.raqam-theme.raqam-account-page.raqam-ac-profile input[name="date_of_birth"] ~ button {
+  display: none !important;
+}
+body.raqam-theme.raqam-account-page .form--user-profile s-button-primary,
+body.raqam-theme.raqam-account-page .form--user-profile .s-button-primary,
+body.raqam-theme.raqam-account-page .form--user-profile button.s-button-primary,
+body.raqam-theme.raqam-account-page .form--user-profile [type="submit"] {
+  background: var(--raqam-btn-grad) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  padding: 12px 28px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 18px rgba(54, 10, 97, 0.45) !important;
+  cursor: pointer !important;
+  margin-top: 8px !important;
+}
+body.raqam-theme.raqam-account-page .form--user-profile .s-button-text {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+@media (max-width: 768px) {
+  body.raqam-theme.raqam-account-page .form--user-profile .grid,
+  body.raqam-theme.raqam-account-page .form--user-profile form > .grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── صفحة العناوين ── */
+body.raqam-theme.raqam-account-page .address-card {
+  background: var(--raqam-glass-card) !important;
+  background-color: var(--raqam-glass-card) !important;
+  backdrop-filter: blur(16px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.4) !important;
+  border: 1px solid var(--raqam-border-purple) !important;
+  border-radius: 14px !important;
+  color: #ffffff !important;
+  padding: 20px !important;
+  transition: background 0.25s ease, box-shadow 0.25s ease !important;
+}
+body.raqam-theme.raqam-account-page .address-card:hover {
+  background: var(--raqam-glass-bg-hover) !important;
+  box-shadow: 0 4px 20px rgba(139, 81, 254, 0.2) !important;
+}
+body.raqam-theme.raqam-account-page .address-card h3,
+body.raqam-theme.raqam-account-page .address-card h4,
+body.raqam-theme.raqam-account-page .address-card .address-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page .address-card p,
+body.raqam-theme.raqam-account-page .address-card span,
+body.raqam-theme.raqam-account-page .address-card .text-gray-500 {
+  color: #c4b5fd !important;
+  -webkit-text-fill-color: #c4b5fd !important;
+}
+body.raqam-theme.raqam-account-page .main-content .grid.gap-3 {
+  gap: 16px !important;
+}
+body.raqam-theme.raqam-account-page .main-content .grid.gap-3:empty,
+body.raqam-theme.raqam-account-page .main-content .grid.gap-3 .empty {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 120px !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.65) !important;
+  text-align: center !important;
+}
+body.raqam-theme.raqam-account-page .main-content .btn-primary,
+body.raqam-theme.raqam-account-page .main-content a.btn-primary,
+body.raqam-theme.raqam-account-page .main-content s-button-primary,
+body.raqam-theme.raqam-account-page .main-content .s-button-primary {
+  background: var(--raqam-btn-grad) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(54, 10, 97, 0.4) !important;
+}
+
+/* ── حالة فارغة (تقييمات / أمنيات) ── */
+body.raqam-theme.raqam-account-page .main-content .empty,
+body.raqam-theme.raqam-account-page .main-content .s-empty-state {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  min-height: 180px !important;
+  padding: 40px 24px !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.65) !important;
+  background: var(--raqam-glass-card) !important;
+  border: 1px dashed rgba(139, 81, 254, 0.3) !important;
+  border-radius: 14px !important;
+}
+body.raqam-theme.raqam-account-page .main-content .empty p,
+body.raqam-theme.raqam-account-page .main-content .empty span,
+body.raqam-theme.raqam-account-page .main-content .empty h3 {
+  color: rgba(255, 255, 255, 0.7) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.7) !important;
+}
+body.raqam-theme.raqam-account-page .main-content .grid {
+  gap: 16px !important;
+}
+
+/* ── حالة فارغة (تقييمات / أمنيات) ── */
+body.raqam-theme.raqam-account-page .main-content .empty,
+body.raqam-theme.raqam-account-page .main-content .s-empty-state {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  min-height: 180px !important;
+  padding: 40px 24px !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.65) !important;
+  background: var(--raqam-glass-card) !important;
+  border: 1px dashed rgba(139, 81, 254, 0.3) !important;
+  border-radius: 14px !important;
+}
+body.raqam-theme.raqam-account-page .main-content .empty p,
+body.raqam-theme.raqam-account-page .main-content .empty span,
+body.raqam-theme.raqam-account-page .main-content .empty h3 {
+  color: rgba(255, 255, 255, 0.7) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.7) !important;
+}
+body.raqam-theme.raqam-account-page .main-content .grid {
+  gap: 16px !important;
+}
+/* ── صفحة قائمة الأمنيات ── */
+body.raqam-theme.raqam-account-page.raqam-ac-wishlist .product-entry--wishlist {
+  background: var(--raqam-glass-card) !important;
+  background-color: var(--raqam-glass-card) !important;
+  backdrop-filter: blur(16px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.4) !important;
+  border: 1px solid var(--raqam-border-purple) !important;
+  border-radius: 14px !important;
+  color: #ffffff !important;
+  overflow: hidden !important;
+  transition: background 0.25s ease, box-shadow 0.25s ease !important;
+}
+body.raqam-theme.raqam-account-page.raqam-ac-wishlist .product-entry--wishlist:hover {
+  background: var(--raqam-glass-bg-hover) !important;
+  box-shadow: 0 6px 24px rgba(139, 81, 254, 0.22) !important;
+}
+body.raqam-theme.raqam-account-page.raqam-ac-wishlist .product-entry--wishlist a {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+body.raqam-theme.raqam-account-page.raqam-ac-wishlist .product-entry--wishlist .product-title,
+body.raqam-theme.raqam-account-page.raqam-ac-wishlist .product-entry--wishlist h3 {
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page.raqam-ac-wishlist .product-entry--wishlist .product-price,
+body.raqam-theme.raqam-account-page.raqam-ac-wishlist .product-entry--wishlist .price {
+  color: var(--raqam-accent) !important;
+  font-weight: 700 !important;
+}
+
+/* ── جداول الحساب (طلبات / تحميل / محفظة) ── */
+body.raqam-theme.raqam-account-page .account-items-list,
+body.raqam-theme.raqam-account-page .account-table-content {
+  background: var(--raqam-glass-card) !important;
+  background-color: var(--raqam-glass-card) !important;
+  backdrop-filter: blur(16px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.4) !important;
+  border: 1px solid var(--raqam-border-purple) !important;
+  border-radius: 14px !important;
+  color: #ffffff !important;
+  overflow: hidden !important;
+}
+body.raqam-theme.raqam-account-page table.s-table {
+  background: transparent !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  width: 100% !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page table.s-table thead tr {
+  background: rgba(54, 10, 97, 0.55) !important;
+  background-color: rgba(54, 10, 97, 0.55) !important;
+}
+body.raqam-theme.raqam-account-page table.s-table thead th,
+body.raqam-theme.raqam-account-page table.s-table th {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: transparent !important;
+  border-bottom: 2px solid var(--raqam-accent) !important;
+  font-weight: 600 !important;
+  padding: 14px 16px !important;
+}
+body.raqam-theme.raqam-account-page table.s-table tbody.list-container,
+body.raqam-theme.raqam-account-page twsaa-infinite-scroll,
+body.raqam-theme.raqam-account-page .list-container {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page table.s-table tbody.list-container tr,
+body.raqam-theme.raqam-account-page .account-table-content tbody tr,
+body.raqam-theme.raqam-account-page .list-container tr,
+body.raqam-theme.raqam-account-page .main-content table.s-table tbody tr,
+body.raqam-theme.raqam-account-page twsaa-infinite-scroll .s-table__tr,
+body.raqam-theme.raqam-account-page .list-container .s-table__tr,
+body.raqam-theme.raqam-account-page .main-content .s-table__tr {
+  background: var(--raqam-glass-row) !important;
+  background-color: var(--raqam-glass-row) !important;
+  border-bottom: 1px solid rgba(139, 81, 254, 0.2) !important;
+  color: #ffffff !important;
+  transition: background 0.25s ease, box-shadow 0.25s ease !important;
+}
+body.raqam-theme.raqam-account-page table.s-table tbody.list-container tr:nth-child(even),
+body.raqam-theme.raqam-account-page .account-table-content tbody tr:nth-child(even),
+body.raqam-theme.raqam-account-page .list-container tr:nth-child(even),
+body.raqam-theme.raqam-account-page twsaa-infinite-scroll .s-table__tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03) !important;
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+body.raqam-theme.raqam-account-page table.s-table tbody.list-container tr:hover,
+body.raqam-theme.raqam-account-page .account-table-content tbody tr:hover,
+body.raqam-theme.raqam-account-page .list-container tr:hover,
+body.raqam-theme.raqam-account-page .main-content table.s-table tbody tr:hover,
+body.raqam-theme.raqam-account-page twsaa-infinite-scroll .s-table__tr:hover,
+body.raqam-theme.raqam-account-page .list-container .s-table__tr:hover,
+body.raqam-theme.raqam-account-page .main-content .s-table__tr:hover {
+  background: rgba(139, 81, 254, 0.14) !important;
+  background-color: rgba(139, 81, 254, 0.14) !important;
+  box-shadow: inset 0 0 0 1px rgba(139, 81, 254, 0.3) !important;
+}
+body.raqam-theme.raqam-account-page table.s-table td,
+body.raqam-theme.raqam-account-page table.s-table tbody td {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: transparent !important;
+  border-color: rgba(139, 81, 254, 0.15) !important;
+  padding: 12px 16px !important;
+  vertical-align: middle !important;
+}
+body.raqam-theme.raqam-account-page table.s-table td a,
+body.raqam-theme.raqam-account-page .s-table__tr a {
+  color: var(--raqam-accent) !important;
+  -webkit-text-fill-color: var(--raqam-accent) !important;
+  text-decoration: none !important;
+}
+body.raqam-theme.raqam-account-page table.s-table td a:hover,
+body.raqam-theme.raqam-account-page .s-table__tr a:hover {
+  color: #c4b5fd !important;
+  -webkit-text-fill-color: #c4b5fd !important;
+}
+body.raqam-theme.raqam-account-page .s-badge,
+body.raqam-theme.raqam-account-page .badge,
+body.raqam-theme.raqam-account-page .status-badge,
+body.raqam-theme.raqam-account-page [class*="order-status"],
+body.raqam-theme.raqam-account-page [class*="status-badge"],
+body.raqam-theme.raqam-account-page table.s-table td .badge,
+body.raqam-theme.raqam-account-page table.s-table td .s-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 4px 12px !important;
+  border-radius: 20px !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(139, 81, 254, 0.4) !important;
+  background: rgba(139, 81, 254, 0.18) !important;
+  color: #e9d5ff !important;
+  -webkit-text-fill-color: #e9d5ff !important;
+}
+body.raqam-theme.raqam-account-page .badge-success,
+body.raqam-theme.raqam-account-page .s-badge-success,
+body.raqam-theme.raqam-account-page [class*="status-completed"],
+body.raqam-theme.raqam-account-page [class*="status-delivered"],
+body.raqam-theme.raqam-account-page [class*="status-done"],
+body.raqam-theme.raqam-account-page .text-green-600,
+body.raqam-theme.raqam-account-page .text-success {
+  background: rgba(34, 197, 94, 0.18) !important;
+  border-color: rgba(34, 197, 94, 0.45) !important;
+  color: #86efac !important;
+  -webkit-text-fill-color: #86efac !important;
+}
+body.raqam-theme.raqam-account-page .badge-warning,
+body.raqam-theme.raqam-account-page .s-badge-warning,
+body.raqam-theme.raqam-account-page [class*="status-pending"],
+body.raqam-theme.raqam-account-page [class*="status-processing"],
+body.raqam-theme.raqam-account-page [class*="status-waiting"],
+body.raqam-theme.raqam-account-page .text-yellow-600,
+body.raqam-theme.raqam-account-page .text-warning {
+  background: rgba(234, 179, 8, 0.18) !important;
+  border-color: rgba(234, 179, 8, 0.45) !important;
+  color: #fde68a !important;
+  -webkit-text-fill-color: #fde68a !important;
+}
+body.raqam-theme.raqam-account-page .badge-danger,
+body.raqam-theme.raqam-account-page .s-badge-danger,
+body.raqam-theme.raqam-account-page [class*="status-cancelled"],
+body.raqam-theme.raqam-account-page [class*="status-canceled"],
+body.raqam-theme.raqam-account-page [class*="status-failed"],
+body.raqam-theme.raqam-account-page [class*="status-rejected"],
+body.raqam-theme.raqam-account-page .text-red-600,
+body.raqam-theme.raqam-account-page .text-danger {
+  background: rgba(239, 68, 68, 0.18) !important;
+  border-color: rgba(239, 68, 68, 0.45) !important;
+  color: #fca5a5 !important;
+  -webkit-text-fill-color: #fca5a5 !important;
+}
+body.raqam-theme.raqam-account-page .badge-info,
+body.raqam-theme.raqam-account-page .s-badge-info,
+body.raqam-theme.raqam-account-page [class*="status-shipped"],
+body.raqam-theme.raqam-account-page [class*="status-shipping"],
+body.raqam-theme.raqam-account-page .text-blue-600,
+body.raqam-theme.raqam-account-page .text-info {
+  background: rgba(59, 130, 246, 0.18) !important;
+  border-color: rgba(59, 130, 246, 0.45) !important;
+  color: #93c5fd !important;
+  -webkit-text-fill-color: #93c5fd !important;
+}
+body.raqam-theme.raqam-account-page table.s-table .btn,
+body.raqam-theme.raqam-account-page table.s-table a.btn,
+body.raqam-theme.raqam-account-page table.s-table button.btn,
+body.raqam-theme.raqam-account-page .s-table__tr .btn,
+body.raqam-theme.raqam-account-page .main-content .btn-outline,
+body.raqam-theme.raqam-account-page .main-content a.btn-outline {
+  background: transparent !important;
+  border: 1px solid var(--raqam-accent) !important;
+  border-radius: 10px !important;
+  color: var(--raqam-accent) !important;
+  -webkit-text-fill-color: var(--raqam-accent) !important;
+  padding: 6px 14px !important;
+  font-weight: 600 !important;
+  transition: background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease !important;
+}
+body.raqam-theme.raqam-account-page table.s-table .btn:hover,
+body.raqam-theme.raqam-account-page .main-content .btn-primary,
+body.raqam-theme.raqam-account-page .main-content a.btn-primary,
+body.raqam-theme.raqam-account-page .main-content button.btn-primary {
+  background: var(--raqam-btn-grad) !important;
+  border: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(54, 10, 97, 0.4) !important;
+}
+body.raqam-theme.raqam-account-page .s-empty-state,
+body.raqam-theme.raqam-account-page .empty-state,
+body.raqam-theme.raqam-account-page .main-content .text-center {
+  color: rgba(255, 255, 255, 0.75) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important;
+}
+body.raqam-theme.raqam-account-page .main-content td[colspan],
+body.raqam-theme.raqam-account-page table.s-table tbody tr:only-child td {
+  text-align: center !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.7) !important;
+  padding: 40px 20px !important;
+}
+body.raqam-theme.raqam-account-page .pagination {
+  background: transparent !important;
+  border: none !important;
+  margin-top: 20px !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+}
+body.raqam-theme.raqam-account-page .pagination a,
+body.raqam-theme.raqam-account-page .pagination .page-link,
+body.raqam-theme.raqam-account-page .pagination .page-item a {
+  color: var(--raqam-accent) !important;
+  -webkit-text-fill-color: var(--raqam-accent) !important;
+  background: rgba(139, 81, 254, 0.12) !important;
+  border: 1px solid rgba(139, 81, 254, 0.35) !important;
+  border-radius: 10px !important;
+  padding: 8px 14px !important;
+  text-decoration: none !important;
+}
+body.raqam-theme.raqam-account-page .pagination a:hover {
+  background: rgba(139, 81, 254, 0.28) !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page .pagination .active a,
+body.raqam-theme.raqam-account-page .pagination .page-item.active .page-link,
+body.raqam-theme.raqam-account-page .pagination .page-item.active a {
+  background: linear-gradient(135deg, var(--raqam-brand) 0%, #7c3aed 100%) !important;
+  border-color: var(--raqam-accent) !important;
+  color: #ffffff !important;
+}
+body.raqam-theme.raqam-account-page .pagination .disabled a,
+body.raqam-theme.raqam-account-page .pagination .page-item.disabled .page-link {
+  color: rgba(255, 255, 255, 0.35) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  pointer-events: none !important;
+}
+@media (max-width: 768px) {
+  body.raqam-theme.raqam-account-page table.s-table thead th,
+  body.raqam-theme.raqam-account-page table.s-table td {
+    padding: 10px 12px !important;
+    font-size: 0.85rem !important;
+  }
+  body.raqam-theme.raqam-account-page .account-items-list,
+  body.raqam-theme.raqam-account-page .account-table-content {
+    border-radius: 12px !important;
+    overflow-x: auto !important;
+  }
+}
+/* ── صفحة المحفظة ── */
+body.raqam-theme.raqam-account-page.raqam-ac-wallet .address-card,
+body.raqam-theme.raqam-account-page.raqam-ac-wallet .product-entry--wishlist {
+  background: linear-gradient(135deg, rgba(54, 10, 97, 0.55) 0%, rgba(139, 81, 254, 0.22) 100%) !important;
+  backdrop-filter: blur(18px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.5) !important;
+  border: 1px solid var(--raqam-border-purple) !important;
+  border-radius: 16px !important;
+  color: #ffffff !important;
+  padding: 24px !important;
+  margin-bottom: 20px !important;
+  box-shadow: 0 8px 28px rgba(54, 10, 97, 0.35) !important;
+}
+body.raqam-theme.raqam-account-page.raqam-ac-wallet .icon-bag-dollar,
+body.raqam-theme.raqam-account-page.raqam-ac-wallet [class*="icon-bag-dollar"],
+body.raqam-theme.raqam-account-page.raqam-ac-wallet .product-entry--wishlist i {
+  color: var(--raqam-accent) !important;
+  font-size: 2rem !important;
+}
+body.raqam-theme.raqam-account-page.raqam-ac-wallet .product-entry--wishlist .price,
+body.raqam-theme.raqam-account-page.raqam-ac-wallet .product-entry--wishlist h2,
+body.raqam-theme.raqam-account-page.raqam-ac-wallet .product-entry--wishlist h3 {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+body.raqam-theme.raqam-account-page.raqam-ac-wallet .address-card p,
+body.raqam-theme.raqam-account-page.raqam-ac-wallet .address-card span {
+  color: #c4b5fd !important;
+}
+/* sky-theme account layout adapters */
+body.raqam-theme.raqam-account-page .account-content {
+    display: flex !important;
+    gap: 20px !important;
+    flex-wrap: wrap !important;
+}
+
+body.raqam-theme.raqam-account-page .account-content > .sidebar {
+    background: var(--raqam-glass-bg) !important;
+    backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-xl) !important;
+    box-shadow: 0 8px 32px rgba(54, 10, 97, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    color: var(--raqam-text) !important;
+    padding: 12px !important;
+}
+
+body.raqam-theme.raqam-account-page .sidebar .menu-item a {
+    color: var(--raqam-text) !important;
+    text-decoration: none !important;
+    display: block !important;
+    padding: 10px 14px !important;
+    border-radius: var(--raqam-radius-md) !important;
+    transition: background 0.25s ease !important;
+}
+
+body.raqam-theme.raqam-account-page .sidebar .menu-item a:hover {
+    background: rgba(139, 81, 254, 0.18) !important;
+}
+
+body.raqam-theme.raqam-account-page .account-layout {
+    flex: 1 !important;
+    min-width: 0 !important;
+    background: var(--raqam-glass-bg) !important;
+    backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-xl) !important;
+    box-shadow: 0 8px 32px rgba(54, 10, 97, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    color: var(--raqam-text) !important;
+    padding: 20px !important;
+}
+
+body.raqam-theme.raqam-account-page .account-heading {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme.raqam-account-page .horizontal-rule {
+    border-color: rgba(139, 81, 254, 0.25) !important;
+}
+
+body.raqam-theme.raqam-account-page .notification-item {
+    display: flex !important;
+    background: var(--raqam-glass-row) !important;
+    border-bottom: 1px solid rgba(139, 81, 254, 0.2) !important;
+    color: var(--raqam-text) !important;
+    padding: 14px 16px !important;
+    text-decoration: none !important;
+    transition: background 0.25s ease !important;
+}
+
+body.raqam-theme.raqam-account-page .notification-item:hover {
+    background: var(--raqam-glass-bg-hover) !important;
+}
+
+body.raqam-theme.raqam-account-page .notification-item h4,
+body.raqam-theme.raqam-account-page .notification-item p {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme.raqam-account-page table.table thead tr {
+    background: rgba(54, 10, 97, 0.55) !important;
+}
+
+body.raqam-theme.raqam-account-page table.table th,
+body.raqam-theme.raqam-account-page table.table td {
+    color: var(--raqam-text) !important;
+    border-color: rgba(139, 81, 254, 0.15) !important;
+}
+
+body.raqam-theme.raqam-account-page table.table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+body.raqam-theme.raqam-account-page table.table tbody tr:hover {
+    background: rgba(139, 81, 254, 0.14) !important;
+}
+
+body.raqam-theme.raqam-account-page .badge {
+    border-radius: 20px !important;
+    font-weight: 600 !important;
+}
+
+body.raqam-theme.raqam-account-page .btn-primary {
+    background: var(--raqam-btn-grad) !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+    border-radius: var(--raqam-radius-md) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   23. CHECKOUT — views/checkout/* (summary, loyalty modals)
+   ═══════════════════════════════════════════════════════════════ */
+
+body.raqam-theme .raqam-cart-page .raqam-checkout-summary,
+body.raqam-theme .raqam-cart-page .order-summary.raqam-checkout-summary {
+    background: var(--raqam-glass-card) !important;
+    backdrop-filter: blur(20px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+    border-radius: var(--raqam-radius-xl) !important;
+    box-shadow: 0 8px 32px rgba(54, 10, 97, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    color: var(--raqam-text) !important;
+    padding: 20px 24px !important;
+}
+
+body.raqam-theme .raqam-cart-page .raqam-checkout-summary h3,
+body.raqam-theme .raqam-cart-page .order-summary h3 {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+    margin-bottom: 14px !important;
+}
+
+body.raqam-theme .raqam-cart-page .raqam-checkout-summary .item-detail,
+body.raqam-theme .raqam-cart-page .order-summary .item-detail {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 6px 0 !important;
+    color: var(--raqam-text-purple) !important;
+    border-bottom: 1px solid rgba(139, 81, 254, 0.15) !important;
+}
+
+body.raqam-theme .raqam-cart-page .raqam-checkout-summary .item-detail label,
+body.raqam-theme .raqam-cart-page .order-summary .item-detail label {
+    color: inherit !important;
+    margin: 0 !important;
+}
+
+body.raqam-theme .raqam-cart-page .raqam-checkout-summary .payable-amount,
+body.raqam-theme .raqam-cart-page .order-summary .payable-amount {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-top: 12px !important;
+    padding-top: 12px !important;
+    border-top: 2px solid rgba(139, 81, 254, 0.35) !important;
+}
+
+body.raqam-theme .raqam-cart-page .raqam-checkout-summary .payable-amount label,
+body.raqam-theme .raqam-cart-page .order-summary .payable-amount label {
+    color: var(--raqam-text-lavender) !important;
+    font-weight: 700 !important;
+    font-size: 1.05rem !important;
+}
+
+body.raqam-theme .raqam-cart-page .raqam-checkout-summary .right,
+body.raqam-theme .raqam-cart-page .order-summary .right {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+}
+
+/* Loyalty / redeem modals */
+body.raqam-theme #loyalty_system_modal .modal-content,
+body.raqam-theme #points_exchange .modal-content {
+    background: var(--raqam-glass-bg) !important;
+    backdrop-filter: blur(22px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.5) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-xl) !important;
+    box-shadow: var(--raqam-shadow-glass) !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme #loyalty_system_modal .modal-header,
+body.raqam-theme #points_exchange .modal-header {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(139, 81, 254, 0.2) !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme #loyalty_system_modal .title,
+body.raqam-theme #loyalty_system_modal h4,
+body.raqam-theme #points_exchange h4 {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme #loyalty_system_modal .text-muted,
+body.raqam-theme #points_exchange .text-muted {
+    color: var(--raqam-text-purple) !important;
+}
+
+body.raqam-theme #loyalty_system_modal .nav-tabs-solid > li > a,
+body.raqam-theme #loyalty_system_modal .nav-tabs > li > a {
+    color: var(--raqam-text-purple) !important;
+    border-color: rgba(139, 81, 254, 0.25) !important;
+    background: transparent !important;
+}
+
+body.raqam-theme #loyalty_system_modal .nav-tabs > li.active > a {
+    color: var(--raqam-text) !important;
+    background: rgba(139, 81, 254, 0.18) !important;
+    border-color: var(--raqam-border-purple) !important;
+}
+
+body.raqam-theme #loyalty_system_modal .product--light {
+    background: var(--raqam-glass-card) !important;
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+    border-radius: var(--raqam-radius-lg) !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme #loyalty_system_modal .product--light__footer,
+body.raqam-theme #loyalty_system_modal .product--light__meta a {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme #loyalty_system_modal .btn-primary,
+body.raqam-theme #points_exchange .btn-primary {
+    background: var(--raqam-btn-grad) !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+    border-radius: var(--raqam-radius-md) !important;
+}
+
+body.raqam-theme #points_exchange .btn-cancel {
+    background: rgba(139, 81, 254, 0.12) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    color: var(--raqam-text-lavender) !important;
+    border-radius: var(--raqam-radius-md) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   24. CATEGORY / LISTING / SEARCH — products listing pages
+   ═══════════════════════════════════════════════════════════════ */
+
+body.raqam-theme.raqam-listing-page .raqam-listing-main,
+body.raqam-theme.raqam-listing-page .main {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme.raqam-listing-page .raqam-category-block,
+body.raqam-theme.raqam-listing-page .category-block {
+    padding: 8px 0 24px !important;
+}
+
+body.raqam-theme.raqam-listing-page .hero-image img,
+body.raqam-theme.raqam-listing-page .hero-image .logo {
+    border-radius: var(--raqam-radius-lg) !important;
+    box-shadow: var(--raqam-shadow-card) !important;
+}
+
+body.raqam-theme.raqam-listing-page .raqam-listing-toolbar .product-group-heading,
+body.raqam-theme.raqam-listing-page .product-group-heading {
+    color: var(--raqam-text) !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    background: linear-gradient(90deg, #ffffff 0%, #a855f7 50%, #360a61 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+body.raqam-theme.raqam-listing-page .product-group-divider {
+    border-color: rgba(139, 81, 254, 0.25) !important;
+    margin: 12px 0 16px !important;
+}
+
+body.raqam-theme.raqam-listing-page .raqam-listing-grid,
+body.raqam-theme.raqam-listing-page #load_data.product-grid-4 {
+    gap: 16px !important;
+    row-gap: 16px !important;
+    column-gap: 16px !important;
+}
+
+body.raqam-theme.raqam-listing-page .raqam-listing-grid .product-box,
+body.raqam-theme.raqam-listing-page #load_data .product-box {
+    min-width: 0 !important;
+}
+
+body.raqam-theme.raqam-listing-page .top-toolbar .btn-dark {
+    background: var(--raqam-glass-bg) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    color: var(--raqam-text) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    font-weight: 600 !important;
+}
+
+body.raqam-theme.raqam-listing-page .top-toolbar .dropdown-list {
+    background: var(--raqam-dropdown-bg) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45) !important;
+}
+
+body.raqam-theme.raqam-listing-page .top-toolbar .dropdown-list a {
+    color: var(--raqam-text) !important;
+    text-decoration: none !important;
+}
+
+body.raqam-theme.raqam-listing-page .top-toolbar .dropdown-list a:hover,
+body.raqam-theme.raqam-listing-page .top-toolbar .dropdown-list li:hover {
+    background: rgba(139, 81, 254, 0.18) !important;
+    color: var(--raqam-text-lavender) !important;
+}
+
+body.raqam-theme.raqam-listing-page .s-products-list-loading-wrapper {
+    color: var(--raqam-text-purple) !important;
+    text-align: center !important;
+    padding: 24px !important;
+}
+
+@media (max-width: 767px) {
+    body.raqam-theme.raqam-listing-page .raqam-listing-grid,
+    body.raqam-theme.raqam-listing-page #load_data.product-grid-4 {
+        gap: 12px !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   25. LOGIN MODAL — §7 enhancements (raqam-login-modal-glass parity)
+   ═══════════════════════════════════════════════════════════════ */
+
+body.raqam-theme #customerLoginModal.raqam-login-modal,
+body.raqam-theme #customerLoginModal {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme #customerLoginModal .modal-content {
+    box-shadow: 0 16px 48px rgba(54, 10, 97, 0.45), 0 0 0 1px rgba(139, 81, 254, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+body.raqam-theme #customerLoginModal .s-modal-header-inner {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+}
+
+body.raqam-theme #customerLoginModal .s-login-modal-header-icon {
+    min-width: 44px !important;
+    flex-shrink: 0 !important;
+    margin-inline-start: 8px !important;
+}
+
+body.raqam-theme #customerLoginModal .s-login-modal-header-icon i {
+    font-size: 1.15rem !important;
+    line-height: 1 !important;
+}
+
+body.raqam-theme #customerLoginModal .close,
+body.raqam-theme #customerLoginModal .s-modal-close {
+    width: auto !important;
+    height: auto !important;
+    min-width: unset !important;
+    padding: 6px !important;
+    transition: opacity 0.2s ease, color 0.2s ease !important;
+}
+
+body.raqam-theme #customerLoginModal .close i,
+body.raqam-theme #customerLoginModal .close .icon-cancel {
+    color: inherit !important;
+    font-size: 16px !important;
+}
+
+body.raqam-theme #customerLoginModal .auth-content,
+body.raqam-theme #customerLoginModal .s-login-modal-wrapper {
+    padding-top: 20px !important;
+}
+
+body.raqam-theme #customerLoginModal .login-form input.control,
+body.raqam-theme #customerLoginModal .login-form #phone,
+body.raqam-theme #customerLoginModal .login-form #otp,
+body.raqam-theme #customerLoginModal .iti input,
+body.raqam-theme #customerLoginModal .s-tel-input input {
+    background-image: none !important;
+    width: 100% !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+body.raqam-theme #customerLoginModal .login-form input:-webkit-autofill,
+body.raqam-theme #customerLoginModal .login-form input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--raqam-text) !important;
+    caret-color: var(--raqam-text) !important;
+    box-shadow: 0 0 0 1000px var(--raqam-input-bg) inset !important;
+}
+
+body.raqam-theme #customerLoginModal .iti,
+body.raqam-theme #customerLoginModal .iti--allow-dropdown,
+body.raqam-theme #customerLoginModal .s-tel-input {
+    width: 100% !important;
+    background: transparent !important;
+}
+
+body.raqam-theme #customerLoginModal .iti__flag-container {
+    z-index: 2 !important;
+}
+
+body.raqam-theme #customerLoginModal #loginSubmit,
+body.raqam-theme #customerLoginModal .btn-primary#loginSubmit {
+    margin-top: 8px !important;
+    width: 100% !important;
+}
+
+body.raqam-theme #customerLoginModal #loginSubmit .s-button-text,
+body.raqam-theme #customerLoginModal .s-login-modal-enter-button .s-button-text {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme #customerLoginModal .login-form input::placeholder,
+body.raqam-theme #customerLoginModal .iti input::placeholder {
+    color: var(--raqam-input-placeholder) !important;
+    opacity: 1 !important;
+}
+
+body.raqam-theme #customerLoginModal .login-form input:focus,
+body.raqam-theme #customerLoginModal .iti input:focus,
+body.raqam-theme #customerLoginModal .s-tel-input input:focus {
+    outline: none !important;
+    border-color: var(--raqam-accent) !important;
+    box-shadow: 0 0 0 3px rgba(139, 81, 254, 0.28), inset 0 1px 2px rgba(0, 0, 0, 0.18) !important;
+}
+
+body.raqam-theme #customerLoginModal #otpSubmit:hover,
+body.raqam-theme #customerLoginModal .verify-resend:hover {
+    background: rgba(139, 81, 254, 0.28) !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme #customerLoginModal .verify-resend-message {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+body.raqam-theme #customerLoginModal .verify-resend-message b,
+body.raqam-theme #customerLoginModal .s-verify-timer {
+    color: var(--raqam-accent) !important;
+}
+
+@media (max-width: 768px) {
+    body.raqam-theme #customerLoginModal #loginSubmit,
+    body.raqam-theme #customerLoginModal .btn-primary#loginSubmit {
+        padding: 14px 16px !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   26. ORDER VIEW DETAIL — orders/view.twig
+   ═══════════════════════════════════════════════════════════════ */
+
+body.raqam-theme.raqam-ac-order-view .raqam-order-view,
+body.raqam-theme.raqam-ac-order-view .sale-container {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-section {
+    background: var(--raqam-glass-card) !important;
+    backdrop-filter: blur(16px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(1.4) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-xl) !important;
+    margin-bottom: 20px !important;
+    overflow: hidden !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-section .section-title,
+body.raqam-theme.raqam-ac-order-view .sale-section .section-title span {
+    background: rgba(54, 10, 97, 0.55) !important;
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+    padding: 12px 16px !important;
+    border-bottom: 2px solid var(--raqam-accent) !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-section .section-content {
+    padding: 16px 18px !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-section .row .title {
+    color: var(--raqam-text-purple) !important;
+    font-weight: 600 !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-section .row .value {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .rating-header.gradient-bg {
+    background: var(--raqam-glass-card) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-lg) !important;
+    color: var(--raqam-text) !important;
+    padding: 16px 18px !important;
+    margin-bottom: 20px !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .rating-header h2,
+body.raqam-theme.raqam-ac-order-view .rating-header p {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-section table {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-section table thead tr {
+    background: rgba(54, 10, 97, 0.55) !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-section table th {
+    color: var(--raqam-text) !important;
+    border-bottom: 2px solid var(--raqam-accent) !important;
+    padding: 12px 14px !important;
+    font-weight: 600 !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-section table td {
+    color: var(--raqam-text) !important;
+    border-bottom: 1px solid rgba(139, 81, 254, 0.15) !important;
+    padding: 12px 14px !important;
+    background: transparent !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-section table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-section table tbody tr:hover {
+    background: rgba(139, 81, 254, 0.1) !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .item-options {
+    color: var(--raqam-text-purple) !important;
+    font-size: 0.85rem !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-summary td {
+    color: var(--raqam-text) !important;
+    padding: 8px 12px !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .sale-summary tr.bold td {
+    font-weight: 700 !important;
+    color: var(--raqam-text-lavender) !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .order-box-container .box {
+    background: var(--raqam-glass-card) !important;
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+    border-radius: var(--raqam-radius-lg) !important;
+    margin-bottom: 16px !important;
+    overflow: hidden !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .order-box-container .box-title {
+    background: rgba(54, 10, 97, 0.45) !important;
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+    padding: 10px 14px !important;
+    border-bottom: 1px solid rgba(139, 81, 254, 0.25) !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .order-box-container .box-content {
+    color: var(--raqam-text-purple) !important;
+    padding: 14px 16px !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .order-box-container .box-content,
+body.raqam-theme.raqam-ac-order-view .order-box-container .box-content p,
+body.raqam-theme.raqam-ac-order-view .order-box-container .box-content span {
+    color: var(--raqam-text-purple) !important;
+}
+
+body.raqam-theme.raqam-ac-order-view .btn-primary {
+    background: var(--raqam-btn-grad) !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    box-shadow: var(--raqam-shadow-btn) !important;
+}
+
+@media (max-width: 768px) {
+    body.raqam-theme.raqam-ac-order-view .sale-section .table {
+        overflow-x: auto !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   27. TESTIMONIALS VIEW-ALL — raqam-testimonials-glass
+   ═══════════════════════════════════════════════════════════════ */
+
+body.raqam-theme.raqam-testimonials-page .nav-header,
+body.raqam-theme.raqam-testimonials-page .nav-header.bg-gray-100 {
+    background: var(--raqam-nav-glass) !important;
+    backdrop-filter: blur(18px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.4) !important;
+    border-bottom: 1px solid var(--raqam-border-purple) !important;
+    box-shadow: 0 4px 24px rgba(54, 10, 97, 0.25) !important;
+}
+
+body.raqam-theme.raqam-testimonials-page .nav-header h1,
+body.raqam-theme.raqam-testimonials-page .nav-header .da-tm,
+body.raqam-theme.raqam-testimonials-page .product-group-heading {
+    color: var(--raqam-text) !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme.raqam-testimonials-page #load_data.raqam-testimonials-grid,
+body.raqam-theme.raqam-testimonials-page .raqam-testimonials-grid {
+    gap: 20px !important;
+    row-gap: 20px !important;
+    column-gap: 20px !important;
+}
+
+body.raqam-theme.raqam-testimonials-page #load_data.raqam-testimonials-grid > div,
+body.raqam-theme.raqam-testimonials-page .raqam-testimonials-grid > div,
+body.raqam-theme.raqam-testimonials-page #load_data.raqam-testimonials-grid .flex.rounded-lg,
+body.raqam-theme.raqam-testimonials-page .raqam-testimonials-grid .testimonial-card {
+    background: var(--raqam-glass-bg) !important;
+    backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.6) brightness(1.05) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px rgba(54, 10, 97, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    color: var(--raqam-text) !important;
+    transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+body.raqam-theme.raqam-testimonials-page #load_data.raqam-testimonials-grid > div:hover,
+body.raqam-theme.raqam-testimonials-page .raqam-testimonials-grid > div:hover {
+    background: var(--raqam-glass-bg-hover) !important;
+    border-color: rgba(139, 81, 254, 0.55) !important;
+    box-shadow: 0 12px 40px rgba(139, 81, 254, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+}
+
+body.raqam-theme.raqam-testimonials-page .testimonial__avatar {
+    border: 2px solid var(--raqam-accent) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 20px rgba(139, 81, 254, 0.4) !important;
+    transition: box-shadow 0.3s ease, transform 0.3s ease !important;
+}
+
+body.raqam-theme.raqam-testimonials-page .testimonial__avatar:hover {
+    box-shadow: 0 0 28px rgba(139, 81, 254, 0.55) !important;
+    transform: scale(1.05) !important;
+}
+
+body.raqam-theme.raqam-testimonials-page .testimonial__avatar + h4,
+body.raqam-theme.raqam-testimonials-page h4.da-tm,
+body.raqam-theme.raqam-testimonials-page .s-testimonials--slider--img h4 {
+    color: var(--raqam-text) !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+}
+
+body.raqam-theme.raqam-testimonials-page .testimonial__rating .icon-star2,
+body.raqam-theme.raqam-testimonials-page .s-rating-stars-wrapper i {
+    color: #ffd700 !important;
+    filter: drop-shadow(0 1px 2px rgba(255, 215, 0, 0.35)) !important;
+}
+
+body.raqam-theme.raqam-testimonials-page p.da-tm,
+body.raqam-theme.raqam-testimonials-page p.text-base.da-tm {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 15px !important;
+    line-height: 1.75 !important;
+    text-align: center !important;
+}
+
+body.raqam-theme.raqam-testimonials-page .testimonial__icon,
+body.raqam-theme.raqam-testimonials-page .testimonial__icon.icon-quote {
+    color: var(--raqam-accent) !important;
+    opacity: 0.18 !important;
+}
+
+@media (max-width: 768px) {
+    body.raqam-theme.raqam-testimonials-page #load_data.raqam-testimonials-grid,
+    body.raqam-theme.raqam-testimonials-page .raqam-testimonials-grid {
+        gap: 16px !important;
+    }
+    body.raqam-theme.raqam-testimonials-page h4.da-tm {
+        font-size: 16px !important;
+    }
+    body.raqam-theme.raqam-testimonials-page p.da-tm {
+        font-size: 14px !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   6b. FOOTER POLISH — raqam-footer-white + newsletter
+   ═══════════════════════════════════════════════════════════════ */
+
+body.raqam-theme .raqam-theme-footer,
+body.raqam-theme footer.raqam-theme-footer {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .raqam-theme-footer .footer-scroll-link {
+    color: var(--raqam-text-muted) !important;
+    text-decoration: none !important;
+}
+
+body.raqam-theme .raqam-theme-footer .footer-scroll-link:hover {
+    color: var(--raqam-text-lavender) !important;
+}
+
+body.raqam-theme .raqam-theme-footer .footer-newsletter {
+    background: var(--raqam-glass-bg) !important;
+    backdrop-filter: blur(18px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.4) !important;
+    border: 1px solid var(--raqam-border-purple-soft) !important;
+    border-radius: var(--raqam-radius-xl) !important;
+    padding: 24px 20px !important;
+    text-align: center !important;
+}
+
+body.raqam-theme .raqam-theme-footer .footer-newsletter h3,
+body.raqam-theme .raqam-theme-footer .footer-newsletter p {
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .raqam-theme-footer .footer-newsletter-form .control {
+    background: var(--raqam-input-bg) !important;
+    border: 1px solid var(--raqam-border-purple) !important;
+    border-radius: var(--raqam-radius-md) !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .raqam-theme-footer .footer-newsletter-form .btn-primary {
+    background: var(--raqam-btn-grad) !important;
+    border: none !important;
+    color: var(--raqam-text) !important;
+    border-radius: var(--raqam-radius-md) !important;
+}
+
+body.raqam-theme .raqam-theme-footer .footer-middle p,
+body.raqam-theme .raqam-theme-footer .footer-middle a,
+body.raqam-theme .raqam-theme-footer .footer-middle h3,
+body.raqam-theme .raqam-theme-footer .footer-middle .title,
+body.raqam-theme .raqam-theme-footer .copyright,
+body.raqam-theme .raqam-theme-footer p {
+    color: var(--raqam-text-muted) !important;
+    fill: var(--raqam-text-muted) !important;
+}
+
+body.raqam-theme .raqam-theme-footer .footer-middle a:hover {
+    color: var(--raqam-text-lavender) !important;
+    opacity: 0.9 !important;
+}
+
+body.raqam-theme .raqam-theme-footer .icons img {
+    filter: brightness(0) invert(1) opacity(0.85) !important;
+    opacity: 0.85 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   28. REVIEWS FILTER — product page best-effort
+   ═══════════════════════════════════════════════════════════════ */
+
+body.raqam-theme .raqam-product-page .s-comments-sort-input option,
+body.raqam-theme .raqam-product-page #comments-filter option {
+    background: var(--raqam-bg-dark) !important;
+    color: var(--raqam-text) !important;
+}
+
+body.raqam-theme .raqam-product-page .comments-wrapper .s-comments-sort-wrapper label,
+body.raqam-theme .raqam-product-page #nav-comments .s-comments-sort-wrapper label {
+    color: var(--raqam-text-purple) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+body.raqam-theme .raqam-product-page .s-comments-sort-input:focus,
+body.raqam-theme .raqam-product-page #comments-filter:focus {
+    border-color: var(--raqam-accent) !important;
+    box-shadow: 0 0 0 3px rgba(139, 81, 254, 0.28) !important;
+}
+

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>{% block title %}{% endblock %}</title>
+    {% set asset_url = getFunction('assets') %}
+    {% set storage_url = 'https://cdn.twsaa.com/' %}
+    {% set lang = getFunction('locale') %}
+    {% set channel = getFunction('getCurrentChannel') %}
+
+    {% if lang == 'ar' %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'css/bootstrap-ar.min.css' }}">
+    {% else %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'css/bootstrap-en.min.css' }}">
+    {% endif %}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'css/fonts.css' }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'css/front-fonts.css' }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'css/ui.css' }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'js/plugins/owlcarousel/assets/owl.carousel.min.css' }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'js/plugins/owlcarousel/assets/owl.theme.default.min.css' }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'css/swiper-bundle.min.css' }}" />
+    {% if lang == 'ar' %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'css/ar.css' }}" />
+    {% else %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'css/en.css' }}" />
+    {% endif %}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'css/app.css' }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'js/plugins/toastr/toastr.min.css' }}">
+
+    {# Vendor CSS: CDN when online; optional for local preview #}
+    <link rel="stylesheet" type="text/css" href="https://twsaa.com/admin-themes/mbotiq/assets/vendor/datepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="https://twsaa.com/admin-themes/mbotiq/assets/vendor/bootstrap-select.min.css">
+
+    {# Raqam overlay — loads after all official Sky CSS #}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'css/raqam-theme.css' }}">
+    <meta name="theme-color" content="#050508">
+
+    <style>
+        :root {
+            --brand: {{ channel.color|default('#000000') }};
+            --brand-light: {{ channel.secondary_color|default('#f0f0f0') }};
+        }
+
+        .cat-sub {
+            position: absolute;
+            width: 260px;
+            background: #ffffff;
+            border: 1px solid var(--brand-light);
+            border-radius: 4px;
+            text-align: right;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-inline-start: -110px;
+            display: none;
+            overflow: hidden;
+            z-index: 40;
+            list-style: none;
+            padding: 0;
+        }
+
+        .cat-sub li ul {
+            right: 100%;
+        }
+
+        .nav .cat-sub {
+            display: none;
+        }
+
+        .nav li:hover > .cat-sub {
+            display: block;
+        }
+
+        .nav .cat-sub li:hover > .cat-sub {
+            display: block;
+            margin-top: -40px;
+        }
+
+        .nav li {
+            position: relative;
+        }
+
+        .nav a {
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+        }
+
+        .nav .cat-sub {
+            position: absolute;
+            left: 0;
+            top: 100%;
+        }
+
+        .nav .cat-sub a {
+            padding: 10px 12px;
+            color: #191919;
+        }
+
+        .nav .cat-sub a:hover {
+            background-color: var(--brand-light);
+            color: var(--brand);
+        }
+    </style>
+
+    {% block head %}{% endblock %}
+    <script type="text/javascript" src="{{ asset_url ~'js/core/libraries/jquery.min.js' }}"></script>
+    <script>
+        Number.prototype.toLocaleFixed = function(currency = '') {
+            return currency.concat(' ').concat(
+                this.toLocaleString(undefined, {
+                    minimumFractionDigits: 2
+                })).trim();
+        };
+        String.prototype.cleanPhone = function() {
+            return this.replace(/[^0-9\+]+/g, '');
+        };
+    </script>
+</head>
+<body class="{{ lang == 'ar' ? 'rtl' : 'ltr' }} raqam-theme{% block body_extra_class %}{% endblock %}">
+    <div class="raqam-space-bg" aria-hidden="true"><div class="raqam-stars"></div></div>
+    <div class="app" id="app">
+
+        {% set ad = getFunction('getad') %}
+        {% set path = getFunction('getPath') %}
+        {% set id = product is defined ? product['id'] : 0 %}
+        {% if ad %}
+            {% set link = jsonDecode(ad['link']) %}
+
+            {% if ad['pages'] == 'all' or
+                (ad['pages'] == 'home' and path == '/') or
+                (ad['pages'] == 'category' and path != '/' and id == 0) or
+                (ad['pages'] == 'product' and id > 0) or
+                (ad['pages'] == 'cart' and path == '/checkout/cart') or
+                (ad['pages'] == 'checkout' and path == '/checkout/onepage') %}
+
+                <div class="store-notify" style="background-color: {{ ad['background_color'] }}; color: {{ ad['font_color'] }};">
+                    <div class="container center-between py-2.5">
+                        <h2 class="flex-1 font-bold text-center text-sm">
+                            <i class="inline-block align-middle mr-2 text-base {{ ad['icon'] }}" style="background-color: {{ ad['background_color'] }}; color: {{ ad['font_color'] }};"></i>
+                            {% if link['slug'] %}
+                                <a class="text-white" href="{{ theme_base|default('') ~ '/' ~ link['slug'] }}" target="_self">
+                            {% else %}
+                                <a class="text-white" target="_self">
+                            {% endif %}
+                                {{ ad['description'] }}
+                            </a>
+                        </h2>
+                        <a href="#" class="px-1 ad-close icon-cancel" id="notify-close" aria-label="close-alert"></a>
+                    </div>
+                </div>
+
+            {% endif %}
+        {% endif %}
+
+        <div class="header">
+            {{ include("layout/header.twig") }}
+        </div>
+
+        <div class="main main-container-wrapper">
+            <div class="content-container">
+                {% block main_content %}{% endblock %}
+            </div>
+        </div>
+        <div class="footer">
+            {{ include("layout/footer.twig") }}
+        </div>
+
+        {% if not authUser %}
+            {{ include("customers/session/popup.twig") }}
+        {% endif %}
+    </div>
+
+    <script type="text/javascript">
+        window.flashMessages = [];
+        window.serverErrors = [];
+    </script>
+
+    <script type="text/javascript" src="{{ asset_url ~'js/shop.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_url ~'js/plugins/owlcarousel/owl.carousel.min.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_url ~'js/core/libraries/swiper-bundle.min.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_url ~'js/core/libraries/bootstrap.min.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_url ~'js/core/libraries/toastr.min.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_url ~'js/plugins/font-awesome/font-awesome.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_url ~'js/core/libraries/jquery-ui.min.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_url ~'js/core/libraries/datepicker.min.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_url ~'js/ui.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_url ~'js/core/libraries/bootstrap-select.min.js' }}"></script>
+    <script type="text/javascript" src="{{ asset_url ~'js/plugins/popper/popper.min.js' }}"></script>
+    <script>
+        {% set getSuccess = getFunction('getSuccess') %}
+        {% if getSuccess %}
+            toastr.options = {
+                "closeButton" : true,
+                "progressBar" : true
+            };
+            toastr.success("{{ getSuccess }}");
+        {% endif %}
+
+        {% set getError = getFunction('getError') %}
+        {% if getError %}
+            toastr.options = {
+                "closeButton" : true,
+                "progressBar" : true
+            };
+            toastr.error("{{ getError }}");
+        {% endif %}
+
+        {% set getInfo = getFunction('getInfo') %}
+        {% if getInfo %}
+            toastr.options = {
+                "closeButton" : true,
+                "progressBar" : true
+            };
+            toastr.info("{{ getInfo }}");
+        {% endif %}
+
+        {% set getWarning = getFunction('getWarning') %}
+        {% if getWarning %}
+            toastr.options = {
+                "closeButton" : true,
+                "progressBar" : true
+            };
+            toastr.warning("{{ getWarning }}");
+        {% endif %}
+
+        {% set getErrorMessage = getFunction('getErrorMessage') %}
+        {% if getErrorMessage %}
+            {% for error in getErrorMessage %}
+                toastr.options = {
+                    "closeButton" : true,
+                    "progressBar" : true
+                };
+                toastr.error("{{ error }}");
+            {% endfor %}
+        {% endif %}
+    </script>
+    <script type="text/javascript" src="https://twsaa.com/admin-themes/mbotiq/assets/search/api.js"></script>
+    {% if lang == 'en' %}
+    <script type="text/javascript" src="https://twsaa.com/admin-themes/mbotiq/assets/search/search.min.js"></script>
+    {% else %}
+    <script type="text/javascript" src="https://twsaa.com/admin-themes/mbotiq/assets/search/search.ar.min.js"></script>
+    {% endif %}
+    <script>
+        $(document).ready(function() {
+            $('.ui.search')
+                .search({
+                    apiSettings: {
+                        url: '{{ theme_base|default('') }}/api/search?term={query}&language=false',
+                        onRequest: function(promise, xhr) {
+                            $('.search-loader').fadeIn(200);
+                        },
+                        onResponse: function(response) {
+                            $('.search-loader').fadeOut(200);
+                            const res = response.data || [];
+                            res.data = res.data.map(r => {
+                                r.price = '<span class="product-price">'+r.price+'</span>';
+                                let discountedPrice = r.special_price;
+                                let discounted = r.discounted;
+                                if (discounted) {
+                                    r.price =
+                                        `<span style='color:red'>${discountedPrice}</span><br/><small><s style='opacity:0.4;'>${r.price}</s></small>`;
+                                }
+                                r.url = '{{ theme_base|default('') }}/' + r.url_key + '?origsource=shopsearch';
+                                r.description = '';
+                                r.action = 'action1';
+                                r.actionText = 'action2';
+                                r.actionURL = r.url;
+                                return r;
+                            });
+                            return res
+                        },
+                    },
+                    fields: {
+                        results: 'data',
+                        title: 'name',
+                    }
+                })
+        });
+    </script>
+    {% block footer_scripts %}{% endblock %}
+
+    <div class="modal-overlay"></div>
+    <script>
+        $(document).ready(function() {
+            $(document).off('click.skyThemeAddToCart').on('click.skyThemeAddToCart', '.addToCart', function(e) {
+                e.preventDefault();
+
+                var productId = $(this).data("id");
+                var $form = $('#addToCart-' + productId);
+
+                if (!$form.length) {
+                    return;
+                }
+
+                var formData = $form.serialize();
+                var $imgToDrag = $(this).closest('.product-card').find('img').eq(0);
+                var $cart = $('.top-links-cart').first();
+
+                $.ajax({
+                    url: "{{ route('cart.addition', '') }}" + '/' + productId,
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        if (response['redirect-url']) {
+                            location.href= response['redirect-url'];
+                        } else if (response.success == true) {
+                            if (window.toastr && response.message) {
+                                toastr.success(response.message);
+                            }
+
+                            $('.cart-count').removeClass('d-none');
+                            $('.cart-count').html(response.count || 0);
+                            $('.disabled-link').removeClass('disabled-link');
+
+                            if ($imgToDrag.length && $cart.length && $imgToDrag.offset() && $cart.offset()) {
+                                var imgclone = $imgToDrag.clone()
+                                    .offset({
+                                        top: $imgToDrag.offset().top,
+                                        left: $imgToDrag.offset().left
+                                    })
+                                    .css({
+                                        'opacity': '0.5',
+                                        'position': 'absolute',
+                                        'height': '150px',
+                                        'width': '150px',
+                                        'z-index': '100'
+                                    })
+                                    .appendTo($('body'))
+                                    .animate({
+                                        'top': $cart.offset().top + 10,
+                                        'left': $cart.offset().left + 10,
+                                        'width': 75,
+                                        'height': 75
+                                    }, 600);
+
+                                imgclone.animate({
+                                    'width': 0,
+                                    'height': 0
+                                }, function() {
+                                    $(this).detach();
+                                });
+                            }
+                        } else {
+                            if (window.toastr && response.message) {
+                                toastr.warning(response.message);
+                            }
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

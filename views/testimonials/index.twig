@@ -1,0 +1,42 @@
+{% extends "layout/main.twig" %}
+{% block body_extra_class %} raqam-testimonials-page{% endblock %}
+{% block title %} {{ title|default('آراء العملاء') }} {% endblock %}
+{% block main_content %}
+
+<div class="main-container-wrapper">
+    <div class="nav-header bg-gray-100">
+        <div class="nav-title">
+            <h1 class="da-tm">{{ title|default('آراء العملاء') }}</h1>
+        </div>
+    </div>
+
+    <div class="main">
+        <h3 class="product-group-heading">{{ subtitle|default('آراء عملائنا') }}</h3>
+        <div id="load_data" class="gird-view grid raqam-testimonials-grid">
+            {% for review in reviews %}
+                <div>
+                    <div class="flex h-full bg-white da-bgg rounded-lg testimonial-card">
+                        <div class="s-testimonials--slider--img flex-center flex-col gap-2 w-full p-4" style="text-align: -webkit-center;">
+                            <div class="testimonial__avatar overflow-hidden h-24 w-24 flex z-1 rounded-full">
+                                <img src="{{ asset_url ~ ('images/') }}{{ review.customer.gender|default('other') }}-gender.png"
+                                     alt="{{ review.name }}" width="75" height="75" style="width: 75px">
+                            </div>
+                            <h4 class="text-lg leading-6 da-tm">{{ review.name }}</h4>
+                            <div class="testimonial__rating text-sm">
+                                <div class="s-rating-stars-wrapper">
+                                    {% for i in 0..4 %}
+                                        <i class="icon-star2" style="color: {{ review.rating > i ? '#FFD700' : '#d4d4d4' }};"></i>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <p class="text-base da-tm leading-6 w-full text-center my-2">{{ review.comment }}</p>
+                            <i class="testimonial__icon icon-quote absolute top-4 end-4 text-3xl da-tm opacity-10"></i>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

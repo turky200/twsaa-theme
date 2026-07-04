@@ -1,0 +1,139 @@
+<header class="site-header raqam-theme-header">
+    {% set storage_url = 'https://cdn.twsaa.com/' %}
+    <div class="header-container">
+        <div class="header-row-one raqam-header-row">
+            <ul class="top-links top-links-1">
+                <li>
+                    <div>
+                        <div class="dropdown-toggle top-links-icon" aria-label="locale-switcher">
+                            <i class="icon-world"></i>
+                        </div>
+
+                        <div class="dropdown-list bottom-left dropdown-links" style="display: none;">
+                            <ul>
+                                {% for locale in getFunction('getAllLocales') %}
+                                    <li>
+                                        <a href="?locale={{ locale.code }}">{{ locale.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div>
+                        <div class="dropdown-toggle top-links-icon" aria-label="currency-switcher">
+                            <i class="icon-flag"></i>
+                        </div>
+
+                        <div class="dropdown-list bottom-left dropdown-links" style="display: none;">
+                            <ul>
+                                {% for currency in getFunction('getActiveChannelCurrency') %}
+                                    <li>
+                                        <a href="?currency={{ currency.code }}" class="{{ currency.company_id }} {{ currency.id }}">{{ currency.code }} {{ currency.symbol }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="cart-dropdown-container has-counter">
+                    <a href="{{ theme_base|default('') }}/checkout/cart" aria-label="cart-page">
+                        <span class="top-links-icon top-links-cart">
+                            <span class="icon-cart"></span>
+                            <span class="count-wrapper cart-count count">{{ getFunction('cartItemsCount') }}</span>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="header-account-item">
+                    <div>
+                        <div
+                            {% if authUser %}
+                                class="dropdown-toggle top-links-icon top-links-account"
+                            {% else %}
+                                class="top-links-icon top-links-account"
+                                data-toggle="modal" data-target="#customerLoginModal"
+                            {% endif %}
+                        >
+                            <i class="icon-user"></i>
+                        </div>
+
+                        {% if authUser %}
+                            <ul class="dropdown-list bottom-right customer-dropdown dropdown-links">
+                                <li class="no-link">
+                                    {{ authUser.first_name }}
+                                </li>
+                                <li>
+                                    <a href="{{ theme_base|default('') }}/customer/account/notifications"><i class="icon-bell"></i>
+                                        {{ ('shop::app.header.notifications'|trans) }}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ theme_base|default('') }}/customer/account/profile"><i class="icon-user"></i>
+                                        {{ ('shop::app.header.profile'|trans) }}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ theme_base|default('') }}/customer/account/wishlist"><i class="icon-heart"></i>
+                                        {{ ('shop::app.header.wishlist'|trans) }}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ theme_base|default('') }}/customer/account/orders"><i class="icon-packed-box"></i>
+                                        {{ ('shop::app.header.orders'|trans) }}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ theme_base|default('') }}/customer/account/cart"><i class="icon-cart"></i>
+                                        {{ ('shop::app.header.cart'|trans) }}</a>
+                                </li>
+                                <hr />
+                                <li>
+                                    <a href="{{ theme_base|default('') }}/customer/account/logout"><i class="icon-send-out"></i>
+                                        {{ ('shop::app.header.logout'|trans) }}</a>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
+
+            {% set channel = getFunction('getCurrentChannel') %}
+            {% set channelLogo = channel and channel.logo ? channel.logo : '' %}
+            {% set logoUrl = channelLogo starts with 'http' ? channelLogo : storage_url ~ channelLogo %}
+            <div class="store-logo top-links-2 raqam-zone-center">
+                <a href="{{ theme_base|default('') }}/" class="store-logo-link raqam-brand-link">
+                    {% if channel %}
+                        <img src="{{ logoUrl }}" class="logo" alt="{{ channel.name }}"
+                             onerror="this.style.display='none'; this.parentElement.classList.add('logo-fallback-active');">
+                        <span class="logo-fallback-text">{{ channel.name }}</span>
+                    {% else %}
+                        <h1>{{ channel.name }}</h1>
+                    {% endif %}
+                </a>
+            </div>
+
+            <ul class="top-links top-links-3">
+                <li class="header-search-item">
+                    <div class="dropdown-toggle top-links-icon top-links-search icon-magnifying-glass icon-search"></div>
+                    <div class="dropdown-list bottom-left popper-tooltip" style="display: none;">
+                        <div class="ui search">
+                            <input type="text" placeholder="ابحث عن منتجك" value="" class="prompt search-box"
+                                   autocomplete="off">
+                            <i class="notch-loader gray search-loader" style="display: none;"></i>
+                            <div class="results"></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="header-menu-item">
+                    <button type="button" class="top-links-icon menu-trigger-btn" id="menu-toggle" aria-label="open-main-menu">
+                        <i class="icon-menu"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="primary-menu raqam-header-category-source">
+            {% include 'layout/navbar.twig' %}
+        </div>
+    </div>
+</header>

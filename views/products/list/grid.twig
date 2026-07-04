@@ -1,0 +1,18 @@
+<div class="product-group raqam-listing-toolbar">
+    <div class="product-group-heading">
+        {# {{ urldecode(request('term')) }} #}
+        {# {% if products.total %} 
+            {{ products.total }}
+            {{ (str_plural('shop::app.search.found-result', products.total)) }}
+        {% endif %} #}
+    </div>
+
+    <div class="product-group-divider"></div>
+    {% if sorter == true %}
+        <div class="product-group-arrows">
+            {% include 'products/list/sorter.twig' %}
+        </div>
+    {% endif %}
+</div>
+<div id="load_data" class="product-grid-4 raqam-listing-grid">
+</div>

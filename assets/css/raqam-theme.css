@@ -5018,3 +5018,95 @@ body.raqam-theme .raqam-product-page #comments-filter:focus {
     box-shadow: 0 0 0 3px rgba(139, 81, 254, 0.28) !important;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   29b. STORE-FOOTER — flex columns (footer.twig restructure)
+   ═══════════════════════════════════════════════════════════════ */
+body.raqam-theme footer.store-footer .store-footer__inner,
+body.raqam-theme .raqam-theme-footer.store-footer .footer-main {
+    background: transparent !important;
+}
+
+body.raqam-theme footer.store-footer .footer-middle.footer-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 24px !important;
+    width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 16px 0 !important;
+}
+
+@media (min-width: 768px) {
+    body.raqam-theme footer.store-footer .footer-middle.footer-container {
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        justify-content: space-between !important;
+        gap: 32px !important;
+    }
+}
+
+body.raqam-theme footer.store-footer .footer-col-brand,
+body.raqam-theme footer.store-footer .footer-col-contact,
+body.raqam-theme footer.store-footer .footer-col-legal {
+    flex: 1 1 0;
+    min-width: 0;
+    text-align: center;
+}
+
+body.raqam-theme footer.store-footer .footer-bottom {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    border-top: 1px solid rgba(139, 81, 254, 0.2) !important;
+    padding-top: 16px !important;
+    margin-top: 8px !important;
+}
+
+@media (min-width: 992px) {
+    body.raqam-theme footer.store-footer .footer-bottom {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+    }
+}
+
+body.raqam-theme footer.store-footer .raqam-footer-logo {
+    max-height: 48px !important;
+    width: auto !important;
+}
+
+body.raqam-theme footer.store-footer .raqam-footer-logo-fallback {
+    display: none;
+    color: var(--raqam-text) !important;
+    font-weight: 700;
+    font-size: 1.125rem;
+}
+
+body.raqam-theme footer.store-footer .logo-fallback-active .raqam-footer-logo-fallback {
+    display: inline-block;
+}
+
+body.raqam-theme footer.store-footer .raqam-footer-newsletter--hidden {
+    display: none !important;
+}
+
+body.raqam-theme footer.store-footer .raqam-payment-logos {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+body.raqam-theme footer.store-footer .raqam-pay-logo {
+    height: 28px !important;
+    width: auto !important;
+    filter: brightness(0) invert(1) opacity(0.85);
+}
+

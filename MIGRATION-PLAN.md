@@ -121,18 +121,25 @@
 
 ---
 
-## المرحلة 3 — صفحات المنتج / السلة / الحساب
+## المرحلة 3 — صفحات المنتج / السلة / الحساب ✅
 
-| JS Snippet | CSS | Twig |
-|------------|-----|------|
-| `raqam-account-pages-glass.js` | `raqam-theme.css` § account (جديد) | `views/customers/account/**/*.twig` |
-| `raqam-account-orders-glass.js` | § orders table | `orders/index.twig`, `orders/view.twig` |
-| `raqam-account-notifications-glass.js` | § notifications | `notification/index.twig` |
-| Product page styles (dstory) | § product-view | `views/products/view.twig` |
-| Cart / checkout (dstory) | § cart | `views/checkout/**` |
-| `raqam-login-modal-glass.js` | ✅ Phase 1 (base) | `customers/session/popup.twig` — classes إضافية |
+| JS Snippet | CSS | Twig | الحالة |
+|------------|-----|------|--------|
+| `raqam-account-pages-glass.js` | §22 account | `customers/account/**` | ✅ |
+| `raqam-account-orders-glass.js` | §22 + §26 orders | `orders/**` | ✅ |
+| `raqam-account-notifications-glass.js` | §22 notifications | `notification/index.twig` | ✅ |
+| Product page styles (dstory) | §20 product-view | `products/view.twig` | ✅ |
+| Cart / checkout (dstory) | §21 + §23 cart | `checkout/**` | ✅ |
+| `raqam-login-modal-glass.js` | §7 + §25 login | `session/popup.twig` | ✅ |
+| `raqam-footer-white` + contact icons | §6 + §6b footer | `footer.twig` | ✅ |
+| `raqam-testimonials-glass.js` | §27 testimonials | `testimonials/index.twig` | ✅ |
+| Listing / category | §24 listing | `products/*.twig` | ✅ |
+
+**توثيق الحالة الكامل:** `COMPLETION-STATUS.md`
 
 ---
+
+*آخر تحديث: 4 يوليو 2026 — Phase 3 مكتمل (~95%)*
 
 ## جدول Mapping: JS → CSS + Twig
 
@@ -209,3 +216,9 @@
 ---
 
 *آخر تحديث: يوليو 2026 — Phase 2 Home Components*
+
+---
+
+## المرحلة 3 — Inner Pages ✅
+
+راجع `COMPLETION-STATUS.md` للتفاصيل الكاملة.
